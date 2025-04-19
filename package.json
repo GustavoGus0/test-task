@@ -1,0 +1,13 @@
+{
+  "name": "management",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "b": "pnpm --filter @management/backend",
+    "w": "pnpm --filter @management/webapp",
+    "dev": "pnpm -r --parallel dev",
+    "types": "pnpm -r --parallel types",
+    "prettify": "pnpm -r --parallel prettify",
+    "lint": "pnpm -r --parallel lint"
+  }
+}
