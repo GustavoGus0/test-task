@@ -1,9 +1,9 @@
 import { trpc } from '../lib/trpc'
 
-import { getStringTrpcRoute } from './getString'
+import { getTasksTrpcRoute } from './getTasks'
 
 export const trpcRouter = trpc.router({
-  getString: getStringTrpcRoute,
+  getTasks: getTasksTrpcRoute,
 })
 
 export type TrpcRouter = typeof trpcRouter

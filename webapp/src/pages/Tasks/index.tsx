@@ -1,5 +1,54 @@
+import cn from 'classnames'
+
+import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
+import { trpc } from '../../lib/trpc'
+import { getCyrillicStatus } from '../../utils/getCyrillic'
+
+import css from './index.module.scss'
 
 export const Tasks = () => {
-  return <Segment title={'Задачи'}>Тут задачи</Segment>
+  const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery()
+  return (
+    <Segment title={'Задачи'}>
+      {(isLoading || isFetching) && <Loader />}
+      {isError && <div>{error.message}</div>}
+      {data && (
+        <ul className={css.tasksList}>
+          {data.tasks.map((task) => (
+            <Task {...task} key={task.id} />
+          ))}
+        </ul>
+      )}
+    </Segment>
+  )
+}
+
+interface ITask {
+  id: string
+  title: string
+  description: string
+  status: 'to-do' | 'in-progress' | 'completed' | 'cancelled'
+  priority: 'low' | 'medium' | 'high'
+}
+const Task = ({ title, description, status, priority }: ITask) => {
+  return (
+    <li className={css.task}>
+      <div className={css.titleBox}>
+        <div className={css.priorityAndTitle}>
+          <div
+            className={cn({
+              [css.priority]: true,
+              [css.high]: priority === 'high',
+              [css.medium]: priority === 'medium',
+              [css.low]: priority === 'low',
+            })}
+          />
+          <h3 className={css.title}>{title}</h3>
+        </div>
+        <p className={css.status}>{getCyrillicStatus(status)}</p>
+      </div>
+      <p className={css.description}>{description}</p>
+    </li>
+  )
 }
