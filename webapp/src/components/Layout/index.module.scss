@@ -1,0 +1,52 @@
+@use '../../styles/vars' as *;
+
+.container {
+  min-height: 100svh;
+  display: flex;
+  gap: $mainPageMenuToContentGap;
+  width: $mainPageWidth;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: $mainPageHeaderToNavGap;
+    margin-top: $mainPageMarginFromTop;
+    width: $mainPageMenuWidth;
+
+    .headerText {
+      font-size: $defaultMainHeaderFontSize;
+    }
+
+    .navigation {
+      display: block;
+      width: 100%;
+
+      .list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+
+        .item {
+          width: 100%;
+
+          .reactLink {
+            cursor: pointer;
+            padding: 0.375rem 0.5rem;
+            border-radius: 0.5rem;
+            background-color: $grayColor;
+            display: flex;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .content {
+    margin-top: $mainPageMarginFromTop;
+    display: flex;
+    flex-direction: column;
+  }
+}
