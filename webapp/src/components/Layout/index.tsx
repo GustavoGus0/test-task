@@ -1,5 +1,7 @@
 import { Link, Outlet } from 'react-router'
 
+import { getNewTaskRoute, getTasksRoute } from '../../lib/routes'
+
 import css from './index.module.scss'
 
 export const Layout = () => {
@@ -10,17 +12,17 @@ export const Layout = () => {
         <nav className={css.navigation}>
           <ul className={css.list}>
             <li className={css.item}>
-              <Link className={css.reactLink} to={'/'}>
+              <Link className={css.reactLink} to={getTasksRoute()}>
                 Задачи
               </Link>
             </li>
             <li className={css.item}>
-              <Link className={css.reactLink} to={'/'}>
+              <Link className={css.reactLink} to={getNewTaskRoute()}>
                 Новая задача
               </Link>
             </li>
             <li className={css.item}>
-              <Link className={css.reactLink} to={'/'}>
+              <Link className={css.reactLink} to={'#'}>
                 Выйти
               </Link>
             </li>

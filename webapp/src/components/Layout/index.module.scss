@@ -38,6 +38,11 @@
             background-color: $grayColor;
             display: flex;
             width: 100%;
+            transition: $defaultInOutFastTransition;
+
+            &:hover {
+              background-color: $grayColorDark;
+            }
           }
         }
       }

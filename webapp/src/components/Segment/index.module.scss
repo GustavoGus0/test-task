@@ -1,0 +1,16 @@
+@use '../../styles/vars' as *;
+
+.segment {
+  display: flex;
+  flex-direction: column;
+  gap: $mainPageHeaderToNavGap;
+
+  .headerLarge {
+    font-size: $defaultMainHeaderFontSize;
+    font-weight: 700;
+  }
+
+  .headerSmall {
+    font-size: $defaultMainHeaderFontSize - 0.5rem;
+  }
+}
