@@ -1,5 +1,4 @@
 import { trpc } from '../../lib/trpc'
-
 interface ITask {
   id: string
   title: string
@@ -45,6 +44,18 @@ const tasks: ITask[] = [
   },
 ]
 
-export const getTasksTrpcRoute = trpc.procedure.query(() => {
-  return { tasks }
+export const getTasksTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
+  const queriedTasks = await ctx.prisma.task.findMany({
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      status: true,
+      priority: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+  return { tasks: [...queriedTasks, ...tasks] }
 })

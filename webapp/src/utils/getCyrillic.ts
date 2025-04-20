@@ -1,4 +1,6 @@
-export const getCyrillicStatus = (status: 'to-do' | 'in-progress' | 'completed' | 'cancelled') => {
+import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
+
+export const getCyrillicStatus = (status: TaskStatus) => {
   switch (status) {
     case 'to-do':
       return 'К выполнению'
@@ -11,7 +13,7 @@ export const getCyrillicStatus = (status: 'to-do' | 'in-progress' | 'completed' 
   }
 }
 
-export const getCyrillicPriority = (priority: 'low' | 'medium' | 'high') => {
+export const getCyrillicPriority = (priority: TaskPriority) => {
   switch (priority) {
     case 'low':
       return 'Низкий'

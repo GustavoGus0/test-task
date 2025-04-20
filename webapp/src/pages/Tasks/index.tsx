@@ -1,3 +1,4 @@
+import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
 import cn from 'classnames'
 
 import { Loader } from '../../components/Loader'
@@ -16,7 +17,7 @@ export const Tasks = () => {
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (
-            <Task {...task} key={task.id} />
+            <Task {...(task as ITask)} key={task.id} />
           ))}
         </ul>
       )}
@@ -28,9 +29,10 @@ interface ITask {
   id: string
   title: string
   description: string
-  status: 'to-do' | 'in-progress' | 'completed' | 'cancelled'
-  priority: 'low' | 'medium' | 'high'
+  status: TaskStatus
+  priority: TaskPriority
 }
+
 const Task = ({ title, description, status, priority }: ITask) => {
   return (
     <li className={css.task}>
