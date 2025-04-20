@@ -9,6 +9,7 @@ interface IInput {
   name: string
   label: string
   type?: string
+  validateMessage?: string
 }
 
 interface ISelectorInput extends IInput {

@@ -1,0 +1,13 @@
+@use '../../styles/vars' as *;
+
+.error {
+  color: $errorTextColor;
+}
+
+.success {
+  color: $successTextColor;
+}
+
+.forInput {
+  font-size: 0.9rem;
+}

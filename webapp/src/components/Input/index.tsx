@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { FormikProps } from 'formik'
 
 import { getCyrillicPriority } from '../../utils/getCyrillic'
+import { Alert } from '../Alert'
 
 import css from './index.module.scss'
 
@@ -18,6 +19,8 @@ export const Input = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
 }) => {
+  const errorMessage = formik.errors[name]
+  const isTouched = formik.touched[name]
   if (type !== 'textarea') {
     return (
       <div className={css.inputBox}>
@@ -25,7 +28,7 @@ export const Input = ({
           {label}
         </label>
         <input
-          className={css.input}
+          className={cn({ [css.input]: true, [css.invalid]: isTouched && errorMessage })}
           onChange={(e) => {
             void formik.setFieldValue(name, e.target.value)
           }}
@@ -33,6 +36,9 @@ export const Input = ({
           id={name}
           name={name}
         />
+        <Alert type="error" forWhat="input">
+          {isTouched && (errorMessage as string)}
+        </Alert>
       </div>
     )
   } else {
@@ -66,6 +72,8 @@ export const SelectorInput = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
 }) => {
+  const errorMessage = formik.errors[name]
+  const isTouched = formik.touched[name]
   return (
     <div className={css.inputBox}>
       <label className={css.label} htmlFor={name}>
@@ -81,6 +89,7 @@ export const SelectorInput = ({
             className={cn({
               [css.priority]: true,
               [css.active]: (formik.values.priority as string) === parameter,
+              [css.invalid]: isTouched && errorMessage,
             })}
             type="button"
           >
@@ -88,6 +97,9 @@ export const SelectorInput = ({
           </button>
         ))}
       </div>
+      <Alert type="error" forWhat="input">
+        {isTouched && (errorMessage as string)}
+      </Alert>
     </div>
   )
 }

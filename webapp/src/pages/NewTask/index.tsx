@@ -11,13 +11,13 @@ import { trpc } from '../../lib/trpc'
 export interface IInitialValues {
   title: string
   description: string
-  priority: TaskPriority
+  priority: TaskPriority | null
   status: TaskStatus
 }
 
 export const NewTask = () => {
   const [formKey, setFormKey] = useState(0)
-  const defaultPriority: TaskPriority = 'low'
+  const defaultPriority: IInitialValues['priority'] = null
   const defaultStatus: TaskStatus = 'to-do'
   const createTask = trpc.newTask.useMutation()
 
@@ -44,11 +44,18 @@ export const NewTask = () => {
         formik={formik}
         legend={'Создайте новую задачу'}
         inputs={[
-          { name: 'title', label: 'Заголовок' },
+          {
+            name: 'title',
+            label: 'Заголовок',
+          },
           { name: 'description', label: 'Описание', type: 'textarea' },
         ]}
         selectorInputs={[
-          { name: 'priority', label: 'Приоритет', parameters: ['low', 'medium', 'high'] },
+          {
+            name: 'priority',
+            label: 'Приоритет',
+            parameters: ['low', 'medium', 'high'],
+          },
         ]}
         initialValues={initialValues}
       />
