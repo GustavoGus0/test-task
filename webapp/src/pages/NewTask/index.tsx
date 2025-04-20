@@ -1,114 +1,57 @@
 import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
 import { zNewTaskTrpcInput } from '@management/backend/src/router/newTask/input'
-import cn from 'classnames'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
+import { useState } from 'react'
 
+import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
 import { trpc } from '../../lib/trpc'
 
-import css from './index.module.scss'
+export interface IInitialValues {
+  title: string
+  description: string
+  priority: TaskPriority
+  status: TaskStatus
+}
 
 export const NewTask = () => {
+  const [formKey, setFormKey] = useState(0)
   const defaultPriority: TaskPriority = 'low'
   const defaultStatus: TaskStatus = 'to-do'
   const createTask = trpc.newTask.useMutation()
 
+  const initialValues: IInitialValues = {
+    title: '',
+    description: '',
+    priority: defaultPriority,
+    status: defaultStatus,
+  }
+
   const formik = useFormik({
-    initialValues: {
-      title: '',
-      description: '',
-      priority: defaultPriority,
-      status: defaultStatus,
-    },
+    initialValues,
     validate: withZodSchema(zNewTaskTrpcInput),
     onSubmit: async (values) => {
       await createTask.mutateAsync(values)
       formik.resetForm()
+      setFormKey((prev) => prev + 1)
     },
   })
   return (
     <Segment title={'Новая задача'}>
-      <form className={css.form} onSubmit={formik.handleSubmit}>
-        <fieldset className={css.fieldset}>
-          <legend className={css.legend}>Создайте новую задачу</legend>
-          <div className={css.inputBox}>
-            <label className={css.label} htmlFor="title">
-              Заголовок
-            </label>
-            <input
-              className={css.input}
-              onChange={(e) => {
-                void formik.setFieldValue('title', e.target.value)
-              }}
-              type="text"
-              id="title"
-              name="title"
-            />
-          </div>
-          <div className={css.inputBox}>
-            <label className={css.label} htmlFor="description">
-              Описание
-            </label>
-            <textarea
-              className={css.textarea}
-              onChange={(e) => {
-                void formik.setFieldValue('description', e.target.value)
-              }}
-              name="description"
-              id="description"
-            />
-          </div>
-          <div className={css.inputBox}>
-            <label className={css.label} htmlFor="priority">
-              Приоритет
-            </label>
-            <div className={css.priorities}>
-              <button
-                onClick={() => {
-                  void formik.setFieldValue('priority', 'low')
-                }}
-                className={cn({
-                  [css.priority]: true,
-                  [css.active]: (formik.values.priority as string) === 'low',
-                })}
-              >
-                Низкий
-              </button>
-              <button
-                onClick={() => {
-                  void formik.setFieldValue('priority', 'medium')
-                }}
-                className={cn({
-                  [css.priority]: true,
-                  [css.active]: (formik.values.priority as string) === 'medium',
-                })}
-              >
-                Средний
-              </button>
-              <button
-                onClick={() => {
-                  void formik.setFieldValue('priority', 'high')
-                }}
-                className={cn({
-                  [css.priority]: true,
-                  [css.active]: (formik.values.priority as string) === 'high',
-                })}
-              >
-                Высокий
-              </button>
-            </div>
-          </div>
-        </fieldset>
-        <div className={css.buttonBox}>
-          <button className={css.button + ' ' + css.submitButton} type="submit">
-            Создать
-          </button>
-          <button className={css.button + ' ' + css.clearButton} type="reset">
-            Очистить
-          </button>
-        </div>
-      </form>
+      <Form
+        key={formKey}
+        formik={formik}
+        legend={'Создайте новую задачу'}
+        inputs={[
+          { name: 'title', label: 'Заголовок' },
+          { name: 'description', label: 'Описание', type: 'textarea' },
+        ]}
+        selectorInputs={[
+          { name: 'priority', label: 'Приоритет', parameters: ['low', 'medium', 'high'] },
+        ]}
+        initialValues={initialValues}
+      />
     </Segment>
   )
 }

@@ -1,0 +1,67 @@
+@use '../../styles/vars' as *;
+
+.inputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .label {
+    font-size: $defaultLabelFontSize;
+  }
+
+  .input {
+    border: none;
+    font-size: 1.2rem;
+    padding: 0.375rem;
+    border-radius: 0.375rem;
+
+    &:focus {
+      outline: 2px solid $accentColor;
+    }
+  }
+
+  .textarea {
+    border: none;
+    padding: 0.375rem;
+    border-radius: 0.375rem;
+    min-height: 2rem;
+    max-height: 300px;
+    resize: vertical;
+
+    &:focus {
+      outline: 2px solid $accentColor;
+    }
+  }
+}
+
+.priorities {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+
+  .priority {
+    cursor: pointer;
+    background-color: $whiteTextColor;
+    padding: 0.5rem 0.675rem;
+    border-radius: 0.375rem;
+    transition: $defaultInOutFastTransition;
+    outline: none;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $accentColor;
+    } 
+  }
+
+  .active {
+    background-color: $accentColor;
+    color: $whiteTextColor;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
