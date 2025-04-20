@@ -14,6 +14,7 @@ export const Tasks = () => {
     <Segment title={'Задачи'}>
       {(isLoading || isFetching) && <Loader />}
       {isError && <div>{error.message}</div>}
+      {(!data || !data.tasks.length) && <div>Задач нет</div>}
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (
