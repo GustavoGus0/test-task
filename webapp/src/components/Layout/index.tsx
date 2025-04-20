@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router'
 
-import { getNewTaskRoute, getTasksRoute } from '../../lib/routes'
+import { links } from '../../lib/links'
 
 import css from './index.module.scss'
 
@@ -11,21 +11,16 @@ export const Layout = () => {
         <h1 className={css.headerText}>TODO</h1>
         <nav className={css.navigation}>
           <ul className={css.list}>
-            <li className={css.item}>
-              <Link className={css.reactLink} to={getTasksRoute()}>
-                Задачи
-              </Link>
-            </li>
-            <li className={css.item}>
-              <Link className={css.reactLink} to={getNewTaskRoute()}>
-                Новая задача
-              </Link>
-            </li>
-            <li className={css.item}>
-              <Link className={css.reactLink} to={'#'}>
-                Выйти
-              </Link>
-            </li>
+            {links.map((link) => (
+              <li className={css.item} key={link.to}>
+                <Link className={css.reactLink} to={link.to}>
+                  <div className={css.linkWrapper}>
+                    <div className={css.icon}>{link.icon}</div>
+                    <span className={css.label}>{link.label}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </header>
