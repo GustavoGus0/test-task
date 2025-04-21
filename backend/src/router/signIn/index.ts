@@ -14,7 +14,7 @@ export const signInTrpcRoute = trpc.procedure
       },
     })
     if (!user) {
-      throw new Error('Wrong nick or password')
+      throw new Error('Неправильный логин или пароль')
     }
     const token = signJWT(user.id)
     return { token }

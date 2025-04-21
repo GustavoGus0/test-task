@@ -39,6 +39,7 @@ export const SignUp = () => {
         Cookies.set('token', token, { expires: 99999 })
         void trpcUtils.invalidate()
         navigate(getTasksRoute())
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         setErrorMessage(error.message)
       }

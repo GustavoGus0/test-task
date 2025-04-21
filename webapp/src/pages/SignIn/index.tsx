@@ -2,6 +2,7 @@ import { zSignInTrpcInput } from '@management/backend/src/router/signIn/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import Cookies from 'js-cookie'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Form } from '../../components/Form'
@@ -15,6 +16,7 @@ interface IInitialValues {
 }
 
 export const SignIn = () => {
+  const [errorMessage, setErrorMessage] = useState<string | undefined>('')
   const signIn = trpc.signIn.useMutation()
   const trpcUtils = trpc.useUtils()
   const navigate = useNavigate()
@@ -26,10 +28,15 @@ export const SignIn = () => {
     initialValues,
     validate: withZodSchema(zSignInTrpcInput),
     onSubmit: async (values) => {
-      const { token } = await signIn.mutateAsync(values)
-      Cookies.set('token', token, { expires: 99999 })
-      void trpcUtils.invalidate()
-      navigate(getTasksRoute())
+      try {
+        const { token } = await signIn.mutateAsync(values)
+        Cookies.set('token', token, { expires: 99999 })
+        void trpcUtils.invalidate()
+        navigate(getTasksRoute())
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        setErrorMessage(error.message)
+      }
     },
   })
   return (
@@ -42,6 +49,7 @@ export const SignIn = () => {
           { name: 'login', label: 'Логин' },
           { name: 'password', label: 'Пароль', type: 'password' },
         ]}
+        alert={errorMessage}
       />
     </Segment>
   )

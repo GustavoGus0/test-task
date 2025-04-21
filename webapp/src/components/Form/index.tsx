@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { FormikProps } from 'formik'
 
+import { Alert } from '../Alert'
 import { Input, SelectorInput } from '../Input'
 
 import css from './index.module.scss'
@@ -18,6 +19,7 @@ interface ISelectorInput extends IInput {
 }
 
 export const Form = ({
+  alert,
   gap = 'large',
   formik,
   inputs,
@@ -25,6 +27,7 @@ export const Form = ({
   legend,
   submitButtonText = 'Создать',
 }: {
+  alert?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
   gap?: 'small' | 'large'
@@ -82,6 +85,11 @@ export const Form = ({
               />
             )
           })}
+        {alert && (
+          <Alert forWhat="input" type="error">
+            {alert}
+          </Alert>
+        )}
       </fieldset>
       <div className={css.buttonBox}>
         <button className={css.button + ' ' + css.submitButton} type="submit">
