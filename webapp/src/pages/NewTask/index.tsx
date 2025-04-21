@@ -1,5 +1,5 @@
-import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
 import { zNewTaskTrpcInput } from '@management/backend/src/router/newTask/input'
+import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
@@ -57,7 +57,6 @@ export const NewTask = () => {
             parameters: ['low', 'medium', 'high'],
           },
         ]}
-        initialValues={initialValues}
       />
     </Segment>
   )

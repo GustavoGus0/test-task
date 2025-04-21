@@ -1,4 +1,4 @@
-import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
+import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 
 export const getCyrillicStatus = (status: TaskStatus) => {
   switch (status) {

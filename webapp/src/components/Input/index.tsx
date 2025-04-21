@@ -1,4 +1,4 @@
-import { TaskPriority } from '@management/backend/src/prisma/types.prisma'
+import { TaskPriority } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { FormikProps } from 'formik'
 
@@ -62,11 +62,13 @@ export const Input = ({
 
 export const SelectorInput = ({
   parameters,
+  needToTranslate = true,
   name,
   label,
   formik,
 }: {
   parameters: string[]
+  needToTranslate?: boolean
   name: string
   label: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -93,7 +95,7 @@ export const SelectorInput = ({
             })}
             type="button"
           >
-            {getCyrillicPriority(parameter as TaskPriority)}
+            {needToTranslate ? getCyrillicPriority(parameter as TaskPriority) : parameter}
           </button>
         ))}
       </div>

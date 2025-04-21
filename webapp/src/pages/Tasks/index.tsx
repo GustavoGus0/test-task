@@ -1,8 +1,9 @@
-import { TaskPriority, TaskStatus } from '@management/backend/src/prisma/types.prisma'
+import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
+// import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 import { getCyrillicStatus } from '../../utils/getCyrillic'
 
@@ -10,6 +11,8 @@ import css from './index.module.scss'
 
 export const Tasks = () => {
   const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery()
+  // const me = useMe()
+  // console.log(me)
   return (
     <Segment title={'Задачи'}>
       {(isLoading || isFetching) && <Loader />}

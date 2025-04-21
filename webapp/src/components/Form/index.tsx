@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik'
 
-import { IInitialValues } from '../../pages/NewTask'
 import { Input, SelectorInput } from '../Input'
 
 import css from './index.module.scss'
@@ -8,11 +7,11 @@ import css from './index.module.scss'
 interface IInput {
   name: string
   label: string
-  type?: string
-  validateMessage?: string
+  type?: 'textarea' | 'text' | 'password'
 }
 
 interface ISelectorInput extends IInput {
+  needToTranslate?: boolean
   parameters: string[]
 }
 
@@ -26,8 +25,7 @@ export const Form = ({
   formik: FormikProps<any>
   inputs: IInput[]
   selectorInputs?: ISelectorInput[]
-  legend: string
-  initialValues: IInitialValues
+  legend?: string
 }) => {
   return (
     <form
@@ -38,7 +36,7 @@ export const Form = ({
       }}
     >
       <fieldset className={css.fieldset}>
-        <legend className={css.legend}>{legend}</legend>
+        {!!legend && <legend className={css.legend}>{legend}</legend>}
         {inputs.map((input) => {
           return input.type === 'textarea' ? (
             <Input
@@ -49,7 +47,13 @@ export const Form = ({
               formik={formik}
             />
           ) : (
-            <Input key={input.name} name={input.name} label={input.label} formik={formik} />
+            <Input
+              type={input.type}
+              key={input.name}
+              name={input.name}
+              label={input.label}
+              formik={formik}
+            />
           )
         })}
         {selectorInputs &&
@@ -60,6 +64,7 @@ export const Form = ({
                 name={input.name}
                 label={input.label}
                 formik={formik}
+                needToTranslate={input.needToTranslate}
                 key={input.name}
               />
             )

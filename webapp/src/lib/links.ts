@@ -1,21 +1,55 @@
 import { icons } from '../assets/icons'
 
-import { getNewTaskRoute, getTasksRoute } from './routes'
+import {
+  getNewTaskRoute,
+  getSignInRoute,
+  getSignOutRoute,
+  getSignUpRoute,
+  getTasksRoute,
+} from './routes'
 
-export const links = [
+export interface ILink {
+  to: string
+  label: string
+  icon: React.ReactNode | null
+  forAuth: boolean
+  canSeeNotAuth: boolean
+}
+
+export const links: ILink[] = [
   {
     to: getTasksRoute(),
     label: 'Задачи',
     icon: icons.tasks(),
+    forAuth: true,
+    canSeeNotAuth: true,
   },
   {
     to: getNewTaskRoute(),
     label: 'Новая задача',
     icon: icons.newTask(),
+    forAuth: true,
+    canSeeNotAuth: false,
   },
   {
-    to: '#',
+    to: getSignUpRoute(),
+    label: 'Регистрация',
+    icon: icons.signUp(),
+    forAuth: false,
+    canSeeNotAuth: true,
+  },
+  {
+    to: getSignInRoute(),
+    label: 'Вход',
+    icon: icons.signIn(),
+    forAuth: false,
+    canSeeNotAuth: true,
+  },
+  {
+    to: getSignOutRoute(),
     label: 'Выйти',
     icon: icons.signOut(),
+    forAuth: true,
+    canSeeNotAuth: false,
   },
 ]
