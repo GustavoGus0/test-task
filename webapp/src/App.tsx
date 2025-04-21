@@ -8,6 +8,8 @@ import {
   getSignOutRoute,
   getSignUpRoute,
   getTasksRoute,
+  getViewTaskRoute,
+  viewTaskRouteParams,
 } from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { NewTask } from './pages/NewTask'
@@ -16,6 +18,7 @@ import { SignIn } from './pages/SignIn'
 import { SignOut } from './pages/SignOut'
 import { SignUp } from './pages/SignUp'
 import { Tasks } from './pages/Tasks'
+import { ViewTask } from './pages/ViewTask'
 
 export default function App() {
   return (
@@ -28,6 +31,7 @@ export default function App() {
             <Route path={getSignUpRoute()} element={<SignUp />} />
             <Route path={getSignInRoute()} element={<SignIn />} />
             <Route path={getSignOutRoute()} element={<SignOut />} />
+            <Route path={getViewTaskRoute(viewTaskRouteParams)} element={<ViewTask />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

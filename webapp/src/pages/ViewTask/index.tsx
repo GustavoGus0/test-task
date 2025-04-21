@@ -1,0 +1,79 @@
+import { TrpcRouterOutput } from '@management/backend/src/router'
+import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
+import cn from 'classnames'
+import { useParams } from 'react-router'
+
+import { icons } from '../../assets/icons'
+import { Segment } from '../../components/Segment'
+import { useMe } from '../../lib/ctx'
+import { getTasksRoute, ViewTaskRouteParams } from '../../lib/routes'
+import { trpc } from '../../lib/trpc'
+import { getCyrillicPriority, getCyrillicStatus } from '../../utils/getCyrillic'
+
+import css from './index.module.scss'
+
+export const ViewTask = () => {
+  const { taskId } = useParams() as ViewTaskRouteParams
+  const { data, error } = trpc.getTask.useQuery({
+    taskId,
+  })
+
+  if (error || !data) {
+    return (
+      <div>
+        Error({data && `: ${error.message}`}
+        {error?.message})
+      </div>
+    )
+  }
+
+  return (
+    <Segment returnTo={getTasksRoute()} title={'Просмотр задачи'}>
+      <Task task={data.task} />
+    </Segment>
+  )
+}
+
+const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
+  const me = useMe()
+  return (
+    <div className={css.taskWrapper}>
+      <div className={css.statusAndPriority}>
+        <p
+          className={cn({
+            [css.bar]: true,
+            [css.low]: task.priority === 'low',
+            [css.medium]: task.priority === 'medium',
+            [css.high]: task.priority === 'high',
+          })}
+        >
+          {getCyrillicPriority(task.priority as TaskPriority)} приориет
+        </p>
+        <p className={cn({ [css.bar]: true, [css.status]: true })}>
+          {getCyrillicStatus(task.status as TaskStatus)}
+        </p>
+      </div>
+      <div className={css.task}>
+        <h2 className={css.title}>{task.title}</h2>
+        <div className={css.descriptionBox}>
+          {task.description === '' ? (
+            'Нет описания'
+          ) : (
+            <p className={css.description}>{task.description}</p>
+          )}
+        </div>
+        <div className={css.authorBox}>
+          <div className={css.bgCircle}>{icons.profile()}</div>
+          <div className={css.textBox}>
+            <h4 className={css.authorFullName}>
+              {task.authorId === me?.id
+                ? 'Вы'
+                : `${task.author.lastName} ${task.author.firstName} ${task.author.patronymic}`}
+            </h4>
+            <p className={css.role}>Постановщик задачи</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

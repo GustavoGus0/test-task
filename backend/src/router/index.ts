@@ -3,6 +3,7 @@ import { inferRouterOutputs } from '@trpc/server'
 import { trpc } from '../lib/trpc'
 
 import { getMeTrpcRoute } from './getMe'
+import { getTaskTrpcRoute } from './getTask'
 import { getTasksTrpcRoute } from './getTasks'
 import { newTaskTrpcRoute } from './newTask'
 import { signInTrpcRoute } from './signIn'
@@ -10,6 +11,7 @@ import { signUpTrpcRoute } from './signUp'
 
 export const trpcRouter = trpc.router({
   getTasks: getTasksTrpcRoute,
+  getTask: getTaskTrpcRoute,
   newTask: newTaskTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,

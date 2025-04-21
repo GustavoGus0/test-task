@@ -6,13 +6,26 @@
   gap: $mainPageHeaderToNavGap;
   width: 100%;
 
-  .headerLarge {
-    font-size: $defaultMainHeaderFontSize;
-    font-weight: 700;
-  }
+  .headerBox {
+    display: flex;
+    align-items: center;
+    gap: 0.675rem;
 
-  .headerSmall {
-    font-size: $defaultMainHeaderFontSize - 0.5rem;
+    .backButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.5rem;
+    }
+
+    .headerLarge {
+      font-size: $defaultMainHeaderFontSize;
+      font-weight: 700;
+    }
+
+    .headerSmall {
+      font-size: $defaultMainHeaderFontSize - 0.5rem;
+    }
   }
 
   .content {

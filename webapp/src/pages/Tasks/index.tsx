@@ -1,8 +1,10 @@
 import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
+import { Link } from 'react-router'
 
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
+import { getViewTaskRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import { getCyrillicStatus } from '../../utils/getCyrillic'
 
@@ -34,24 +36,26 @@ interface ITask {
   priority: TaskPriority
 }
 
-const Task = ({ title, description, status, priority }: ITask) => {
+const Task = ({ id, title, description, status, priority }: ITask) => {
   return (
-    <li className={css.task}>
-      <div className={css.titleBox}>
-        <div className={css.priorityAndTitle}>
-          <div
-            className={cn({
-              [css.priority]: true,
-              [css.high]: priority === 'high',
-              [css.medium]: priority === 'medium',
-              [css.low]: priority === 'low',
-            })}
-          />
-          <h3 className={css.title}>{title}</h3>
+    <Link to={getViewTaskRoute({ taskId: id })}>
+      <li className={css.task}>
+        <div className={css.titleBox}>
+          <div className={css.priorityAndTitle}>
+            <div
+              className={cn({
+                [css.priority]: true,
+                [css.high]: priority === 'high',
+                [css.medium]: priority === 'medium',
+                [css.low]: priority === 'low',
+              })}
+            />
+            <h3 className={css.title}>{title}</h3>
+          </div>
+          <p className={css.status}>{getCyrillicStatus(status)}</p>
         </div>
-        <p className={css.status}>{getCyrillicStatus(status)}</p>
-      </div>
-      <p className={css.description}>{description}</p>
-    </li>
+        <p className={css.description}>{description}</p>
+      </li>
+    </Link>
   )
 }
