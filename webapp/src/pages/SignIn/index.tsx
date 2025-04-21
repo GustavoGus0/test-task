@@ -35,6 +35,8 @@ export const SignIn = () => {
   return (
     <Segment title="Регистрация">
       <Form
+        gap="small"
+        submitButtonText="Войти"
         formik={formik}
         inputs={[
           { name: 'login', label: 'Логин' },

@@ -2,6 +2,7 @@ import { zSignUpTrpcInput } from '@management/backend/src/router/signUp/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import Cookies from 'js-cookie'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { Form } from '../../components/Form'
@@ -18,6 +19,7 @@ interface IInitialValues {
 }
 
 export const SignUp = () => {
+  const [errorMessage, setErrorMessage] = useState<string | undefined>('')
   const signUp = trpc.signUp.useMutation()
   const trpcUtils = trpc.useUtils()
   const navigate = useNavigate()
@@ -32,19 +34,24 @@ export const SignUp = () => {
     initialValues,
     validate: withZodSchema(zSignUpTrpcInput),
     onSubmit: async (values) => {
-      const { token } = await signUp.mutateAsync(values)
-      Cookies.set('token', token, { expires: 99999 })
-      void trpcUtils.invalidate()
-      navigate(getTasksRoute())
+      try {
+        const { token } = await signUp.mutateAsync(values)
+        Cookies.set('token', token, { expires: 99999 })
+        void trpcUtils.invalidate()
+        navigate(getTasksRoute())
+      } catch (error: any) {
+        setErrorMessage(error.message)
+      }
     },
   })
   return (
     <Segment title="Регистрация">
       <Form
+        gap="small"
         formik={formik}
         legend="Создайте аккаунт"
         inputs={[
-          { name: 'login', label: 'Логин' },
+          { name: 'login', label: 'Логин', errorMessage: errorMessage },
           { name: 'password', label: 'Пароль', type: 'password' },
           { name: 'firstName', label: 'Имя' },
           { name: 'lastName', label: 'Фамилия' },

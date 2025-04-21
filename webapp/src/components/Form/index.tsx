@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import { FormikProps } from 'formik'
 
 import { Input, SelectorInput } from '../Input'
@@ -8,6 +9,7 @@ interface IInput {
   name: string
   label: string
   type?: 'textarea' | 'text' | 'password'
+  errorMessage?: string
 }
 
 interface ISelectorInput extends IInput {
@@ -16,16 +18,20 @@ interface ISelectorInput extends IInput {
 }
 
 export const Form = ({
+  gap = 'large',
   formik,
   inputs,
   selectorInputs,
   legend,
+  submitButtonText = 'Создать',
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
+  gap?: 'small' | 'large'
   inputs: IInput[]
   selectorInputs?: ISelectorInput[]
   legend?: string
+  submitButtonText?: string
 }) => {
   return (
     <form
@@ -35,11 +41,17 @@ export const Form = ({
         void formik.handleSubmit()
       }}
     >
-      <fieldset className={css.fieldset}>
+      <fieldset
+        className={cn({
+          [css.fieldset]: true,
+          [css.smallGap]: gap === 'small',
+        })}
+      >
         {!!legend && <legend className={css.legend}>{legend}</legend>}
         {inputs.map((input) => {
           return input.type === 'textarea' ? (
             <Input
+              errorMessage={input.errorMessage}
               key={input.name}
               type="textarea"
               name={input.name}
@@ -48,6 +60,7 @@ export const Form = ({
             />
           ) : (
             <Input
+              errorMessage={input.errorMessage}
               type={input.type}
               key={input.name}
               name={input.name}
@@ -72,7 +85,7 @@ export const Form = ({
       </fieldset>
       <div className={css.buttonBox}>
         <button className={css.button + ' ' + css.submitButton} type="submit">
-          Создать
+          {submitButtonText}
         </button>
         <button
           className={css.button + ' ' + css.clearButton}
