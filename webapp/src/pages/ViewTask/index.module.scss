@@ -37,10 +37,17 @@
     padding: 1rem;
     border-radius: 1rem;
 
-    .title {
-      font-size: 2rem;
+    .titleBox {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       padding-bottom: 0.5rem;
       border-bottom: 1px solid rgb(0 0 0);
+
+      .title {
+        font-size: 2rem;
+      }
     }
 
     .descriptionBox {

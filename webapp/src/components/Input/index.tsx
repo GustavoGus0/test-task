@@ -12,7 +12,7 @@ export const Input = ({
   formik,
   errorMessage,
 }: {
-  type?: 'text' | 'textarea' | 'password'
+  type?: 'text' | 'textarea' | 'password' | 'time'
   name: string
   label: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,7 +21,7 @@ export const Input = ({
 }) => {
   const validationMessage = formik.errors[name]
   const isTouched = formik.touched[name]
-  if (type !== 'textarea') {
+  if (type === 'text' || type === 'password') {
     return (
       <div className={css.inputBox}>
         <label className={css.label} htmlFor={name}>
@@ -43,6 +43,23 @@ export const Input = ({
           {isTouched && (validationMessage as string)}
           {errorMessage && (errorMessage as string)}
         </Alert>
+      </div>
+    )
+  } else if (type === 'time') {
+    return (
+      <div className={css.inputBox}>
+        <label className={css.label} htmlFor={name}>
+          {label}
+        </label>
+        <input
+          className={css.input}
+          onChange={(e) => {
+            void formik.setFieldValue(name, e.target.value)
+          }}
+          type={type}
+          id={name}
+          name={name}
+        />
       </div>
     )
   } else {

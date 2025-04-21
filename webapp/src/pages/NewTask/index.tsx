@@ -59,6 +59,8 @@ export const NewTask = () => {
             label: 'Заголовок',
           },
           { name: 'description', label: 'Описание', type: 'textarea' },
+          { name: 'deadline', label: 'Время начала', type: 'time' },
+          { name: 'deadline', label: 'Время завершения', type: 'time' },
         ]}
         selectorInputs={[
           {

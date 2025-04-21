@@ -34,6 +34,26 @@ export const ViewTask = () => {
   )
 }
 
+function formatTimestamp(timestamp: Date) {
+  const date = new Date(timestamp)
+
+  const dateFormatter = new Intl.DateTimeFormat('ru', {
+    day: 'numeric',
+    month: 'long',
+  })
+
+  const timeFormatter = new Intl.DateTimeFormat('ru', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: false,
+  })
+
+  const formattedDate = dateFormatter.format(date)
+  const formattedTime = timeFormatter.format(date)
+
+  return `${formattedDate}, ${formattedTime}`
+}
+
 const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
   const me = useMe()
   return (
@@ -54,7 +74,10 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
         </p>
       </div>
       <div className={css.task}>
-        <h2 className={css.title}>{task.title}</h2>
+        <div className={css.titleBox}>
+          <h2 className={css.title}>{task.title}</h2>
+          <p>{formatTimestamp(task.createdAt)}</p>
+        </div>
         <div className={css.descriptionBox}>
           {task.description === '' ? (
             'Нет описания'
