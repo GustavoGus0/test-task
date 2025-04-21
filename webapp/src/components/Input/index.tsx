@@ -1,8 +1,6 @@
-import { TaskPriority } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { FormikProps } from 'formik'
 
-import { getCyrillicPriority } from '../../utils/getCyrillic'
 import { Alert } from '../Alert'
 
 import css from './index.module.scss'
@@ -68,13 +66,13 @@ export const Input = ({
 
 export const SelectorInput = ({
   parameters,
-  needToTranslate = true,
+  translatorFunction,
   name,
   label,
   formik,
 }: {
   parameters: string[]
-  needToTranslate?: boolean
+  translatorFunction?: (arg: string) => string
   name: string
   label: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -96,12 +94,12 @@ export const SelectorInput = ({
             }}
             className={cn({
               [css.priority]: true,
-              [css.active]: (formik.values.priority as string) === parameter,
+              [css.active]: (formik.values[name] as string) === parameter,
               [css.invalid]: isTouched && errorMessage,
             })}
             type="button"
           >
-            {needToTranslate ? getCyrillicPriority(parameter as TaskPriority) : parameter}
+            {translatorFunction ? translatorFunction(parameter) : parameter}
           </button>
         ))}
       </div>

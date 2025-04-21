@@ -14,7 +14,7 @@ interface IInput {
 }
 
 interface ISelectorInput extends IInput {
-  needToTranslate?: boolean
+  translatorFunction?: (arg: string) => string
   parameters: string[]
 }
 
@@ -80,7 +80,7 @@ export const Form = ({
                 name={input.name}
                 label={input.label}
                 formik={formik}
-                needToTranslate={input.needToTranslate}
+                translatorFunction={input.translatorFunction}
                 key={input.name}
               />
             )

@@ -8,6 +8,7 @@ import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
+import { getCyrillicPriority } from '../../utils/getCyrillic'
 
 export interface IInitialValues {
   title: string
@@ -61,6 +62,7 @@ export const NewTask = () => {
         ]}
         selectorInputs={[
           {
+            translatorFunction: getCyrillicPriority as (priority: string) => string,
             name: 'priority',
             label: 'Приоритет',
             parameters: ['low', 'medium', 'high'],

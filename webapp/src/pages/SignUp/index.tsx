@@ -10,6 +10,7 @@ import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { getTasksRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
+import { getCyrillicRole } from '../../utils/getCyrillic'
 
 interface IInitialValues {
   login: string
@@ -17,6 +18,7 @@ interface IInitialValues {
   lastName: string
   patronymic: string
   password: string
+  role: 'MANAGER' | 'EXECUTOR' | null
 }
 
 export const SignUp = () => {
@@ -34,6 +36,7 @@ export const SignUp = () => {
     lastName: '',
     patronymic: '',
     password: '',
+    role: null,
   }
   const formik = useFormik({
     initialValues,
@@ -62,6 +65,14 @@ export const SignUp = () => {
           { name: 'firstName', label: 'Имя' },
           { name: 'lastName', label: 'Фамилия' },
           { name: 'patronymic', label: 'Отчество' },
+        ]}
+        selectorInputs={[
+          {
+            translatorFunction: getCyrillicRole as (role: string) => string,
+            name: 'role',
+            label: 'Роль',
+            parameters: ['MANAGER', 'EXECUTOR'],
+          },
         ]}
       />
     </Segment>

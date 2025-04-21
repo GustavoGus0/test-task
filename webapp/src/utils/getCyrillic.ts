@@ -1,4 +1,4 @@
-import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
+import { UserRole, TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 
 export const getCyrillicStatus = (status: TaskStatus) => {
   switch (status) {
@@ -21,5 +21,14 @@ export const getCyrillicPriority = (priority: TaskPriority) => {
       return 'Средний'
     case 'high':
       return 'Высокий'
+  }
+}
+
+export const getCyrillicRole = (role: UserRole) => {
+  switch (role) {
+    case 'EXECUTOR':
+      return 'Исполнитель'
+    case 'MANAGER':
+      return 'Менеджер'
   }
 }

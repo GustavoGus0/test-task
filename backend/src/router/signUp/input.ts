@@ -6,4 +6,8 @@ export const zSignUpTrpcInput = z.object({
   lastName: z.string().min(1, 'Фамилию тоже нужно указать'),
   patronymic: z.string().nullable(),
   password: z.string().min(4, 'Пароль должен быть не менее 4 символов'),
+  role: z
+    .enum(['MANAGER', 'EXECUTOR'], { errorMap: () => ({ message: 'Нужно выбрать роль' }) })
+    .nullable()
+    .refine((val) => val !== null, 'Нужно выбрать роль'),
 })
