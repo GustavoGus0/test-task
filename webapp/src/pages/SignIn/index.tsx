@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router'
 
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
+import { useMe } from '../../lib/ctx'
 import { getTasksRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 
@@ -16,6 +17,10 @@ interface IInitialValues {
 }
 
 export const SignIn = () => {
+  const me = useMe()
+  if (me) {
+    return <Segment title="Вход">Вы уже авторизованы</Segment>
+  }
   const [errorMessage, setErrorMessage] = useState<string | undefined>('')
   const signIn = trpc.signIn.useMutation()
   const trpcUtils = trpc.useUtils()

@@ -11,6 +11,7 @@ import {
 } from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { NewTask } from './pages/NewTask'
+import { NotFound } from './pages/NotFound'
 import { SignIn } from './pages/SignIn'
 import { SignOut } from './pages/SignOut'
 import { SignUp } from './pages/SignUp'
@@ -27,6 +28,7 @@ export default function App() {
             <Route path={getSignUpRoute()} element={<SignUp />} />
             <Route path={getSignInRoute()} element={<SignIn />} />
             <Route path={getSignOutRoute()} element={<SignOut />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </AppContextProvider>

@@ -6,6 +6,7 @@ import { useState } from 'react'
 
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
+import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 
 export interface IInitialValues {
@@ -16,6 +17,14 @@ export interface IInitialValues {
 }
 
 export const NewTask = () => {
+  const me = useMe()
+  if (!me) {
+    return (
+      <Segment type="error" title="Не авторизован">
+        Для доступа к этой странице вам нужно авторизоваться
+      </Segment>
+    )
+  }
   const [formKey, setFormKey] = useState(0)
   const defaultPriority: IInitialValues['priority'] = null
   const defaultStatus: TaskStatus = 'to-do'
