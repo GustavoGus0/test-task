@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./node_modules/.prisma/client"
 }
 
 datasource db {
@@ -12,10 +11,18 @@ model Task {
   id          String    @id @default(uuid())
   title       String
   description String
-  status      String    @default("to-do")
+  status      String
   priority    String
-  completedAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  canceledAt  DateTime?
+  completedAt DateTime?
+}
+
+model User {
+  id         String   @id @default(uuid())
+  firstName  String
+  lastName   String
+  patronymic String?
+  password   String
+  createdAt  DateTime @default(now())
 }
