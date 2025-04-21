@@ -8,6 +8,7 @@ export const getTasksTrpcRoute = trpc.procedure.query(async ({ ctx }) => {
       description: true,
       status: true,
       priority: true,
+      authorId: true,
     },
     orderBy: {
       createdAt: 'desc',

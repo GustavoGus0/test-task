@@ -5,13 +5,13 @@ import { zNewTaskTrpcInput } from './input'
 export const newTaskTrpcRoute = trpc.procedure
   .input(zNewTaskTrpcInput)
   .mutation(async ({ ctx, input }) => {
-    const { title, description, priority, status } = input
+    if (!ctx.me) {
+      throw new Error('UNAUTHORIZED')
+    }
     await ctx.prisma.task.create({
       data: {
-        title,
-        description,
-        priority,
-        status,
+        ...input,
+        authorId: ctx.me.id,
       },
     })
 
