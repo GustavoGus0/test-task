@@ -22,7 +22,7 @@ export const getTasksTrpcRoute = trpc.procedure
           authorId: true,
         },
         orderBy: {
-          createdAt: byDate === 'new' ? 'desc' : 'asc',
+          createdAt: byDate === 'old' ? 'asc' : 'desc',
         },
       })
       return { tasks }
