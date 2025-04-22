@@ -8,3 +8,5 @@ export type ExpressRequest = Request & {
 export type TaskStatus = 'to-do' | 'in-progress' | 'completed' | 'cancelled'
 export type TaskPriority = 'low' | 'medium' | 'high'
 export type UserRole = 'MANAGER' | 'EXECUTOR'
+export type TaskFilter = 'all' | 'my' | 'executors'
+export type DateFilter = 'new' | 'old'

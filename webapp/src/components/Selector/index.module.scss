@@ -1,0 +1,42 @@
+@use '../../styles/vars' as *;
+
+.parametersWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .parameter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .parameterValues {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+
+      .value {
+        user-select: none;
+        cursor: pointer;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.675rem;
+        border-radius: 10rem;
+        background-color: $grayColor;
+        transition: $defaultInOutFastTransition;
+
+        &:hover {
+          background-color: $grayColorDark;
+        }
+      }
+
+      .active {
+        background-color: $accentColor;
+        color: $whiteTextColor;
+
+        &:hover {
+          background-color: $accentColor;
+        }
+      }
+    }
+  }
+}

@@ -9,22 +9,65 @@
   .headerBox {
     display: flex;
     align-items: center;
-    gap: 0.675rem;
+    justify-content: space-between;
 
-    .backButton {
+    .titleAndReturn {
       display: flex;
-      justify-content: center;
+      flex-direction: row;
+      gap: 0.5rem;
+
+      .backButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+      }
+
+      .headerLarge {
+        font-size: $defaultMainHeaderFontSize;
+        font-weight: 700;
+      }
+
+      .headerSmall {
+        font-size: $defaultMainHeaderFontSize - 0.5rem;
+      }
+    }
+
+    .filtersBox {
+      display: flex;
       align-items: center;
-      width: 2.5rem;
-    }
+      justify-content: center;
+      position: relative;
 
-    .headerLarge {
-      font-size: $defaultMainHeaderFontSize;
-      font-weight: 700;
-    }
+      .filtersButton {
+        cursor: pointer;
+        border-radius: 10rem;
+        padding: 0.45rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2rem;
 
-    .headerSmall {
-      font-size: $defaultMainHeaderFontSize - 0.5rem;
+        svg {
+          fill: $grayColorIcons;
+        }
+      }
+
+      .filters {
+        background-color: $whiteTextColor;
+        padding: 1rem;
+        border-radius: 1rem;
+        box-shadow: 0 5px 8px 0 rgb(0 0 0 / 0.3);
+        position: absolute;
+        top: 2.5rem;
+        right: 0;
+        z-index: 999;
+        width: max-content;
+      }
+
+      .filtersButton:hover {
+        background-color: $grayColor;
+      }
     }
   }
 

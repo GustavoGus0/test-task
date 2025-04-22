@@ -1,19 +1,80 @@
-import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
+import {
+  TaskPriority,
+  TaskStatus,
+  TaskFilter,
+  DateFilter,
+} from '@management/backend/src/utils/types'
 import cn from 'classnames'
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
+import { Selector } from '../../components/Selector'
 import { getViewTaskRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
-import { getCyrillicStatus } from '../../utils/getCyrillic'
+import {
+  getCyrillicDataFilter,
+  getCyrillicPriority,
+  getCyrillicStatus,
+  getCyrillicTasksFilter,
+} from '../../utils/getCyrillic'
+import { useStorage } from '../../utils/useStorage'
 
 import css from './index.module.scss'
 
+export interface IFilter {
+  byTasks: TaskFilter
+  byDate: DateFilter
+  byPriority: TaskPriority
+  byStatus: TaskStatus
+}
+
 export const Tasks = () => {
-  const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery()
+  const { getItem } = useStorage()
+  const [filters, setFilters] = useState<IFilter>({
+    byTasks: (getItem('filterByTasks') as TaskFilter) || 'all',
+    byDate: (getItem('filterByDate') as DateFilter) || 'new',
+    byPriority: (getItem('filterByPriority') as TaskPriority) || 'high',
+    byStatus: (getItem('filterByStatus') as TaskStatus) || 'to-do',
+  })
+  const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery(filters)
   return (
-    <Segment title={'Задачи'}>
+    <Segment
+      title={'Задачи'}
+      Filters={
+        <Selector
+          filters={filters}
+          setFilters={setFilters}
+          parameters={[
+            {
+              title: 'Задачи',
+              values: ['all', 'my', 'executors'],
+              byWhat: 'byTasks',
+              translatorFunction: getCyrillicTasksFilter as (value: string) => string,
+            },
+            {
+              title: 'По дате',
+              values: ['new', 'old'],
+              byWhat: 'byDate',
+              translatorFunction: getCyrillicDataFilter as (value: string) => string,
+            },
+            {
+              title: 'По приоритету',
+              values: ['high', 'medium', 'low'],
+              byWhat: 'byPriority',
+              translatorFunction: getCyrillicPriority as (value: string) => string,
+            },
+            {
+              title: 'По статусу',
+              values: ['to-do', 'in-progress', 'completed', 'cancelled'],
+              byWhat: 'byStatus',
+              translatorFunction: getCyrillicStatus as (value: string) => string,
+            },
+          ]}
+        />
+      }
+    >
       {(isLoading || isFetching) && <Loader />}
       {isError && <div>{error.message}</div>}
       {(!data || !data.tasks.length) && <div>Задач нет</div>}
