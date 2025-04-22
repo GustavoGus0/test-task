@@ -1,6 +1,9 @@
 @use '../../styles/vars' as *;
 
 .taskWrapper {
+  display: flex;
+  flex-direction: column;
+
   .statusAndPriority {
     margin-left: 1rem;
     width: calc(100% - 1rem);
@@ -100,5 +103,12 @@
         }
       }
     }
+  }
+
+  .buttonBox {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }

@@ -4,6 +4,7 @@ import cn from 'classnames'
 import { useParams } from 'react-router'
 
 import { icons } from '../../assets/icons'
+import { ChangeButton, DeleteButton, EditButton } from '../../components/Button'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { getTasksRoute, ViewTaskRouteParams } from '../../lib/routes'
@@ -54,8 +55,16 @@ function formatTimestamp(timestamp: Date) {
   return `${formattedDate}, ${formattedTime}`
 }
 
+const defineButtonText = (status: 'to-do' | 'in-progress') => {
+  if (status === 'in-progress') {
+    return 'Завершить'
+  }
+  return 'Начать'
+}
+
 const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
   const me = useMe()
+  const isProcessed = task.status === 'to-do' || task.status === 'in-progress'
   return (
     <div className={css.taskWrapper}>
       <div className={css.statusAndPriority}>
@@ -96,6 +105,13 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
             <p className={css.role}>Постановщик задачи</p>
           </div>
         </div>
+      </div>
+      <div className={css.buttonBox}>
+        {isProcessed && (
+          <ChangeButton text={defineButtonText(task.status as 'to-do' | 'in-progress')} />
+        )}
+        {me && me.id === task.authorId && <EditButton />}
+        {me && me.id === task.authorId && <DeleteButton taskId={task.id} />}
       </div>
     </div>
   )
