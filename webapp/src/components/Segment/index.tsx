@@ -1,12 +1,14 @@
 import cn from 'classnames'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 
 import { icons } from '../../assets/icons'
+import { useStorage } from '../../utils/useStorage'
 
 import css from './index.module.scss'
 
 export const Segment = ({
+  setState,
   title,
   returnTo,
   size = 1,
@@ -14,6 +16,8 @@ export const Segment = ({
   Filters = undefined,
   children,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setState?: Dispatch<SetStateAction<any>>
   title: string
   returnTo?: string
   size?: 1 | 2
@@ -22,6 +26,19 @@ export const Segment = ({
   children: React.ReactNode
 }) => {
   const [isShow, setIsShow] = useState(false)
+  const { removeItem, getItem } = useStorage()
+  const needShow =
+    useMemo(
+      () =>
+        getItem('filterByTasks') ||
+        getItem('filterByDate') ||
+        getItem('filterByPriority') ||
+        getItem('filterByStatus'),
+      [getItem]
+    ) === null
+      ? false
+      : true
+
   return (
     <div className={cn({ [css.segment]: true, [css.error]: type === 'error' })}>
       <div className={css.headerBox}>
@@ -39,6 +56,26 @@ export const Segment = ({
         </div>
         {Filters && (
           <div className={css.filtersBox}>
+            {needShow && (
+              <button
+                onClick={() => {
+                  removeItem('filterByTasks')
+                  removeItem('filterByDate')
+                  removeItem('filterByPriority')
+                  removeItem('filterByStatus')
+                  setState?.({
+                    byTasks: null,
+                    byDate: null,
+                    byPriority: null,
+                    byStatus: null,
+                  })
+                }}
+                className={css.dropFilters}
+                type="button"
+              >
+                {icons.cross()} Сбросить
+              </button>
+            )}
             <button className={css.filtersButton} onClick={() => setIsShow((prev) => !prev)}>
               {icons.filters()}
             </button>

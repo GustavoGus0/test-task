@@ -7,6 +7,7 @@ import {
 import cn from 'classnames'
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { useDebounceValue } from 'usehooks-ts'
 
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
@@ -33,14 +34,16 @@ export interface IFilter {
 export const Tasks = () => {
   const { getItem } = useStorage()
   const [filters, setFilters] = useState<IFilter>({
-    byTasks: (getItem('filterByTasks') as TaskFilter) || 'all',
-    byDate: (getItem('filterByDate') as DateFilter) || 'new',
-    byPriority: (getItem('filterByPriority') as TaskPriority) || 'high',
-    byStatus: (getItem('filterByStatus') as TaskStatus) || 'to-do',
+    byTasks: getItem('filterByTasks') as TaskFilter,
+    byDate: getItem('filterByDate') as DateFilter,
+    byPriority: getItem('filterByPriority') as TaskPriority,
+    byStatus: getItem('filterByStatus') as TaskStatus,
   })
-  const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery(filters)
+  const [debouncedFilters] = useDebounceValue(filters, 500)
+  const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery(debouncedFilters)
   return (
     <Segment
+      setState={setFilters}
       title={'Задачи'}
       Filters={
         <Selector

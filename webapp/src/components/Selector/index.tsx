@@ -45,11 +45,18 @@ const Parameter = ({
 }) => {
   const { setItem } = useStorage()
   const handleFiltersChange = (parameter: IParameter['byWhat'], value: string) => {
+    if (filters[parameter] === value) {
+      setFilters((prev) => ({
+        ...prev,
+        [parameter]: null,
+      }))
+      return setItem(`filter${parameter.charAt(0).toUpperCase()}${parameter.slice(1)}`, null)
+    }
     setFilters((prev) => ({
       ...prev,
       [parameter]: value,
     }))
-    setItem(`filter${parameter.charAt(0).toUpperCase()}${parameter.slice(1)}`, value)
+    return setItem(`filter${parameter.charAt(0).toUpperCase()}${parameter.slice(1)}`, value)
   }
   return (
     <div className={css.parameter}>
