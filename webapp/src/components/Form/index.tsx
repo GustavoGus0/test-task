@@ -9,7 +9,7 @@ import css from './index.module.scss'
 interface IInput {
   name: string
   label: string
-  type?: 'textarea' | 'text' | 'password' | 'time'
+  type?: 'textarea' | 'text' | 'password'
   errorMessage?: string
 }
 
