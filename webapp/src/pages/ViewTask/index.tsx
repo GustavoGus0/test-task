@@ -61,33 +61,33 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
   const isProcessed = task.status === 'to-do' || task.status === 'in-progress'
   return (
     <div className={css.taskWrapper}>
-      <div className={css.statusAndPriority}>
-        <p
-          className={cn({
-            [css.bar]: true,
-            [css.low]: task.priority === 'low',
-            [css.medium]: task.priority === 'medium',
-            [css.high]: task.priority === 'high',
-          })}
-        >
-          {getCyrillicPriority(task.priority as TaskPriority)} приориет
-        </p>
-        <p
-          className={cn({
-            [css.bar]: true,
-            [css.status]: true,
-            [css.completed]: task.status === 'completed',
-          })}
-        >
-          {getCyrillicStatus(task.status as TaskStatus)}{' '}
-          {task.status === 'completed' && formatTimestamp(task.completedAt as Date)}
-        </p>
+      <div className={css.statusPriorityAndTime}>
+        <div className={css.statusAndPriority}>
+          <p
+            className={cn({
+              [css.bar]: true,
+              [css.low]: task.priority === 'low',
+              [css.medium]: task.priority === 'medium',
+              [css.high]: task.priority === 'high',
+            })}
+          >
+            {getCyrillicPriority(task.priority as TaskPriority)} приориет
+          </p>
+          <p
+            className={cn({
+              [css.bar]: true,
+              [css.status]: true,
+              [css.completed]: task.status === 'completed',
+            })}
+          >
+            {getCyrillicStatus(task.status as TaskStatus)}{' '}
+            {task.status === 'completed' && formatTimestamp(task.completedAt as Date)}
+          </p>
+        </div>
+        <p className={css.createdAt}>{formatTimestamp(task.createdAt)}</p>
       </div>
       <div className={css.task}>
-        <div className={css.titleBox}>
-          <h2 className={css.title}>{task.title}</h2>
-          <p>{formatTimestamp(task.createdAt)}</p>
-        </div>
+        <h2 className={css.title}>{task.title}</h2>
         <div className={css.descriptionBox}>
           {task.description === '' ? (
             'Нет описания'
