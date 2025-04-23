@@ -15,30 +15,30 @@
       display: flex;
       flex-direction: row;
       gap: 0.5rem;
-  
+
       .bar {
         padding: 0.25rem 0.675rem;
         border-radius: 0.75rem 0.75rem 0 0;
         color: $whiteTextColor;
         font-size: 0.8rem;
       }
-  
+
       .status {
         background-color: $accentColor;
       }
-  
+
       .low {
         background-color: $lowPriorityColor;
       }
-  
+
       .medium {
         background-color: $mediumPriorityColor;
       }
-  
+
       .high {
         background-color: $highPriorityColor;
       }
-  
+
       .completed {
         background-color: $successBackgroundColor;
       }
@@ -51,7 +51,6 @@
       text-wrap: nowrap;
     }
   }
-
 
   .task {
     background-color: $grayColor;

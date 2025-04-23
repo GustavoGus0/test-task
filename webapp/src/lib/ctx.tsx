@@ -24,7 +24,6 @@ export interface IAlert {
   type: AlertType
   title: string
   createdAt: Date
-  message?: string
 }
 
 const AppReactContext = createContext<AppContext>({
@@ -57,12 +56,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
           {children}
           <div style={alertContainer}>
             {alerts.map((alert, index) => (
-              <GlobalAlert
-                key={index}
-                title={alert.title}
-                message={alert.message}
-                type={alert.type}
-              />
+              <GlobalAlert key={index} title={alert.title} type={alert.type} />
             ))}
           </div>
         </div>

@@ -38,7 +38,7 @@ const returnIconByType = (type: IAlert['type']) => {
   }
 }
 
-export const GlobalAlert = ({ title, message, type }: Omit<IAlert, 'createdAt'>) => {
+export const GlobalAlert = ({ title, type }: Omit<IAlert, 'createdAt'>) => {
   return (
     <div
       className={cn({
@@ -50,7 +50,6 @@ export const GlobalAlert = ({ title, message, type }: Omit<IAlert, 'createdAt'>)
       <div className={css.icon}>{returnIconByType(type)}</div>
       <div className={css.textBox}>
         <h4 className={css.alertTitle}>{title}</h4>
-        {message && <p className={css.alertMessage}>{message}</p>}
       </div>
     </div>
   )

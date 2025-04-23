@@ -23,7 +23,6 @@ export const DeleteButton = ({ taskId }: { taskId: string }) => {
   const newAlert = {
     type: 'delete' as AlertType,
     title: 'Задача удалена',
-    message: 'Она вас больше не побеспокоит',
   }
   return (
     <button
@@ -56,8 +55,7 @@ export const ChangeButton = ({ taskId, text }: { taskId: string; text: string })
   const setAlerts = useAlerts()
   const newAlert = {
     type: 'success' as AlertType,
-    title: 'Успешно',
-    message: text === 'to-do' ? 'Задача взята в работу' : 'Задача выполнена',
+    title: text === 'to-do' ? 'Задача взята в работу' : 'Задача выполнена',
   }
   return (
     <button
@@ -85,7 +83,6 @@ export const CancelButton = ({ taskId }: { taskId: string }) => {
   const newAlert = {
     type: 'cancel' as AlertType,
     title: 'Задача отменена',
-    message: 'Она появится в архиве',
   }
   return (
     <button
