@@ -11,11 +11,14 @@
     gap: 0.25rem;
 
     .parameterValues {
+      width: 240px;
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 0.5rem;
 
       .value {
+        flex: 1;
         user-select: none;
         cursor: pointer;
         font-size: 0.8rem;
