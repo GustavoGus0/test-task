@@ -38,6 +38,47 @@ export const DeleteButton = ({ taskId }: { taskId: string }) => {
   )
 }
 
-export const ChangeButton = ({ text }: { text: string }) => {
-  return <button className={css.button}>{text}</button>
+const defineButtonText = (status: 'to-do' | 'in-progress') => {
+  if (status === 'in-progress') {
+    return ['Завершить', 'completed']
+  }
+  return ['Начать', 'in-progress']
+}
+
+export const ChangeButton = ({ taskId, text }: { taskId: string; text: string }) => {
+  const changeTaskStatus = trpc.changeTaskStatus.useMutation()
+  const trpcUtils = trpc.useUtils()
+  return (
+    <button
+      onClick={async () => {
+        await changeTaskStatus.mutateAsync({
+          taskId,
+          status: defineButtonText(text as 'to-do' | 'in-progress')[1] as
+            | 'in-progress'
+            | 'completed',
+        })
+        trpcUtils.getTask.invalidate()
+      }}
+      className={cn({ [css.button]: true, [css.change]: true })}
+    >
+      {defineButtonText(text as 'to-do' | 'in-progress')[0]}
+    </button>
+  )
+}
+
+export const CancelButton = ({ taskId }: { taskId: string }) => {
+  const cancelTask = trpc.cancelTask.useMutation()
+  return (
+    <button
+      onClick={async () => {
+        await cancelTask.mutateAsync({ taskId })
+      }}
+      className={cn({ [css.button]: true, [css.cancel]: true })}
+    >
+      <div className={css.box}>
+        {icons.cross()}
+        <span>Отменить</span>
+      </div>
+    </button>
+  )
 }

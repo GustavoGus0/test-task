@@ -4,11 +4,12 @@ import cn from 'classnames'
 import { useParams } from 'react-router'
 
 import { icons } from '../../assets/icons'
-import { ChangeButton, DeleteButton, EditButton } from '../../components/Button'
+import { CancelButton, ChangeButton, DeleteButton, EditButton } from '../../components/Button'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { getTasksRoute, ViewTaskRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
+import { checkMyIdea, checkStatus } from '../../utils/check'
 import { getCyrillicPriority, getCyrillicStatus } from '../../utils/getCyrillic'
 
 import css from './index.module.scss'
@@ -53,13 +54,6 @@ function formatTimestamp(timestamp: Date) {
   const formattedTime = timeFormatter.format(date)
 
   return `${formattedDate}, ${formattedTime}`
-}
-
-const defineButtonText = (status: 'to-do' | 'in-progress') => {
-  if (status === 'in-progress') {
-    return 'Завершить'
-  }
-  return 'Начать'
 }
 
 const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
@@ -107,10 +101,11 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
         </div>
       </div>
       <div className={css.buttonBox}>
-        {isProcessed && (
-          <ChangeButton text={defineButtonText(task.status as 'to-do' | 'in-progress')} />
+        {isProcessed && <ChangeButton taskId={task.id} text={task.status} />}
+        {checkMyIdea(me, task) && !checkStatus(task, ['cancelled', 'completed']) && <EditButton />}
+        {checkMyIdea(me, task) && !checkStatus(task, ['completed', 'cancelled']) && (
+          <CancelButton taskId={task.id} />
         )}
-        {me && me.id === task.authorId && <EditButton />}
         {me && me.id === task.authorId && <DeleteButton taskId={task.id} />}
       </div>
     </div>

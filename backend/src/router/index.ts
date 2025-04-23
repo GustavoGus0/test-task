@@ -2,6 +2,8 @@ import { inferRouterOutputs } from '@trpc/server'
 
 import { trpc } from '../lib/trpc'
 
+import { cancelTaskTrpcRoute } from './cancelTask'
+import { changeTaskStatusTrpcRoute } from './changeTaskStatus'
 import { deleteTaskTrpcRoute } from './deleteTask'
 import { getMeTrpcRoute } from './getMe'
 import { getTaskTrpcRoute } from './getTask'
@@ -15,6 +17,8 @@ export const trpcRouter = trpc.router({
   getTask: getTaskTrpcRoute,
   newTask: newTaskTrpcRoute,
   deleteTask: deleteTaskTrpcRoute,
+  cancelTask: cancelTaskTrpcRoute,
+  changeTaskStatus: changeTaskStatusTrpcRoute,
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
   getMe: getMeTrpcRoute,

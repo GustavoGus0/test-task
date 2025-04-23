@@ -22,18 +22,38 @@
 
     svg {
       fill: $grayColorIcons;
-      height: 1.375rem;
+      height: 1rem;
     }
   }
 }
 
 .delete {
-  background-color: $grayColor;
-
   &:hover {
     background-color: $errorBackgroundColor;
     color: $whiteTextColor;
-    
+
+    .box {
+      svg {
+        fill: $whiteTextColor;
+      }
+    }
+  }
+}
+
+.change {
+  flex: 1 0 8rem;
+
+  &:hover {
+    background-color: $successBackgroundColor;
+    color: $whiteTextColor;
+  }
+}
+
+.cancel {
+  &:hover {
+    background-color: $errorBackgroundColor;
+    color: $whiteTextColor;
+
     .box {
       svg {
         fill: $whiteTextColor;
