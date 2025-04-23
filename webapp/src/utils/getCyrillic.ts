@@ -44,7 +44,7 @@ export const getCyrillicDataFilter = (filter: DateFilter) => {
     case 'new':
       return 'Новые'
     case 'old':
-      return 'Старые'
+      return 'Давние'
   }
 }
 

@@ -11,7 +11,7 @@ export const getTasksTrpcRoute = trpc.procedure
         where: {
           authorId: byTasks === 'my' ? ctx.me?.id : undefined,
           priority: byPriority || undefined,
-          status: byStatus || undefined,
+          status: byStatus ? byStatus : { not: 'completed' },
         },
         select: {
           id: true,

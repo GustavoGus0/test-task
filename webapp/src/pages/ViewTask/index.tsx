@@ -53,7 +53,7 @@ function formatTimestamp(timestamp: Date) {
   const formattedDate = dateFormatter.format(date)
   const formattedTime = timeFormatter.format(date)
 
-  return `${formattedDate}, ${formattedTime}`
+  return `${formattedDate} в ${formattedTime}`
 }
 
 const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
@@ -72,8 +72,15 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
         >
           {getCyrillicPriority(task.priority as TaskPriority)} приориет
         </p>
-        <p className={cn({ [css.bar]: true, [css.status]: true })}>
-          {getCyrillicStatus(task.status as TaskStatus)}
+        <p
+          className={cn({
+            [css.bar]: true,
+            [css.status]: true,
+            [css.completed]: task.status === 'completed',
+          })}
+        >
+          {getCyrillicStatus(task.status as TaskStatus)}{' '}
+          {task.status === 'completed' && formatTimestamp(task.completedAt as Date)}
         </p>
       </div>
       <div className={css.task}>

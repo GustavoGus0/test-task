@@ -20,7 +20,7 @@ export const ArchivedTasks = () => {
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (
-            <Task {...(task as ITask)} key={task.id} />
+            <Task completed={true} {...(task as ITask)} key={task.id} />
           ))}
         </ul>
       )}

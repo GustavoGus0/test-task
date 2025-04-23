@@ -14,16 +14,23 @@ export const changeTaskStatusTrpcRoute = trpc.procedure
     if (!task) {
       throw new Error('Task not found')
     }
-    if (
-      (task.status === 'to-do' && status === 'in-progress') ||
-      (task.status === 'in-progress' && status === 'completed')
-    ) {
+    if (task.status === 'to-do' && status === 'in-progress') {
       await ctx.prisma.task.update({
         where: {
           id: taskId,
         },
         data: {
           status: status,
+        },
+      })
+    } else if (task.status === 'in-progress' && status === 'completed') {
+      await ctx.prisma.task.update({
+        where: {
+          id: taskId,
+        },
+        data: {
+          status: status,
+          completedAt: new Date(),
         },
       })
     } else {

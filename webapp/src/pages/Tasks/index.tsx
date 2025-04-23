@@ -32,8 +32,8 @@ export interface IFilter {
 export const Tasks = () => {
   const { getItem } = useStorage()
   const [filters, setFilters] = useState<IFilter>({
-    byTasks: getItem('filterByTasks') as TaskFilter,
-    byDate: getItem('filterByDate') as DateFilter,
+    byTasks: 'all' as TaskFilter,
+    byDate: 'old' as DateFilter,
     byPriority: getItem('filterByPriority') as TaskPriority,
     byStatus: getItem('filterByStatus') as TaskStatus,
   })
@@ -56,7 +56,7 @@ export const Tasks = () => {
             },
             {
               title: 'По дате',
-              values: ['new', 'old'],
+              values: ['old', 'new'],
               byWhat: 'byDate',
               translatorFunction: getCyrillicDataFilter as (value: string) => string,
             },

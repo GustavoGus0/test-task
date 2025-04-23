@@ -33,6 +33,10 @@
     .high {
       background-color: $highPriorityColor;
     }
+
+    .completed {
+      background-color: $successBackgroundColor;
+    }
   }
 
   .task {
