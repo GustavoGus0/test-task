@@ -1,8 +1,8 @@
 import cn from 'classnames'
-import { Dispatch, SetStateAction, useMemo, useState } from 'react'
-import { Link } from 'react-router'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { icons } from '../../assets/icons'
+import { useDelayedShow } from '../../hooks/useDelayedShow'
 import { useStorage } from '../../utils/useStorage'
 
 import css from './index.module.scss'
@@ -10,7 +10,7 @@ import css from './index.module.scss'
 export const Segment = ({
   setState,
   title,
-  returnTo,
+  getBack = false,
   size = 1,
   type = 'default',
   Filters = undefined,
@@ -19,13 +19,13 @@ export const Segment = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setState?: Dispatch<SetStateAction<any>>
   title: string
-  returnTo?: string
+  getBack?: boolean
   size?: 1 | 2
   type?: 'default' | 'error'
   Filters?: React.ReactNode
   children: React.ReactNode
 }) => {
-  const [isShow, setIsShow] = useState(false)
+  const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
   const { removeItem, getItem } = useStorage()
   const needShow =
     useMemo(
@@ -43,10 +43,10 @@ export const Segment = ({
     <div className={cn({ [css.segment]: true, [css.error]: type === 'error' })}>
       <div className={css.headerBox}>
         <div className={css.titleAndReturn}>
-          {returnTo && (
-            <Link className={css.backButton} to={returnTo}>
+          {getBack && (
+            <button className={css.backButton} onClick={() => history.back()}>
               {icons.arrowBack()}
-            </Link>
+            </button>
           )}
           {size === 1 ? (
             <h2 className={css.headerLarge}>{title}</h2>
@@ -76,10 +76,18 @@ export const Segment = ({
                 {icons.cross()} Сбросить
               </button>
             )}
-            <button className={css.filtersButton} onClick={() => setIsShow((prev) => !prev)}>
+            <button
+              className={css.filtersButton}
+              onMouseEnter={showElement}
+              onMouseLeave={hideElement}
+            >
               {icons.filters()}
             </button>
-            {isShow && <div className={css.filters}>{Filters}</div>}
+            {isShow && (
+              <div onMouseEnter={showElement} onMouseLeave={hideElement} className={css.filters}>
+                {Filters}
+              </div>
+            )}
           </div>
         )}
       </div>

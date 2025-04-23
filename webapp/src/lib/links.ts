@@ -1,6 +1,7 @@
 import { icons } from '../assets/icons'
 
 import {
+  getArchivedTasksRoute,
   getNewTaskRoute,
   getSignInRoute,
   getSignOutRoute,
@@ -28,6 +29,13 @@ export const links: ILink[] = [
     to: getNewTaskRoute(),
     label: 'Новая задача',
     icon: icons.newTask(),
+    forAuth: true,
+    canSeeNotAuth: false,
+  },
+  {
+    to: getArchivedTasksRoute(),
+    label: 'Архив',
+    icon: icons.archive(),
     forAuth: true,
     canSeeNotAuth: false,
   },

@@ -12,7 +12,7 @@ export type ViewTaskRouteParams = typeof viewTaskRouteParams
 export const getViewTaskRoute = ({ taskId }: ViewTaskRouteParams) => `/task/${taskId}`
 
 export const getNewTaskRoute = () => '/new-task'
-export const getMyTasksRoute = () => '/my-tasks'
+export const getArchivedTasksRoute = () => '/archived-tasks'
 export const getSignUpRoute = () => '/sign-up'
 export const getSignInRoute = () => '/sign-in'
 export const getSignOutRoute = () => '/sign-out'

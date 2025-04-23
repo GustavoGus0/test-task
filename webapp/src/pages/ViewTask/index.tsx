@@ -7,7 +7,7 @@ import { icons } from '../../assets/icons'
 import { CancelButton, ChangeButton, DeleteButton, EditButton } from '../../components/Button'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
-import { getTasksRoute, ViewTaskRouteParams } from '../../lib/routes'
+import { ViewTaskRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import { checkMyIdea, checkStatus } from '../../utils/check'
 import { getCyrillicPriority, getCyrillicStatus } from '../../utils/getCyrillic'
@@ -30,7 +30,7 @@ export const ViewTask = () => {
   }
 
   return (
-    <Segment returnTo={getTasksRoute()} title={'Просмотр задачи'}>
+    <Segment getBack={true} title={'Просмотр задачи'}>
       <Task task={data.task} />
     </Segment>
   )
