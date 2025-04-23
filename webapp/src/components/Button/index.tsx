@@ -68,10 +68,12 @@ export const ChangeButton = ({ taskId, text }: { taskId: string; text: string })
 
 export const CancelButton = ({ taskId }: { taskId: string }) => {
   const cancelTask = trpc.cancelTask.useMutation()
+  const trpcUtils = trpc.useUtils()
   return (
     <button
       onClick={async () => {
         await cancelTask.mutateAsync({ taskId })
+        trpcUtils.getTask.invalidate()
       }}
       className={cn({ [css.button]: true, [css.cancel]: true })}
     >

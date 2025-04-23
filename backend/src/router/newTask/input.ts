@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const zNewTaskTrpcInput = z.object({
-  title: z.string().min(1, 'Заголовок не может быть пустым'),
+  title: z.string().min(1, 'Заголовок не может быть пустым').max(60, 'Слишком длинный заголовок'),
   description: z.string(),
   priority: z
     .enum(['high', 'medium', 'low'], {
