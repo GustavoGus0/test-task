@@ -39,7 +39,7 @@ export const Input = ({
           id={name}
           name={name}
         />
-        <Alert type="error" forWhat="input">
+        <Alert type="error">
           {isTouched && (validationMessage as string)}
           {errorMessage && (errorMessage as string)}
         </Alert>
@@ -103,9 +103,7 @@ export const SelectorInput = ({
           </button>
         ))}
       </div>
-      <Alert type="error" forWhat="input">
-        {isTouched && (errorMessage as string)}
-      </Alert>
+      <Alert type="error">{isTouched && (errorMessage as string)}</Alert>
     </div>
   )
 }

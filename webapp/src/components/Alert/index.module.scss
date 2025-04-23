@@ -11,3 +11,53 @@
 .forInput {
   font-size: 0.9rem;
 }
+
+.globalAlert {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.675rem;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  .icon {
+    width: 1.5rem;
+
+    svg {
+      fill: $greenText;
+    }
+  }
+
+  .textBox {
+    display: flex;
+    flex-direction: column;
+
+    .alertTitle {
+      font-size: 1.375rem;
+    }
+
+    .alertMessage {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.green {
+  background-color: $greenBackground;
+  color: $greenText;
+  border: $greenText 1px solid;
+}
+
+.red {
+  background-color: $redBackground;
+  color: $redText;
+  border: $redText 1px solid;
+
+  .icon {
+    width: 1.5rem;
+
+    svg {
+      fill: $redText;
+    }
+  }
+}

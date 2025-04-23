@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
-import { useMe } from '../../lib/ctx'
+import { useAlerts, useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 import { getCyrillicPriority } from '../../utils/getCyrillic'
 
@@ -19,6 +19,7 @@ export interface IInitialValues {
 
 export const NewTask = () => {
   const me = useMe()
+  const setAlerts = useAlerts()
   if (!me) {
     return (
       <Segment type="error" title="Не авторизован">
@@ -45,6 +46,10 @@ export const NewTask = () => {
       await createTask.mutateAsync(values)
       formik.resetForm()
       setFormKey((prev) => prev + 1)
+      setAlerts((prev) => [
+        { title: 'Задача создана', type: 'success', createdAt: new Date() },
+        ...prev,
+      ])
     },
   })
   return (

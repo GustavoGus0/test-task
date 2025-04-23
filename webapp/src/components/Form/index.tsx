@@ -85,11 +85,7 @@ export const Form = ({
               />
             )
           })}
-        {alert && (
-          <Alert forWhat="input" type="error">
-            {alert}
-          </Alert>
-        )}
+        {alert && <Alert type="error">{alert}</Alert>}
       </fieldset>
       <div className={css.buttonBox}>
         <button className={css.button + ' ' + css.submitButton} type="submit">
