@@ -24,6 +24,7 @@ export const signUpTrpcRoute = trpc.procedure
         patronymic: input.patronymic,
         password: getPasswordHash(input.password),
         role: input.role,
+        managerId: input.managerId,
       },
     })
     const token = signJWT(user.id)

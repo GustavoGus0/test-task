@@ -1,8 +1,8 @@
 import cn from 'classnames'
 import { Dispatch, SetStateAction } from 'react'
 
-import { IFilter } from '../../pages/Tasks'
 import { useStorage } from '../../hooks/useStorage'
+import { IFilter } from '../../pages/Tasks'
 
 import css from './index.module.scss'
 

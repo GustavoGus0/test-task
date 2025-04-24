@@ -1,11 +1,20 @@
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
 import { ITask, Task } from '../../components/Task'
+import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 
 import css from './index.module.scss'
 
 export const ArchivedTasks = () => {
+  const me = useMe()
+  if (!me) {
+    return (
+      <Segment type="error" title="Не авторизован">
+        Для доступа к этой странице вам нужно авторизоваться
+      </Segment>
+    )
+  }
   const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery({
     byTasks: null,
     byDate: null,

@@ -5,6 +5,7 @@ import { trpc } from '../lib/trpc'
 import { cancelTaskTrpcRoute } from './cancelTask'
 import { changeTaskStatusTrpcRoute } from './changeTaskStatus'
 import { deleteTaskTrpcRoute } from './deleteTask'
+import { getManagersTrpcRoute } from './getManagers'
 import { getMeTrpcRoute } from './getMe'
 import { getTaskTrpcRoute } from './getTask'
 import { getTasksTrpcRoute } from './getTasks'
@@ -22,6 +23,7 @@ export const trpcRouter = trpc.router({
   signIn: signInTrpcRoute,
   signUp: signUpTrpcRoute,
   getMe: getMeTrpcRoute,
+  getManagers: getManagersTrpcRoute,
 })
 
 export type TrpcRouter = typeof trpcRouter

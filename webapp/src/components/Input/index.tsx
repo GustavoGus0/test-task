@@ -71,7 +71,7 @@ export const SelectorInput = ({
   label,
   formik,
 }: {
-  parameters: string[]
+  parameters: string[] | { login: string; id: string }[]
   translatorFunction?: (arg: string) => string
   name: string
   label: string
@@ -86,22 +86,37 @@ export const SelectorInput = ({
         {label}
       </label>
       <div className={css.priorities}>
-        {parameters.map((parameter) => (
-          <button
-            key={parameter}
-            onClick={() => {
-              void formik.setFieldValue(name, parameter)
-            }}
-            className={cn({
-              [css.priority]: true,
-              [css.active]: (formik.values[name] as string) === parameter,
-              [css.invalid]: isTouched && errorMessage,
-            })}
-            type="button"
-          >
-            {translatorFunction ? translatorFunction(parameter) : parameter}
-          </button>
-        ))}
+        {parameters && parameters.length > 0 ? (
+          parameters.map((parameter) => (
+            <button
+              key={typeof parameter === 'string' ? parameter : parameter.login}
+              onClick={() => {
+                return typeof parameter === 'string'
+                  ? formik.setFieldValue(name, parameter)
+                  : formik.setFieldValue(name, parameter.id)
+              }}
+              className={cn({
+                [css.priority]: true,
+                [css.active]:
+                  typeof parameter === 'string'
+                    ? (formik.values[name] as string) === parameter
+                    : (formik.values[name] as string) === parameter.id,
+                [css.invalid]: isTouched && errorMessage,
+              })}
+              type="button"
+            >
+              {translatorFunction
+                ? typeof parameter === 'string'
+                  ? translatorFunction(parameter)
+                  : translatorFunction(parameter.login)
+                : typeof parameter === 'string'
+                  ? parameter
+                  : parameter.login}
+            </button>
+          ))
+        ) : (
+          <p className={css.noData}>Нет данных о руководителях</p>
+        )}
       </div>
       <Alert type="error">{isTouched && (errorMessage as string)}</Alert>
     </div>

@@ -10,4 +10,5 @@ export const zSignUpTrpcInput = z.object({
     .enum(['MANAGER', 'EXECUTOR'], { errorMap: () => ({ message: 'Нужно выбрать роль' }) })
     .nullable()
     .refine((val) => val !== null, 'Нужно выбрать роль'),
+  managerId: z.string().nullable(),
 })

@@ -19,6 +19,7 @@ interface IInitialValues {
   patronymic: string
   password: string
   role: 'MANAGER' | 'EXECUTOR' | null
+  managerId: string | null
 }
 
 export const SignUp = () => {
@@ -26,7 +27,12 @@ export const SignUp = () => {
   if (me) {
     return <Segment title="Регистрация">Вы уже авторизованы</Segment>
   }
+  const { data, error } = trpc.getManagers.useQuery()
+  const availableManagers = data?.map((manager) => ({ login: manager.login, id: manager.id }))
   const [errorMessage, setErrorMessage] = useState<string | undefined>('')
+  if (error) {
+    setErrorMessage(error.message)
+  }
   const signUp = trpc.signUp.useMutation()
   const trpcUtils = trpc.useUtils()
   const navigate = useNavigate()
@@ -37,6 +43,7 @@ export const SignUp = () => {
     patronymic: '',
     password: '',
     role: null,
+    managerId: null,
   }
   const formik = useFormik({
     initialValues,
@@ -72,6 +79,12 @@ export const SignUp = () => {
             name: 'role',
             label: 'Роль',
             parameters: ['MANAGER', 'EXECUTOR'],
+          },
+          {
+            name: 'manager',
+            label: 'Руководитель',
+            parameters: availableManagers ? availableManagers : [],
+            selectorType: 'managers',
           },
         ]}
       />

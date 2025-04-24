@@ -11,6 +11,8 @@ import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
 import { Selector } from '../../components/Selector'
 import { ITask, Task } from '../../components/Task'
+import { useStorage } from '../../hooks/useStorage'
+import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 import {
   getCyrillicDataFilter,
@@ -18,7 +20,6 @@ import {
   getCyrillicStatus,
   getCyrillicTasksFilter,
 } from '../../utils/getCyrillic'
-import { useStorage } from '../../hooks/useStorage'
 
 import css from './index.module.scss'
 
@@ -30,6 +31,14 @@ export interface IFilter {
 }
 
 export const Tasks = () => {
+  const me = useMe()
+  if (!me) {
+    return (
+      <Segment type="error" title="Не авторизован">
+        Для доступа к этой странице вам нужно авторизоваться
+      </Segment>
+    )
+  }
   const { getItem, setItem } = useStorage()
   useEffect(() => {
     setItem('filterByTasks', 'all' as TaskFilter)

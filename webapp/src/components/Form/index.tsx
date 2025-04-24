@@ -15,7 +15,8 @@ interface IInput {
 
 interface ISelectorInput extends IInput {
   translatorFunction?: (arg: string) => string
-  parameters: string[]
+  selectorType?: 'default' | 'managers'
+  parameters: string[] | { login: string; id: string }[]
 }
 
 export const Form = ({
@@ -28,6 +29,7 @@ export const Form = ({
   submitButtonText = 'Создать',
 }: {
   alert?: string
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
   gap?: 'small' | 'large'
@@ -36,6 +38,10 @@ export const Form = ({
   legend?: string
   submitButtonText?: string
 }) => {
+  const filteredSelectorInputs =
+    formik.values.role === 'MANAGER' || formik.values.role === null
+      ? selectorInputs?.filter((input) => input.selectorType !== 'managers')
+      : selectorInputs
   return (
     <form
       className={css.form}
@@ -72,8 +78,8 @@ export const Form = ({
             />
           )
         })}
-        {selectorInputs &&
-          selectorInputs.map((input) => {
+        {filteredSelectorInputs &&
+          filteredSelectorInputs.map((input) => {
             return (
               <SelectorInput
                 parameters={input.parameters}

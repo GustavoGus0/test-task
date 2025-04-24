@@ -16,6 +16,8 @@ export const getCyrillicStatus = (status: TaskStatus) => {
       return 'Выполнена'
     case 'cancelled':
       return 'Отменена'
+    default:
+      return 'Ошибка перевода статуса'
   }
 }
 
@@ -27,6 +29,8 @@ export const getCyrillicPriority = (priority: TaskPriority) => {
       return 'Средний'
     case 'high':
       return 'Высокий'
+    default:
+      return 'Ошибка перевода приоритета'
   }
 }
 
@@ -36,6 +40,8 @@ export const getCyrillicRole = (role: UserRole) => {
       return 'Исполнитель'
     case 'MANAGER':
       return 'Менеджер'
+    default:
+      return 'Ошибка перевода роли'
   }
 }
 
@@ -45,6 +51,8 @@ export const getCyrillicDataFilter = (filter: DateFilter) => {
       return 'Новые'
     case 'old':
       return 'Давние'
+    default:
+      return 'Ошибка перевода даты'
   }
 }
 
@@ -56,5 +64,7 @@ export const getCyrillicTasksFilter = (filter: TaskFilter) => {
       return 'Мои'
     case 'executors':
       return 'Исполнителей'
+    default:
+      return 'Ошибка перевода задач'
   }
 }

@@ -23,7 +23,7 @@ export const links: ILink[] = [
     label: 'Задачи',
     icon: icons.tasks(),
     forAuth: true,
-    canSeeNotAuth: true,
+    canSeeNotAuth: false,
   },
   {
     to: getNewTaskRoute(),

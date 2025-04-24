@@ -72,4 +72,9 @@
   .invalid {
     outline: 2px solid $errorTextColor;
   }
+
+  .noData {
+    color: $grayColorDarkest;
+    font-size: 0.8rem;
+  }
 }
