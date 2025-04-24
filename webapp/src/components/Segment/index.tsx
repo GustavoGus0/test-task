@@ -26,7 +26,7 @@ export const Segment = ({
   children: React.ReactNode
 }) => {
   const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
-  const { removeItem, getItem } = useStorage()
+  const { removeItem, setItem, getItem } = useStorage()
   const needShow =
     useMemo(
       () =>
@@ -59,13 +59,13 @@ export const Segment = ({
             {needShow && (
               <button
                 onClick={() => {
-                  removeItem('filterByTasks')
-                  removeItem('filterByDate')
+                  setItem('filterByTasks', 'all')
+                  setItem('filterByDate', 'old')
                   removeItem('filterByPriority')
                   removeItem('filterByStatus')
                   setState?.({
-                    byTasks: null,
-                    byDate: null,
+                    byTasks: 'all',
+                    byDate: 'old',
                     byPriority: null,
                     byStatus: null,
                   })

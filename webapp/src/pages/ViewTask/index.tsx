@@ -71,7 +71,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
               [css.high]: task.priority === 'high',
             })}
           >
-            {getCyrillicPriority(task.priority as TaskPriority)} приориет
+            {getCyrillicPriority(task.priority as TaskPriority)} приоритет
           </p>
           <p
             className={cn({

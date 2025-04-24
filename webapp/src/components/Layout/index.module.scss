@@ -1,6 +1,7 @@
 @use '../../styles/vars' as *;
 
 .container {
+  max-width: 1920px;
   min-height: 100svh;
   display: flex;
   gap: $mainPageMenuToContentGap;

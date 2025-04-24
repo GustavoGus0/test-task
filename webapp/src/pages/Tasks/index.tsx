@@ -4,7 +4,7 @@ import {
   TaskFilter,
   DateFilter,
 } from '@management/backend/src/utils/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
 import { Loader } from '../../components/Loader'
@@ -30,10 +30,14 @@ export interface IFilter {
 }
 
 export const Tasks = () => {
-  const { getItem } = useStorage()
+  const { getItem, setItem } = useStorage()
+  useEffect(() => {
+    setItem('filterByTasks', 'all' as TaskFilter)
+    setItem('filterByDate', 'old' as DateFilter)
+  }, [])
   const [filters, setFilters] = useState<IFilter>({
-    byTasks: 'all' as TaskFilter,
-    byDate: 'old' as DateFilter,
+    byTasks: getItem('filterByTasks') as TaskFilter,
+    byDate: getItem('filterByDate') as DateFilter,
     byPriority: getItem('filterByPriority') as TaskPriority,
     byStatus: getItem('filterByStatus') as TaskStatus,
   })
