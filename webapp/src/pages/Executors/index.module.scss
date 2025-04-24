@@ -1,0 +1,39 @@
+@use '../../styles/vars' as *;
+
+.authorBox {
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $grayColor;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  .bgCircle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $grayColorLight;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 999rem;
+
+    svg {
+      fill: $grayColorDarkest;
+      width: 50%;
+    }
+  }
+
+  .textBox {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem;
+
+    .authorFullName {
+      font-size: 1.5rem;
+    }
+  }
+}

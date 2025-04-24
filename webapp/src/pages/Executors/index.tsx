@@ -1,7 +1,10 @@
+import { icons } from '../../assets/icons'
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
+
+import css from './index.module.scss'
 
 export const Executors = () => {
   const me = useMe()
@@ -25,8 +28,30 @@ export const Executors = () => {
       {(isLoading || isFetching) && <Loader />}
       {!data.length && <div>У вас нет подчинённых</div>}
       {data.map((executor) => (
-        <div key={executor.id}>{executor.login}</div>
+        <Executor executor={executor as IExecutor} key={executor.id}></Executor>
       ))}
     </Segment>
+  )
+}
+
+interface IExecutor {
+  id: string
+  login: string
+  firstName: string
+  lastName: string
+  patronymic: string
+  role: 'MANAGER' | 'EXECUTOR'
+}
+
+const Executor = ({ executor }: { executor: IExecutor }) => {
+  return (
+    <div className={css.authorBox}>
+      <div className={css.bgCircle}>{icons.profile()}</div>
+      <div className={css.textBox}>
+        <h4 className={css.authorFullName}>
+          {executor.lastName} {executor.firstName} {executor.patronymic}
+        </h4>
+      </div>
+    </div>
   )
 }

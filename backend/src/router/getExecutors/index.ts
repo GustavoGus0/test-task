@@ -9,6 +9,14 @@ export const getExecutorsTrpcRoute = trpc.procedure.query(({ ctx }) => {
       managerId: ctx.me?.id,
       role: 'EXECUTOR',
     },
+    select: {
+      id: true,
+      login: true,
+      firstName: true,
+      lastName: true,
+      patronymic: true,
+      role: true,
+    },
   })
   return executors
 })
