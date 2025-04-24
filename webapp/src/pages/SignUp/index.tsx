@@ -19,7 +19,7 @@ interface IInitialValues {
   patronymic: string
   password: string
   role: 'MANAGER' | 'EXECUTOR' | null
-  managerId: string | null
+  managerId: string | undefined
 }
 
 export const SignUp = () => {
@@ -46,7 +46,7 @@ export const SignUp = () => {
     patronymic: '',
     password: '',
     role: null,
-    managerId: null,
+    managerId: undefined,
   }
   const formik = useFormik({
     initialValues,
