@@ -13,6 +13,7 @@ export const getViewTaskRoute = ({ taskId }: ViewTaskRouteParams) => `/task/${ta
 
 export const getNewTaskRoute = () => '/new-task'
 export const getArchivedTasksRoute = () => '/archived-tasks'
+export const getExecutorsRoute = () => '/my-executors'
 export const getSignUpRoute = () => '/sign-up'
 export const getSignInRoute = () => '/sign-in'
 export const getSignOutRoute = () => '/sign-out'

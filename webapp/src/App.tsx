@@ -4,6 +4,7 @@ import { Layout } from './components/Layout'
 import { AppContextProvider } from './lib/ctx'
 import {
   getArchivedTasksRoute,
+  getExecutorsRoute,
   getNewTaskRoute,
   getSignInRoute,
   getSignOutRoute,
@@ -14,6 +15,7 @@ import {
 } from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { ArchivedTasks } from './pages/ArchivedTasks'
+import { Executors } from './pages/Executors'
 import { NewTask } from './pages/NewTask'
 import { NotFound } from './pages/NotFound'
 import { SignIn } from './pages/SignIn'
@@ -31,6 +33,7 @@ export default function App() {
             <Route path={getTasksRoute()} element={<Tasks />} />
             <Route path={getNewTaskRoute()} element={<NewTask />} />
             <Route path={getArchivedTasksRoute()} element={<ArchivedTasks />} />
+            <Route path={getExecutorsRoute()} element={<Executors />} />
             <Route path={getSignUpRoute()} element={<SignUp />} />
             <Route path={getSignInRoute()} element={<SignIn />} />
             <Route path={getSignOutRoute()} element={<SignOut />} />

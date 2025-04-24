@@ -2,6 +2,7 @@ import { icons } from '../assets/icons'
 
 import {
   getArchivedTasksRoute,
+  getExecutorsRoute,
   getNewTaskRoute,
   getSignInRoute,
   getSignOutRoute,
@@ -15,6 +16,7 @@ export interface ILink {
   icon: React.ReactNode | null
   forAuth: boolean
   canSeeNotAuth: boolean
+  forExecutor: boolean
 }
 
 export const links: ILink[] = [
@@ -24,6 +26,7 @@ export const links: ILink[] = [
     icon: icons.tasks(),
     forAuth: true,
     canSeeNotAuth: false,
+    forExecutor: true,
   },
   {
     to: getNewTaskRoute(),
@@ -31,6 +34,15 @@ export const links: ILink[] = [
     icon: icons.newTask(),
     forAuth: true,
     canSeeNotAuth: false,
+    forExecutor: true,
+  },
+  {
+    to: getExecutorsRoute(),
+    label: 'Подчинённые',
+    icon: icons.executors(),
+    forAuth: true,
+    canSeeNotAuth: false,
+    forExecutor: false,
   },
   {
     to: getArchivedTasksRoute(),
@@ -38,6 +50,7 @@ export const links: ILink[] = [
     icon: icons.archive(),
     forAuth: true,
     canSeeNotAuth: false,
+    forExecutor: true,
   },
   {
     to: getSignUpRoute(),
@@ -45,6 +58,7 @@ export const links: ILink[] = [
     icon: icons.signUp(),
     forAuth: false,
     canSeeNotAuth: true,
+    forExecutor: true,
   },
   {
     to: getSignInRoute(),
@@ -52,6 +66,7 @@ export const links: ILink[] = [
     icon: icons.signIn(),
     forAuth: false,
     canSeeNotAuth: true,
+    forExecutor: true,
   },
   {
     to: getSignOutRoute(),
@@ -59,5 +74,6 @@ export const links: ILink[] = [
     icon: icons.signOut(),
     forAuth: true,
     canSeeNotAuth: false,
+    forExecutor: true,
   },
 ]

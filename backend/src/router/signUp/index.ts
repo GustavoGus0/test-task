@@ -15,7 +15,6 @@ export const signUpTrpcRoute = trpc.procedure
     if (existingUser) {
       throw new Error('Пользователь с таким логином уже существует')
     }
-
     const user = await ctx.prisma.user.create({
       data: {
         login: input.login,

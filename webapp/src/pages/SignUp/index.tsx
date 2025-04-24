@@ -27,8 +27,11 @@ export const SignUp = () => {
   if (me) {
     return <Segment title="Регистрация">Вы уже авторизованы</Segment>
   }
-  const { data, error } = trpc.getManagers.useQuery()
-  const availableManagers = data?.map((manager) => ({ login: manager.login, id: manager.id }))
+  const { data, error } = trpc.getManagers.useQuery({})
+  const availableManagers = data?.managers?.map((manager) => ({
+    login: manager.login,
+    id: manager.id,
+  }))
   const [errorMessage, setErrorMessage] = useState<string | undefined>('')
   if (error) {
     setErrorMessage(error.message)
@@ -81,7 +84,7 @@ export const SignUp = () => {
             parameters: ['MANAGER', 'EXECUTOR'],
           },
           {
-            name: 'manager',
+            name: 'managerId',
             label: 'Руководитель',
             parameters: availableManagers ? availableManagers : [],
             selectorType: 'managers',

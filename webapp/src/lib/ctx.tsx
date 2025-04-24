@@ -45,7 +45,11 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   }, [])
   return (
     <AppReactContext.Provider
-      value={{ me: data?.me || null, alerts: alerts, setAlerts: setAlerts }}
+      value={{
+        me: data?.me || null,
+        alerts: alerts,
+        setAlerts: setAlerts,
+      }}
     >
       {isLoading || isFetching ? (
         <Loader />
