@@ -2,7 +2,7 @@ import cn from 'classnames'
 import { Dispatch, SetStateAction } from 'react'
 
 import { IFilter } from '../../pages/Tasks'
-import { useStorage } from '../../utils/useStorage'
+import { useStorage } from '../../hooks/useStorage'
 
 import css from './index.module.scss'
 

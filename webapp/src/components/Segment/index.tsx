@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { icons } from '../../assets/icons'
 import { useDelayedShow } from '../../hooks/useDelayedShow'
-import { useStorage } from '../../utils/useStorage'
+import { useStorage } from '../../hooks/useStorage'
 
 import css from './index.module.scss'
 

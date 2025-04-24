@@ -18,7 +18,7 @@ import {
   getCyrillicStatus,
   getCyrillicTasksFilter,
 } from '../../utils/getCyrillic'
-import { useStorage } from '../../utils/useStorage'
+import { useStorage } from '../../hooks/useStorage'
 
 import css from './index.module.scss'
 
