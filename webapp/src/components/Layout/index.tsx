@@ -15,9 +15,9 @@ export const Layout = () => {
     <div className={css.container}>
       <header className={css.header}>
         <h1 className={css.headerText}>TODO</h1>
-        {me && <p>Logged as {me?.login}</p>}
+        {me && <p>Зарегистрирован как {me?.login}</p>}
         {me && me.role === 'EXECUTOR' && data?.manager !== undefined && (
-          <p>Manager: {data?.manager?.login}</p>
+          <p>Руководитель: {data?.manager?.login}</p>
         )}
         <nav className={css.navigation}>
           <ul className={css.list}>

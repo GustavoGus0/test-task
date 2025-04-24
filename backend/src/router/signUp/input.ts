@@ -1,7 +1,10 @@
 import { z } from 'zod'
 
 export const zSignUpTrpcInput = z.object({
-  login: z.string().min(1, 'Логин обязательно нужно указать'),
+  login: z
+    .string()
+    .min(1, 'Логин обязательно нужно указать')
+    .regex(/^[A-Za-z0-9-]+$/, 'Логин может состоять только из латинских букв, цифр и дефиса'),
   firstName: z.string().min(1, 'Имя обязательно нужно указать'),
   lastName: z.string().min(1, 'Фамилию тоже нужно указать'),
   patronymic: z.string().nullable(),

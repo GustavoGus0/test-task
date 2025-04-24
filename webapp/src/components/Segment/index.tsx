@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 
 import { icons } from '../../assets/icons'
 import { useDelayedShow } from '../../hooks/useDelayedShow'
@@ -28,16 +28,10 @@ export const Segment = ({
   const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
   const { removeItem, setItem, getItem } = useStorage()
   const needShow =
-    useMemo(
-      () =>
-        getItem('filterByTasks') ||
-        getItem('filterByDate') ||
-        getItem('filterByPriority') ||
-        getItem('filterByStatus'),
-      [getItem]
-    ) === null
-      ? false
-      : true
+    getItem('filterByTasks') !== 'all' ||
+    getItem('filterByDate') !== 'old' ||
+    getItem('filterByPriority') !== null ||
+    getItem('filterByStatus') !== null
 
   return (
     <div className={cn({ [css.segment]: true, [css.error]: type === 'error' })}>

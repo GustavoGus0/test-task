@@ -39,7 +39,7 @@ export const getCyrillicRole = (role: UserRole) => {
     case 'EXECUTOR':
       return 'Исполнитель'
     case 'MANAGER':
-      return 'Менеджер'
+      return 'Руководитель'
     default:
       return 'Ошибка перевода роли'
   }
