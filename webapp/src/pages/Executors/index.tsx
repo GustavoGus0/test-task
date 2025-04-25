@@ -27,9 +27,10 @@ export const Executors = () => {
     <Segment title="Подчинённые">
       {(isLoading || isFetching) && <Loader />}
       {!data.length && <div>У вас нет подчинённых</div>}
-      {data.map((executor) => (
-        <Executor executor={executor as IExecutor} key={executor.id}></Executor>
-      ))}
+      {!isFetching &&
+        data.map((executor) => (
+          <Executor executor={executor as IExecutor} key={executor.id}></Executor>
+        ))}
     </Segment>
   )
 }

@@ -52,6 +52,13 @@ export const Tasks = () => {
   })
   const [debouncedFilters] = useDebounceValue(filters, 500)
   const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery(debouncedFilters)
+  if (isError) {
+    return (
+      <Segment type="error" title="Ошибка">
+        {error.message}
+      </Segment>
+    )
+  }
   return (
     <Segment
       setState={setFilters}
@@ -91,8 +98,7 @@ export const Tasks = () => {
       }
     >
       {(isLoading || isFetching) && <Loader />}
-      {isError && <div>{error.message}</div>}
-      {(!data || !data.tasks.length) && <div>Задач нет</div>}
+      {!isFetching && !data?.tasks.length && <div>Задач нет</div>}
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (

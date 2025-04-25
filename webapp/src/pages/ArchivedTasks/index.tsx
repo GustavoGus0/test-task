@@ -30,6 +30,14 @@ export const ArchivedTasks = () => {
     byPriority: null,
     byStatus: filterArchive,
   })
+
+  if (!data || isError) {
+    return (
+      <Segment type="error" title="Ошибка">
+        {isError && error.message}
+      </Segment>
+    )
+  }
   return (
     <Segment
       title="Архив"
@@ -43,8 +51,7 @@ export const ArchivedTasks = () => {
       }
     >
       {(isLoading || isFetching) && <Loader />}
-      {isError && <div>{error.message}</div>}
-      {(!data || !data.tasks.length) && <div>Задач нет</div>}
+      {!isFetching && (!data || !data.tasks.length) && <div>Задач нет</div>}
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (
