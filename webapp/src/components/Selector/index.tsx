@@ -86,7 +86,8 @@ export const NoButtonSelector = ({
   setFilterArchive,
 }: {
   buttons: { value: 'completed' | 'cancelled' }[]
-  translatorFunction: (arg: string) => string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  translatorFunction: (arg: string, ...props: any) => string
   filterArchive: 'completed' | 'cancelled'
   setFilterArchive: Dispatch<SetStateAction<'completed' | 'cancelled'>>
 }) => {
@@ -104,7 +105,7 @@ export const NoButtonSelector = ({
               }}
               className={cn({ [css.button]: true, [css.active]: button.value === filterArchive })}
             >
-              {translatorFunction(button.value as TaskStatus)}
+              {translatorFunction(button.value as TaskStatus, { communion: true })}
             </button>
           </li>
         ))}

@@ -6,18 +6,32 @@ import {
   TaskFilter,
 } from '@management/backend/src/utils/types'
 
-export const getCyrillicStatus = (status: TaskStatus) => {
-  switch (status) {
-    case 'to-do':
-      return 'К выполнению'
-    case 'in-progress':
-      return 'Выполняется'
-    case 'completed':
-      return 'Выполнена'
-    case 'cancelled':
-      return 'Отменена'
-    default:
-      return 'Ошибка перевода статуса'
+export const getCyrillicStatus = (
+  status: TaskStatus,
+  options?: { communion: boolean } | undefined
+) => {
+  if (options?.communion) {
+    switch (status) {
+      case 'completed':
+        return 'Выполненные'
+      case 'cancelled':
+        return 'Отменённые'
+      default:
+        return 'Ошибка перевода статуса'
+    }
+  } else {
+    switch (status) {
+      case 'to-do':
+        return 'К выполнению'
+      case 'in-progress':
+        return 'Выполняется'
+      case 'completed':
+        return 'Выполнена'
+      case 'cancelled':
+        return 'Отменена'
+      default:
+        return 'Ошибка перевода статуса'
+    }
   }
 }
 
