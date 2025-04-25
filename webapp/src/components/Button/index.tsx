@@ -1,23 +1,33 @@
+import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
+import { Link, useNavigate } from 'react-router'
 
 import { icons } from '../../assets/icons'
 import { AlertType, useAlerts } from '../../lib/ctx'
+import { getArchivedTasksRoute, getEditTaskRoute, getTasksRoute } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 
 import css from './index.module.scss'
 
-export const EditButton = () => {
+export const EditButton = ({ taskId }: { taskId: string }) => {
   return (
-    <button className={css.button} type="button">
+    <Link to={getEditTaskRoute({ taskId })} className={css.button} type="button">
       <div className={css.box}>
         {icons.pencil()}
         <span>Редактировать</span>
       </div>
-    </button>
+    </Link>
   )
 }
 
-export const DeleteButton = ({ taskId }: { taskId: string }) => {
+export const DeleteButton = ({
+  taskId,
+  taskStatus,
+}: {
+  taskId: string
+  taskStatus: TaskStatus
+}) => {
+  const navigate = useNavigate()
   const deleteTask = trpc.deleteTask.useMutation()
   const setAlerts = useAlerts()
   const newAlert = {
@@ -29,7 +39,12 @@ export const DeleteButton = ({ taskId }: { taskId: string }) => {
       className={cn({ [css.button]: true, [css.delete]: true })}
       onClick={async () => {
         await deleteTask.mutateAsync({ taskId })
-        history.back()
+        if (taskStatus === 'to-do' || taskStatus === 'in-progress') {
+          navigate(getTasksRoute())
+        }
+        if (taskStatus === 'completed' || taskStatus === 'cancelled') {
+          navigate(getArchivedTasksRoute())
+        }
         setAlerts((prev) => [...prev, { ...newAlert, createdAt: new Date() }])
       }}
       type="button"
@@ -50,6 +65,7 @@ const defineButtonText = (status: 'to-do' | 'in-progress') => {
 }
 
 export const ChangeButton = ({ taskId, text }: { taskId: string; text: string }) => {
+  const navigate = useNavigate()
   const changeTaskStatus = trpc.changeTaskStatus.useMutation()
   const trpcUtils = trpc.useUtils()
   const setAlerts = useAlerts()
@@ -68,6 +84,9 @@ export const ChangeButton = ({ taskId, text }: { taskId: string; text: string })
         })
         trpcUtils.getTask.invalidate()
         setAlerts((prev) => [...prev, { ...newAlert, createdAt: new Date() }])
+        if (text === 'in-progress') {
+          navigate(getTasksRoute())
+        }
       }}
       className={cn({ [css.button]: true, [css.change]: true })}
     >

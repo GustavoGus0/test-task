@@ -19,24 +19,24 @@
       gap: $mainPageHeaderToNavGap;
       margin-top: $mainPageMarginFromTop;
       width: 100%;
-  
+
       .headerText {
         font-size: $defaultMainHeaderFontSize;
       }
-  
+
       .navigation {
         display: block;
         width: 100%;
-  
+
         .list {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
           width: 100%;
-  
+
           .item {
             width: 100%;
-  
+
             .reactLink {
               cursor: pointer;
               padding: 0.5rem 0.675rem;
@@ -45,23 +45,23 @@
               display: flex;
               width: 100%;
               transition: $defaultInOutFastTransition;
-  
+
               &:hover {
                 background-color: $grayColorDark;
               }
-  
+
               .linkWrapper {
                 display: flex;
                 align-items: center;
                 flex-direction: row;
                 gap: 0.5rem;
-  
+
                 .icon {
                   display: flex;
                   justify-content: center;
                   align-items: center;
                 }
-  
+
                 svg {
                   width: 1.375rem;
                   fill: $grayColorDarkest;
@@ -73,7 +73,6 @@
       }
     }
   }
-
 
   .content {
     margin-top: $mainPageMarginFromTop;

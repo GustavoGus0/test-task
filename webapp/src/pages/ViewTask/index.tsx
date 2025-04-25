@@ -109,11 +109,15 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
       </div>
       <div className={css.buttonBox}>
         {isProcessed && <ChangeButton taskId={task.id} text={task.status} />}
-        {checkMyIdea(me, task) && !checkStatus(task, ['cancelled', 'completed']) && <EditButton />}
+        {checkMyIdea(me, task) && !checkStatus(task, ['cancelled', 'completed']) && (
+          <EditButton taskId={task.id} />
+        )}
         {checkMyIdea(me, task) && !checkStatus(task, ['completed', 'cancelled']) && (
           <CancelButton taskId={task.id} />
         )}
-        {me && me.id === task.createdById && <DeleteButton taskId={task.id} />}
+        {me && me.id === task.createdById && (
+          <DeleteButton taskStatus={task.status as TaskStatus} taskId={task.id} />
+        )}
       </div>
     </div>
   )

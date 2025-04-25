@@ -38,6 +38,7 @@ export const Input = ({
           type={type}
           id={name}
           name={name}
+          value={formik.values[name]}
         />
         <Alert type="error">
           {isTouched && (validationMessage as string)}
@@ -58,6 +59,7 @@ export const Input = ({
           }}
           id={name}
           name={name}
+          value={formik.values[name]}
         />
       </div>
     )

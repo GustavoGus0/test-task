@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { FormikProps } from 'formik'
 
+import { icons } from '../../assets/icons'
 import { Alert } from '../Alert'
 import { Input, SelectorInput } from '../Input'
 
@@ -20,6 +21,7 @@ interface ISelectorInput extends IInput {
 }
 
 export const Form = ({
+  cancelButton = false,
   alert,
   gap = 'large',
   formik,
@@ -27,7 +29,9 @@ export const Form = ({
   selectorInputs,
   legend,
   submitButtonText = 'Создать',
+  clearButtonText = 'Очистить',
 }: {
+  cancelButton?: boolean
   alert?: string
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,6 +41,7 @@ export const Form = ({
   selectorInputs?: ISelectorInput[]
   legend?: string
   submitButtonText?: string
+  clearButtonText?: string
 }) => {
   const filteredSelectorInputs =
     formik.values.role === 'MANAGER' || formik.values.role === null
@@ -56,7 +61,16 @@ export const Form = ({
           [css.smallGap]: gap === 'small',
         })}
       >
-        {!!legend && <legend className={css.legend}>{legend}</legend>}
+        {!!legend && (
+          <legend className={css.legend}>
+            {legend}
+            {cancelButton && (
+              <button type="button" onClick={() => history.back()} className={css.icon}>
+                {icons.cross()}
+              </button>
+            )}
+          </legend>
+        )}
         {inputs.map((input) => {
           return input.type === 'textarea' ? (
             <Input
@@ -91,7 +105,6 @@ export const Form = ({
               />
             )
           })}
-        {alert && <Alert type="error">{alert}</Alert>}
       </fieldset>
       <div className={css.buttonBox}>
         <button className={css.button + ' ' + css.submitButton} type="submit">
@@ -102,8 +115,9 @@ export const Form = ({
           type="reset"
           onClick={() => formik.resetForm()}
         >
-          Очистить
+          {clearButtonText}
         </button>
+        {alert && <Alert type="error">{alert}</Alert>}
       </div>
     </form>
   )

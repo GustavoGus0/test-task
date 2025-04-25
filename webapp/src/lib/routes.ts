@@ -9,7 +9,11 @@ export const getTasksRoute = () => '/'
 
 export const viewTaskRouteParams = getRouteParams({ taskId: true })
 export type ViewTaskRouteParams = typeof viewTaskRouteParams
-export const getViewTaskRoute = ({ taskId }: ViewTaskRouteParams) => `/task/${taskId}`
+export const getViewTaskRoute = ({ taskId }: ViewTaskRouteParams) => `/tasks/${taskId}`
+
+export const editTaskRouteParams = getRouteParams({ taskId: true })
+export type EditTaskRouteParams = typeof viewTaskRouteParams
+export const getEditTaskRoute = ({ taskId }: EditTaskRouteParams) => `/tasks/${taskId}/edit`
 
 export const getNewTaskRoute = () => '/new-task'
 export const getArchivedTasksRoute = () => '/archived-tasks'

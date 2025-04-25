@@ -3,7 +3,9 @@ import { Route, Routes } from 'react-router'
 import { Layout } from './components/Layout'
 import { AppContextProvider } from './lib/ctx'
 import {
+  editTaskRouteParams,
   getArchivedTasksRoute,
+  getEditTaskRoute,
   getExecutorsRoute,
   getNewTaskRoute,
   getSignInRoute,
@@ -15,6 +17,7 @@ import {
 } from './lib/routes'
 import { TrpcProvider } from './lib/trpc'
 import { ArchivedTasks } from './pages/ArchivedTasks'
+import { EditTask } from './pages/EditTask'
 import { Executors } from './pages/Executors'
 import { NewTask } from './pages/NewTask'
 import { NotFound } from './pages/NotFound'
@@ -38,6 +41,7 @@ export default function App() {
             <Route path={getSignInRoute()} element={<SignIn />} />
             <Route path={getSignOutRoute()} element={<SignOut />} />
             <Route path={getViewTaskRoute(viewTaskRouteParams)} element={<ViewTask />} />
+            <Route path={getEditTaskRoute(editTaskRouteParams)} element={<EditTask />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
