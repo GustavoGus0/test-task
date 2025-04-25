@@ -1,14 +1,12 @@
 import { zNewTaskTrpcInput } from '@management/backend/src/router/newTask/input'
 import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
-import cn from 'classnames'
-import { FormikProps, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
 
-import { icons } from '../../assets/icons'
 import { Form } from '../../components/Form'
-import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
+import { ExecutorsSelector } from '../../components/Selector'
 import { useAlerts, useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 import { getCyrillicPriority } from '../../utils/getCyrillic'
@@ -85,56 +83,5 @@ export const NewTask = () => {
         {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
       </div>
     </Segment>
-  )
-}
-
-const ExecutorsSelector = ({
-  formik,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  formik: FormikProps<any>
-}) => {
-  const [showExecutors, setShowExecutors] = useState<boolean>(false)
-  const { data, error, isLoading, isFetching } = trpc.getExecutors.useQuery()
-  const [assignedToIdState, setAssignedToIdState] = useState<string | null>(null)
-
-  const handleSetExecutor = (parameter: string) => {
-    if (assignedToIdState === parameter) {
-      setAssignedToIdState(null)
-      formik.setFieldValue('assignedToId', null)
-    }
-    formik.setFieldValue('assignedToId', parameter)
-    return setAssignedToIdState(parameter)
-  }
-  if (isLoading || isFetching) {
-    return <Loader />
-  }
-  if (!data || error || data?.length === 0) {
-    return null
-  }
-
-  return (
-    <div className={css.executorsSelector}>
-      <button onClick={() => setShowExecutors((prev) => !prev)} className={css.selectorButton}>
-        <div className={css.icon}>{icons.newTask()}</div>
-        <span>Назначить на подчинённого</span>
-      </button>
-      <ul className={css.executorsList}>
-        {showExecutors &&
-          data.map((executor) => (
-            <li key={executor.id} className={css.executorItem}>
-              <button
-                onClick={() => handleSetExecutor(executor.id)}
-                className={cn({
-                  [css.executorButton]: true,
-                  [css.active]: formik.values.assignedToId === executor.id,
-                })}
-              >
-                {executor.lastName} {executor.firstName} {executor.patronymic}
-              </button>
-            </li>
-          ))}
-      </ul>
-    </div>
   )
 }

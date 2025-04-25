@@ -1,9 +1,13 @@
 import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
-import { Dispatch, SetStateAction } from 'react'
+import { FormikProps } from 'formik'
+import { Dispatch, SetStateAction, useState } from 'react'
 
+import { icons } from '../../assets/icons'
 import { useStorage } from '../../hooks/useStorage'
+import { trpc } from '../../lib/trpc'
 import { IFilter } from '../../pages/Tasks'
+import { Loader } from '../Loader'
 
 import css from './index.module.scss'
 
@@ -109,6 +113,55 @@ export const NoButtonSelector = ({
             </button>
           </li>
         ))}
+      </ul>
+    </div>
+  )
+}
+
+export const ExecutorsSelector = ({
+  formik,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: FormikProps<any>
+}) => {
+  const [showExecutors, setShowExecutors] = useState<boolean>(false)
+  const { data, error, isLoading, isFetching } = trpc.getExecutors.useQuery()
+
+  const handleSetExecutor = (parameter: string) => {
+    if (formik.values.assignedToId === parameter) {
+      formik.setFieldValue('assignedToId', null)
+    } else {
+      formik.setFieldValue('assignedToId', parameter)
+    }
+  }
+  if (isLoading || isFetching) {
+    return <Loader />
+  }
+  if (!data || error || data?.length === 0) {
+    return null
+  }
+
+  return (
+    <div className={css.executorsSelector}>
+      <button onClick={() => setShowExecutors((prev) => !prev)} className={css.selectorButton}>
+        <div className={css.icon}>{icons.newTask()}</div>
+        <span>Назначить подчинённого</span>
+      </button>
+      <ul className={css.executorsList}>
+        {showExecutors &&
+          data.map((executor) => (
+            <li key={executor.id} className={css.executorItem}>
+              <button
+                onClick={() => handleSetExecutor(executor.id)}
+                className={cn({
+                  [css.executorButton]: true,
+                  [css.active]: formik.values.assignedToId === executor.id,
+                })}
+              >
+                {executor.lastName} {executor.firstName} {executor.patronymic}
+              </button>
+            </li>
+          ))}
       </ul>
     </div>
   )

@@ -36,7 +36,7 @@ export const editTaskTrpcRoute = trpc.procedure
       },
       data: {
         ...taskInput,
-        assignedToId: taskInput.assignedToId || undefined,
+        assignedToId: taskInput.assignedToId || ctx.me.id,
       },
     })
   })

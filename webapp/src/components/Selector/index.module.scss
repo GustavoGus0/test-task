@@ -78,3 +78,65 @@
     }
   }
 }
+
+.executorsSelector {
+  .selectorButton {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    background-color: $grayColor;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    user-select: none;
+    cursor: pointer;
+    transition: $defaultInOutFastTransition;
+
+    .icon {
+      width: 1.5rem;
+      fill: $grayColorDarkest;
+    }
+
+    &:hover {
+      background-color: $grayColorDark;
+    }
+  }
+
+  .executorsList {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .executorItem {
+      width: 100%;
+      height: fit-content;
+
+      .executorButton {
+        font-weight: bold;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        background-color: $grayColor;
+        user-select: none;
+        cursor: pointer;
+        transition: $defaultInOutFastTransition;
+
+        &:hover {
+          background-color: $grayColorDark;
+        }
+      }
+
+      .active {
+        background-color: $accentColor;
+        color: $whiteTextColor;
+
+        &:hover {
+          background-color: $accentColor;
+        }
+      }
+    }
+  }
+}
