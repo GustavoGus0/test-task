@@ -10,13 +10,14 @@
   background-color: $grayColor;
 
   .titleBox {
+    max-width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
     .priorityAndTitle {
-      width: calc(100% - 7rem);
+      width: calc(100% - 18rem);
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -77,12 +78,18 @@
       }
     }
 
-    .status {
-      color: $whiteTextColor;
-      font-size: 0.8rem;
-      padding: 0.25rem 0.5rem;
-      border-radius: 999rem;
-      background-color: $accentColor;
+    .statusAndAssignedBy {
+      display: flex;
+      gap: 0.5rem;
+
+      .status {
+        width: max-content;
+        color: $whiteTextColor;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 999rem;
+        background-color: $accentColor;
+      }
     }
   }
 
