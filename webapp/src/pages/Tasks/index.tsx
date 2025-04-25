@@ -81,7 +81,7 @@ export const Tasks = () => {
             },
             {
               title: 'По статусу',
-              values: ['to-do', 'in-progress', 'completed', 'cancelled'],
+              values: ['to-do', 'in-progress'],
               byWhat: 'byStatus',
               translatorFunction: getCyrillicStatus as (value: string) => string,
             },

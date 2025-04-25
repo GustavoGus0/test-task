@@ -13,7 +13,8 @@ export const Segment = ({
   getBack = false,
   size = 1,
   type = 'default',
-  Filters = undefined,
+  Filters,
+  NoButtonSelector,
   children,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,6 +24,7 @@ export const Segment = ({
   size?: 1 | 2
   type?: 'default' | 'error'
   Filters?: React.ReactNode
+  NoButtonSelector?: React.ReactNode
   children: React.ReactNode
 }) => {
   const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
@@ -84,6 +86,7 @@ export const Segment = ({
             )}
           </div>
         )}
+        {NoButtonSelector}
       </div>
       <div className={css.content}>{children}</div>
     </div>

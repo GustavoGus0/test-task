@@ -10,6 +10,7 @@ import css from './index.module.scss'
 
 export interface ITask {
   completed?: boolean
+  cancelled?: boolean
   id: string
   title: string
   description: string
@@ -17,7 +18,15 @@ export interface ITask {
   priority: TaskPriority
 }
 
-export const Task = ({ completed = false, id, title, description, status, priority }: ITask) => {
+export const Task = ({
+  completed = false,
+  cancelled = false,
+  id,
+  title,
+  description,
+  status,
+  priority,
+}: ITask) => {
   return (
     <Link to={getViewTaskRoute({ taskId: id })}>
       <li className={css.task}>
@@ -30,15 +39,21 @@ export const Task = ({ completed = false, id, title, description, status, priori
                       [css.priority]: true,
                       [css.completed]: true,
                     })
-                  : cn({
-                      [css.priority]: true,
-                      [css.high]: priority === 'high',
-                      [css.medium]: priority === 'medium',
-                      [css.low]: priority === 'low',
-                    })
+                  : cancelled
+                    ? cn({
+                        [css.priority]: true,
+                        [css.cancelled]: true,
+                      })
+                    : cn({
+                        [css.priority]: true,
+                        [css.high]: priority === 'high',
+                        [css.medium]: priority === 'medium',
+                        [css.low]: priority === 'low',
+                      })
               }
             >
               {completed && icons.checkMark()}
+              {cancelled && icons.cross()}
             </div>
             <h3 className={css.title}>{title}</h3>
           </div>

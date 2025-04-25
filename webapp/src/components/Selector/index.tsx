@@ -1,3 +1,4 @@
+import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { Dispatch, SetStateAction } from 'react'
 
@@ -74,6 +75,40 @@ const Parameter = ({
           </button>
         ))}
       </div>
+    </div>
+  )
+}
+
+export const NoButtonSelector = ({
+  buttons,
+  translatorFunction,
+  filterArchive,
+  setFilterArchive,
+}: {
+  buttons: { value: 'completed' | 'cancelled' }[]
+  translatorFunction: (arg: string) => string
+  filterArchive: 'completed' | 'cancelled'
+  setFilterArchive: Dispatch<SetStateAction<'completed' | 'cancelled'>>
+}) => {
+  const { setItem } = useStorage()
+  return (
+    <div className={css.noButtonWrapper}>
+      <ul className={css.list}>
+        {buttons.map((button) => (
+          <li className={css.item} key={button.value}>
+            <button
+              type="button"
+              onClick={() => {
+                setItem(`filterArchive`, button.value)
+                return setFilterArchive(button.value)
+              }}
+              className={cn({ [css.button]: true, [css.active]: button.value === filterArchive })}
+            >
+              {translatorFunction(button.value as TaskStatus)}
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
