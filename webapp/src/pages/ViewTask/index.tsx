@@ -9,7 +9,7 @@ import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
 import { ViewTaskRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
-import { checkMyIdea, checkStatus } from '../../utils/check'
+import { checkMyOrManagersTask, checkMyTask, checkStatus } from '../../utils/check'
 import { getCyrillicPriority, getCyrillicStatus } from '../../utils/getCyrillic'
 
 import css from './index.module.scss'
@@ -109,13 +109,13 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
       </div>
       <div className={css.buttonBox}>
         {isProcessed && <ChangeButton taskId={task.id} text={task.status} />}
-        {checkMyIdea(me, task) && !checkStatus(task, ['cancelled', 'completed']) && (
+        {checkMyTask(me, task) && !checkStatus(task, ['cancelled', 'completed']) && (
           <EditButton taskId={task.id} />
         )}
-        {checkMyIdea(me, task) && !checkStatus(task, ['completed', 'cancelled']) && (
+        {checkMyOrManagersTask(me, task) && !checkStatus(task, ['completed', 'cancelled']) && (
           <CancelButton taskId={task.id} />
         )}
-        {me && me.id === task.createdById && (
+        {checkMyTask(me, task) && (
           <DeleteButton taskStatus={task.status as TaskStatus} taskId={task.id} />
         )}
       </div>
