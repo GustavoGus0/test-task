@@ -27,6 +27,22 @@ export const getTasksTrpcRoute = trpc.procedure
           status: true,
           priority: true,
           createdById: true,
+          createdBy: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              patronymic: true,
+            },
+          },
+          assignedTo: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              patronymic: true,
+            },
+          },
         },
         orderBy: {
           createdAt: byDate === 'new' ? 'desc' : 'asc',
@@ -54,6 +70,7 @@ export const getTasksTrpcRoute = trpc.procedure
           status: true,
           priority: true,
           createdById: true,
+          assignedToId: true,
         },
         orderBy: {
           createdAt: byDate === 'new' ? 'desc' : 'asc',

@@ -4,22 +4,16 @@ import { Link, Outlet } from 'react-router'
 import { useMe } from '../../lib/ctx'
 import { links } from '../../lib/links'
 import { type ILink } from '../../lib/links'
-import { trpc } from '../../lib/trpc'
 
 import css from './index.module.scss'
 
 export const Layout = () => {
   const me = useMe()
-  const { data } = trpc.getManagers.useQuery({ myManager: true })
   return (
     <div className={css.container}>
       <div className={css.stickyContainer}>
         <header className={css.header}>
           <h1 className={css.headerText}>TODO</h1>
-          {me && <p>Зарегистрирован как {me?.login}</p>}
-          {me && me.role === 'EXECUTOR' && data?.manager !== undefined && (
-            <p>Руководитель: {data?.manager?.login}</p>
-          )}
           <nav className={css.navigation}>
             <ul className={css.list}>
               {defineLinksFilter(links, me).map((link) => (
