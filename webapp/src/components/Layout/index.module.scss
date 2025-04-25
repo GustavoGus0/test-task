@@ -8,58 +8,64 @@
   width: $mainPageWidth;
   margin: 0 auto;
 
-  .header {
-    display: flex;
-    flex-direction: column;
-    gap: $mainPageHeaderToNavGap;
-    margin-top: $mainPageMarginFromTop;
+  .stickyContainer {
     width: $mainPageMenuWidth;
 
-    .headerText {
-      font-size: $defaultMainHeaderFontSize;
-    }
-
-    .navigation {
-      display: block;
+    .header {
+      position: sticky;
+      top: $mainPageMarginFromTop;
+      display: flex;
+      flex-direction: column;
+      gap: $mainPageHeaderToNavGap;
+      margin-top: $mainPageMarginFromTop;
       width: 100%;
-
-      .list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+  
+      .headerText {
+        font-size: $defaultMainHeaderFontSize;
+      }
+  
+      .navigation {
+        display: block;
         width: 100%;
-
-        .item {
+  
+        .list {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
           width: 100%;
-
-          .reactLink {
-            cursor: pointer;
-            padding: 0.5rem 0.675rem;
-            border-radius: 0.5rem;
-            background-color: $grayColor;
-            display: flex;
+  
+          .item {
             width: 100%;
-            transition: $defaultInOutFastTransition;
-
-            &:hover {
-              background-color: $grayColorDark;
-            }
-
-            .linkWrapper {
+  
+            .reactLink {
+              cursor: pointer;
+              padding: 0.5rem 0.675rem;
+              border-radius: 0.5rem;
+              background-color: $grayColor;
               display: flex;
-              align-items: center;
-              flex-direction: row;
-              gap: 0.5rem;
-
-              .icon {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+              width: 100%;
+              transition: $defaultInOutFastTransition;
+  
+              &:hover {
+                background-color: $grayColorDark;
               }
-
-              svg {
-                width: 1.375rem;
-                fill: $grayColorDarkest;
+  
+              .linkWrapper {
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                gap: 0.5rem;
+  
+                .icon {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+  
+                svg {
+                  width: 1.375rem;
+                  fill: $grayColorDarkest;
+                }
               }
             }
           }
@@ -67,6 +73,7 @@
       }
     }
   }
+
 
   .content {
     margin-top: $mainPageMarginFromTop;

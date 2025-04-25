@@ -13,27 +13,29 @@ export const Layout = () => {
   const { data } = trpc.getManagers.useQuery({ myManager: true })
   return (
     <div className={css.container}>
-      <header className={css.header}>
-        <h1 className={css.headerText}>TODO</h1>
-        {me && <p>Зарегистрирован как {me?.login}</p>}
-        {me && me.role === 'EXECUTOR' && data?.manager !== undefined && (
-          <p>Руководитель: {data?.manager?.login}</p>
-        )}
-        <nav className={css.navigation}>
-          <ul className={css.list}>
-            {defineLinksFilter(links, me).map((link) => (
-              <li className={css.item} key={link.to}>
-                <Link className={css.reactLink} to={link.to}>
-                  <div className={css.linkWrapper}>
-                    <div className={css.icon}>{link.icon}</div>
-                    <span className={css.label}>{link.label}</span>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+      <div className={css.stickyContainer}>
+        <header className={css.header}>
+          <h1 className={css.headerText}>TODO</h1>
+          {me && <p>Зарегистрирован как {me?.login}</p>}
+          {me && me.role === 'EXECUTOR' && data?.manager !== undefined && (
+            <p>Руководитель: {data?.manager?.login}</p>
+          )}
+          <nav className={css.navigation}>
+            <ul className={css.list}>
+              {defineLinksFilter(links, me).map((link) => (
+                <li className={css.item} key={link.to}>
+                  <Link className={css.reactLink} to={link.to}>
+                    <div className={css.linkWrapper}>
+                      <div className={css.icon}>{link.icon}</div>
+                      <span className={css.label}>{link.label}</span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </header>
+      </div>
       <main className={css.content}>
         <Outlet />
       </main>
