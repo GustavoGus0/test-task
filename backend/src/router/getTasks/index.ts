@@ -11,11 +11,12 @@ export const getTasksTrpcRoute = trpc.procedure
 
     if (input && ctx.me.managerId !== null) {
       const { byTasks, byDate, byPriority, byStatus } = input
+
       const tasks = await ctx.prisma.task.findMany({
         where: {
-          authorId: byTasks === 'my' ? ctx.me.id : ctx.me.managerId,
+          authorId: byTasks === 'all' ? undefined : byTasks === 'my' ? ctx.me.id : ctx.me.managerId,
           priority: byPriority || undefined,
-          status: byStatus ? byStatus : { not: 'completed' },
+          status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
         },
         select: {
           id: true,
