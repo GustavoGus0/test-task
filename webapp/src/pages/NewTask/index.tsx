@@ -1,9 +1,9 @@
 import { zNewTaskTrpcInput } from '@management/backend/src/router/newTask/input'
 import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
-import { useFormik } from 'formik'
+import { FormikProps, useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 
 import { icons } from '../../assets/icons'
 import { Form } from '../../components/Form'
@@ -37,14 +37,13 @@ export const NewTask = () => {
   const defaultPriority: IInitialValues['priority'] = null
   const defaultStatus: TaskStatus = 'to-do'
   const createTask = trpc.newTask.useMutation()
-  const [taskExecutorId, setTaskExecutorId] = useState<string | null>(null)
 
   const initialValues: IInitialValues = {
     title: '',
     description: '',
     priority: defaultPriority,
     status: defaultStatus,
-    assignedToId: taskExecutorId,
+    assignedToId: null,
   }
 
   const formik = useFormik({
@@ -83,32 +82,29 @@ export const NewTask = () => {
             },
           ]}
         />
-        {me.role === 'MANAGER' && (
-          <ExecutorsSelector<string | null>
-            taskExecutorId={taskExecutorId}
-            setTaskExecutorId={setTaskExecutorId}
-          />
-        )}
+        {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
       </div>
     </Segment>
   )
 }
 
-const ExecutorsSelector = <T,>({
-  taskExecutorId,
-  setTaskExecutorId,
+const ExecutorsSelector = ({
+  formik,
 }: {
-  taskExecutorId: T
-  setTaskExecutorId: Dispatch<SetStateAction<T>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formik: FormikProps<any>
 }) => {
   const [showExecutors, setShowExecutors] = useState<boolean>(false)
   const { data, error, isLoading, isFetching } = trpc.getExecutors.useQuery()
+  const [assignedToIdState, setAssignedToIdState] = useState<string | null>(null)
 
-  const handleSetExecutor = (parameter: T) => {
-    if (taskExecutorId === parameter) {
-      return setTaskExecutorId(null as T)
+  const handleSetExecutor = (parameter: string) => {
+    if (assignedToIdState === parameter) {
+      setAssignedToIdState(null)
+      formik.setFieldValue('assignedToId', null)
     }
-    setTaskExecutorId(parameter)
+    formik.setFieldValue('assignedToId', parameter)
+    return setAssignedToIdState(parameter)
   }
   if (isLoading || isFetching) {
     return <Loader />
@@ -128,10 +124,10 @@ const ExecutorsSelector = <T,>({
           data.map((executor) => (
             <li key={executor.id} className={css.executorItem}>
               <button
-                onClick={() => handleSetExecutor(executor.id as T)}
+                onClick={() => handleSetExecutor(executor.id)}
                 className={cn({
                   [css.executorButton]: true,
-                  [css.active]: taskExecutorId === executor.id,
+                  [css.active]: formik.values.assignedToId === executor.id,
                 })}
               >
                 {executor.lastName} {executor.firstName} {executor.patronymic}

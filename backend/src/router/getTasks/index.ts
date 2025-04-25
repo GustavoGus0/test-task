@@ -9,13 +9,14 @@ export const getTasksTrpcRoute = trpc.procedure
       throw new Error('UNAUTHORIZED')
     }
 
-    if (input && ctx.me.managerId !== null) {
+    if (input && ctx.me.role === 'EXECUTOR' && ctx.me.managerId !== null) {
       const { byTasks, byDate, byPriority, byStatus } = input
 
       const tasks = await ctx.prisma.task.findMany({
         where: {
           createdById:
-            byTasks === 'all' ? undefined : byTasks === 'my' ? ctx.me.id : ctx.me.managerId,
+            byTasks === 'all' ? undefined : byTasks === 'managers' ? ctx.me.managerId : ctx.me.id,
+          assignedToId: byTasks === 'executors' ? { not: ctx.me.id } : ctx.me.id,
           priority: byPriority || undefined,
           status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
         },
@@ -32,11 +33,17 @@ export const getTasksTrpcRoute = trpc.procedure
         },
       })
       return { tasks }
-    } else if (input) {
-      const { byDate, byPriority, byStatus } = input
+    } else if (input && ctx.me.role === 'MANAGER') {
+      const { byTasks, byDate, byPriority, byStatus } = input
       const tasks = await ctx.prisma.task.findMany({
         where: {
           createdById: ctx.me.id,
+          assignedToId:
+            byTasks === 'all'
+              ? undefined
+              : byTasks === 'executors'
+                ? { not: ctx.me.id }
+                : ctx.me.id,
           priority: byPriority || undefined,
           status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
         },
@@ -54,4 +61,5 @@ export const getTasksTrpcRoute = trpc.procedure
       })
       return { tasks }
     }
+    return null
   })
