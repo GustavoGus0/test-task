@@ -45,7 +45,7 @@ export const SignIn = () => {
     },
   })
   return (
-    <Segment title="Регистрация">
+    <Segment title="Вход">
       <Form
         gap="small"
         submitButtonText="Войти"

@@ -63,7 +63,8 @@ export const Tasks = () => {
           parameters={[
             {
               title: 'Задачи',
-              values: ['all', 'my', 'executors'],
+              values:
+                me.role === 'MANAGER' ? ['all', 'my', 'executors'] : ['all', 'my', 'managers'],
               byWhat: 'byTasks',
               translatorFunction: getCyrillicTasksFilter as (value: string) => string,
             },

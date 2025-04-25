@@ -10,4 +10,5 @@ export const zNewTaskTrpcInput = z.object({
     .nullable()
     .refine((val) => val !== null, 'Нужно выбрать приоритет задачи'),
   status: z.enum(['to-do', 'in-progress', 'completed', 'cancelled']),
+  assignedToId: z.string().nullable(),
 })

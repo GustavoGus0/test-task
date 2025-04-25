@@ -99,9 +99,9 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           <div className={css.bgCircle}>{icons.profile()}</div>
           <div className={css.textBox}>
             <h4 className={css.authorFullName}>
-              {task.authorId === me?.id
+              {task.createdById === me?.id
                 ? 'Вы'
-                : `${task.author.lastName} ${task.author.firstName} ${task.author.patronymic}`}
+                : `${task.createdBy.lastName} ${task.createdBy.firstName} ${task.createdBy.patronymic}`}
             </h4>
             <p className={css.role}>Постановщик задачи</p>
           </div>
@@ -113,7 +113,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
         {checkMyIdea(me, task) && !checkStatus(task, ['completed', 'cancelled']) && (
           <CancelButton taskId={task.id} />
         )}
-        {me && me.id === task.authorId && <DeleteButton taskId={task.id} />}
+        {me && me.id === task.createdById && <DeleteButton taskId={task.id} />}
       </div>
     </div>
   )

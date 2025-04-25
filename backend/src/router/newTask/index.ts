@@ -11,7 +11,12 @@ export const newTaskTrpcRoute = trpc.procedure
     await ctx.prisma.task.create({
       data: {
         ...input,
-        authorId: ctx.me.id,
+        title: input.title,
+        description: input.description,
+        priority: input.priority,
+        status: input.status || 'to-do',
+        assignedToId: input.assignedToId ?? ctx.me.id,
+        createdById: ctx.me.id,
       },
     })
 

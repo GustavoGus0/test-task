@@ -14,7 +14,8 @@ export const getTasksTrpcRoute = trpc.procedure
 
       const tasks = await ctx.prisma.task.findMany({
         where: {
-          authorId: byTasks === 'all' ? undefined : byTasks === 'my' ? ctx.me.id : ctx.me.managerId,
+          createdById:
+            byTasks === 'all' ? undefined : byTasks === 'my' ? ctx.me.id : ctx.me.managerId,
           priority: byPriority || undefined,
           status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
         },
@@ -24,7 +25,7 @@ export const getTasksTrpcRoute = trpc.procedure
           description: true,
           status: true,
           priority: true,
-          authorId: true,
+          createdById: true,
         },
         orderBy: {
           createdAt: byDate === 'new' ? 'desc' : 'asc',
@@ -35,7 +36,7 @@ export const getTasksTrpcRoute = trpc.procedure
       const { byDate, byPriority, byStatus } = input
       const tasks = await ctx.prisma.task.findMany({
         where: {
-          authorId: ctx.me.id,
+          createdById: ctx.me.id,
           priority: byPriority || undefined,
           status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
         },
@@ -45,7 +46,7 @@ export const getTasksTrpcRoute = trpc.procedure
           description: true,
           status: true,
           priority: true,
-          authorId: true,
+          createdById: true,
         },
         orderBy: {
           createdAt: byDate === 'new' ? 'desc' : 'asc',

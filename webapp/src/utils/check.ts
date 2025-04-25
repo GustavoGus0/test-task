@@ -5,7 +5,7 @@ export const checkMyIdea = (
   me: TrpcRouterOutput['getMe']['me'],
   task: TrpcRouterOutput['getTask']['task']
 ) => {
-  return me && me.id === task.authorId
+  return me && me.id === task.createdById
 }
 
 export const checkStatus = (

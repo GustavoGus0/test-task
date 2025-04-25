@@ -15,6 +15,7 @@ export interface IInitialValues {
   description: string
   priority: TaskPriority | null
   status: TaskStatus
+  assignedToId: string | null
 }
 
 export const NewTask = () => {
@@ -37,6 +38,7 @@ export const NewTask = () => {
     description: '',
     priority: defaultPriority,
     status: defaultStatus,
+    assignedToId: null,
   }
 
   const formik = useFormik({

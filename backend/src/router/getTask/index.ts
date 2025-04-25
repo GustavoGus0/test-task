@@ -11,7 +11,7 @@ export const getTaskTrpcRoute = trpc.procedure
         id: taskId,
       },
       include: {
-        author: {
+        createdBy: {
           select: {
             id: true,
             login: true,

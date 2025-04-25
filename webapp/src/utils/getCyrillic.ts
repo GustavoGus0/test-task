@@ -64,6 +64,8 @@ export const getCyrillicTasksFilter = (filter: TaskFilter) => {
       return 'Мои'
     case 'executors':
       return 'Исполнителей'
+    case 'managers':
+      return 'Руководителя'
     default:
       return 'Ошибка перевода задач'
   }
