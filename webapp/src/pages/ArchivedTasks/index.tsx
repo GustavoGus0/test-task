@@ -25,7 +25,7 @@ export const ArchivedTasks = () => {
     getItem('filterArchive') as 'completed' | 'cancelled'
   )
   const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery({
-    byTasks: null,
+    byTasks: 'all',
     byDate: null,
     byPriority: null,
     byStatus: filterArchive,
