@@ -30,6 +30,7 @@ export const Segment = ({
   const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
   const { removeItem, setItem, getItem } = useStorage()
   const needShow =
+    getItem('filterByTime') !== 'all-time' ||
     getItem('filterByTasks') !== 'all' ||
     getItem('filterByDate') !== 'old' ||
     getItem('filterByPriority') !== null ||
@@ -55,11 +56,13 @@ export const Segment = ({
             {needShow && (
               <button
                 onClick={() => {
+                  setItem('filterByTime', 'all-time')
                   setItem('filterByTasks', 'all')
                   setItem('filterByDate', 'old')
                   removeItem('filterByPriority')
                   removeItem('filterByStatus')
                   setState?.({
+                    byTime: 'all-time',
                     byTasks: 'all',
                     byDate: 'old',
                     byPriority: null,

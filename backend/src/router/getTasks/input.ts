@@ -6,5 +6,6 @@ export const zGetTasksTrpcInput = z
     byDate: z.enum(['new', 'old']).nullable(),
     byPriority: z.enum(['high', 'medium', 'low']).nullable(),
     byStatus: z.enum(['to-do', 'in-progress', 'completed', 'cancelled']).nullable(),
+    byTime: z.enum(['on-today', 'on-week', 'all-time']).nullable(),
   })
   .nullable()

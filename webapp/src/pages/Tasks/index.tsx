@@ -3,6 +3,7 @@ import {
   TaskStatus,
   TaskFilter,
   DateFilter,
+  TimeFilter,
 } from '@management/backend/src/utils/types'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
@@ -19,6 +20,7 @@ import {
   getCyrillicPriority,
   getCyrillicStatus,
   getCyrillicTasksFilter,
+  getCyrillicTimeFilter,
 } from '../../utils/getCyrillic'
 
 import css from './index.module.scss'
@@ -28,6 +30,7 @@ export interface IFilter {
   byDate: DateFilter
   byPriority: TaskPriority
   byStatus: TaskStatus
+  byTime: TimeFilter
 }
 
 export const Tasks = () => {
@@ -41,10 +44,12 @@ export const Tasks = () => {
   }
   const { getItem, setItem } = useStorage()
   useEffect(() => {
+    setItem('filterByTime', 'all-time' as TaskFilter)
     setItem('filterByTasks', 'all' as TaskFilter)
     setItem('filterByDate', 'old' as DateFilter)
   }, [])
   const [filters, setFilters] = useState<IFilter>({
+    byTime: getItem('filterByTime') as TimeFilter,
     byTasks: getItem('filterByTasks') as TaskFilter,
     byDate: getItem('filterByDate') as DateFilter,
     byPriority: getItem('filterByPriority') as TaskPriority,
@@ -68,6 +73,12 @@ export const Tasks = () => {
           filters={filters}
           setFilters={setFilters}
           parameters={[
+            {
+              title: 'Время',
+              values: ['all-time', 'on-today', 'on-week'],
+              byWhat: 'byTime',
+              translatorFunction: getCyrillicTimeFilter as (value: string) => string,
+            },
             {
               title: 'Задачи',
               values:

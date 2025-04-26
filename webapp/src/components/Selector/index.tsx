@@ -14,7 +14,7 @@ import css from './index.module.scss'
 interface IParameter {
   title: string
   values: string[]
-  byWhat: 'byTasks' | 'byDate' | 'byPriority' | 'byStatus'
+  byWhat: 'byTasks' | 'byDate' | 'byPriority' | 'byStatus' | 'byTime'
   translatorFunction: (value: string) => string
 }
 

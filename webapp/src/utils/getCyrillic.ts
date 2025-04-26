@@ -4,6 +4,7 @@ import {
   TaskStatus,
   DateFilter,
   TaskFilter,
+  TimeFilter,
 } from '@management/backend/src/utils/types'
 
 export const getCyrillicStatus = (
@@ -82,5 +83,18 @@ export const getCyrillicTasksFilter = (filter: TaskFilter) => {
       return 'Руководителя'
     default:
       return 'Ошибка перевода задач'
+  }
+}
+
+export const getCyrillicTimeFilter = (filter: TimeFilter) => {
+  switch (filter) {
+    case 'on-today':
+      return 'За сегодня'
+    case 'on-week':
+      return 'За неделю'
+    case 'all-time':
+      return 'За все время'
+    default:
+      return 'Ошибка перевода времени'
   }
 }

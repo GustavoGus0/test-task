@@ -10,7 +10,18 @@ export const getTasksTrpcRoute = trpc.procedure
     }
 
     if (input && ctx.me.role === 'EXECUTOR' && ctx.me.managerId !== null) {
-      const { byTasks, byDate, byPriority, byStatus } = input
+      const { byTasks, byDate, byPriority, byStatus, byTime } = input
+
+      let dateFilter = {}
+      if (byTime === 'on-today') {
+        const oneDayAgo = new Date()
+        oneDayAgo.setDate(oneDayAgo.getDate() - 1)
+        dateFilter = { gte: oneDayAgo }
+      } else if (byTime === 'on-week') {
+        const oneWeekAgo = new Date()
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
+        dateFilter = { gte: oneWeekAgo }
+      }
 
       const tasks = await ctx.prisma.task.findMany({
         where: {
@@ -19,6 +30,7 @@ export const getTasksTrpcRoute = trpc.procedure
           assignedToId: byTasks === 'executors' ? { not: ctx.me.id } : ctx.me.id,
           priority: byPriority || undefined,
           status: byStatus ? byStatus : { notIn: ['completed', 'cancelled'] },
+          createdAt: dateFilter,
         },
         select: {
           id: true,
