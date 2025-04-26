@@ -30,7 +30,7 @@ export const ViewTask = () => {
   }
 
   return (
-    <Segment getBack={true} title={'Просмотр задачи'}>
+    <Segment status={data.task.status as TaskStatus} getBack={true} title={'Просмотр задачи'}>
       <Task task={data.task} />
     </Segment>
   )

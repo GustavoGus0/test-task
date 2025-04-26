@@ -1,15 +1,19 @@
+import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { Dispatch, SetStateAction } from 'react'
+import { useNavigate } from 'react-router'
 
 import { icons } from '../../assets/icons'
 import { useDelayedShow } from '../../hooks/useDelayedShow'
 import { useStorage } from '../../hooks/useStorage'
+import { getArchivedTasksRoute, getTasksRoute } from '../../lib/routes'
 
 import css from './index.module.scss'
 
 export const Segment = ({
   setState,
   title,
+  status,
   getBack = false,
   size = 1,
   type = 'default',
@@ -20,6 +24,7 @@ export const Segment = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setState?: Dispatch<SetStateAction<any>>
   title: string
+  status?: TaskStatus
   getBack?: boolean
   size?: 1 | 2
   type?: 'default' | 'error'
@@ -27,6 +32,7 @@ export const Segment = ({
   NoButtonSelector?: React.ReactNode
   children: React.ReactNode
 }) => {
+  const navigate = useNavigate()
   const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
   const { removeItem, setItem, getItem } = useStorage()
   const needShow =
@@ -41,7 +47,14 @@ export const Segment = ({
       <div className={css.headerBox}>
         <div className={css.titleAndReturn}>
           {getBack && (
-            <button className={css.backButton} onClick={() => history.back()}>
+            <button
+              className={css.backButton}
+              onClick={() =>
+                status === 'to-do' || status === 'in-progress'
+                  ? navigate(getTasksRoute())
+                  : navigate(getArchivedTasksRoute())
+              }
+            >
               {icons.arrowBack()}
             </button>
           )}

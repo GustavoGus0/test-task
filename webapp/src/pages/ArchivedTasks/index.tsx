@@ -25,6 +25,7 @@ export const ArchivedTasks = () => {
     getItem('filterArchive') as 'completed' | 'cancelled'
   )
   const { data, error, isError, isLoading, isFetching } = trpc.getTasks.useQuery({
+    byTime: null,
     byTasks: 'all',
     byDate: null,
     byPriority: null,
@@ -55,12 +56,7 @@ export const ArchivedTasks = () => {
       {data && (
         <ul className={css.tasksList}>
           {data.tasks.map((task) => (
-            <Task
-              completed={task.status === 'completed'}
-              cancelled={task.status === 'cancelled'}
-              {...(task as ITask)}
-              key={task.id}
-            />
+            <Task {...(task as ITask)} key={task.id} />
           ))}
         </ul>
       )}
