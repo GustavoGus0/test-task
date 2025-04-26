@@ -1,7 +1,8 @@
 import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { FormikProps } from 'formik'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Dispatch, forwardRef, SetStateAction, useState } from 'react'
 
 import { icons } from '../../assets/icons'
 import { useStorage } from '../../hooks/useStorage'
@@ -24,20 +25,24 @@ interface ISelector {
   parameters: IParameter[]
 }
 
-export const Selector = ({ filters, setFilters, parameters }: ISelector) => {
-  return (
-    <div className={css.parametersWrapper}>
-      {parameters.map((parameter) => (
-        <Parameter
-          filters={filters}
-          setFilters={setFilters}
-          parameter={parameter}
-          key={parameter.title}
-        />
-      ))}
-    </div>
-  )
-}
+export const Selector = forwardRef<HTMLDivElement, ISelector>(
+  ({ filters, setFilters, parameters }, ref) => {
+    return (
+      <div ref={ref} className={css.parametersWrapper}>
+        {parameters.map((parameter) => (
+          <Parameter
+            filters={filters}
+            setFilters={setFilters}
+            parameter={parameter}
+            key={parameter.title}
+          />
+        ))}
+      </div>
+    )
+  }
+)
+
+Selector.displayName = 'Selector'
 
 const Parameter = ({
   filters,
@@ -142,27 +147,39 @@ export const ExecutorsSelector = ({
   }
 
   return (
-    <div className={css.executorsSelector}>
-      <button onClick={() => setShowExecutors((prev) => !prev)} className={css.selectorButton}>
+    <motion.div className={css.executorsSelector}>
+      <motion.button
+        onClick={() => setShowExecutors((prev) => !prev)}
+        className={css.selectorButton}
+      >
         <div className={css.icon}>{icons.newTask()}</div>
         <span>Назначить подчинённого</span>
-      </button>
+      </motion.button>
       <ul className={css.executorsList}>
-        {showExecutors &&
-          data.map((executor) => (
-            <li key={executor.id} className={css.executorItem}>
-              <button
-                onClick={() => handleSetExecutor(executor.id)}
-                className={cn({
-                  [css.executorButton]: true,
-                  [css.active]: formik.values.assignedToId === executor.id,
-                })}
+        <AnimatePresence>
+          {showExecutors &&
+            data.map((executor, index) => (
+              <motion.li
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ type: 'tween', duration: 0.2, delay: index * 0.05 }}
+                key={executor.id}
+                className={css.executorItem}
               >
-                {executor.lastName} {executor.firstName} {executor.patronymic}
-              </button>
-            </li>
-          ))}
+                <button
+                  onClick={() => handleSetExecutor(executor.id)}
+                  className={cn({
+                    [css.executorButton]: true,
+                    [css.active]: formik.values.assignedToId === executor.id,
+                  })}
+                >
+                  {executor.lastName} {executor.firstName} {executor.patronymic}
+                </button>
+              </motion.li>
+            ))}
+        </AnimatePresence>
       </ul>
-    </div>
+    </motion.div>
   )
 }

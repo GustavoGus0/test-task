@@ -102,11 +102,21 @@ export const Segment = ({
             >
               {icons.filters()}
             </button>
-            {isShow && (
-              <div onMouseEnter={showElement} onMouseLeave={hideElement} className={css.filters}>
-                {Filters}
-              </div>
-            )}
+            <AnimatePresence>
+              {isShow && (
+                <motion.div
+                  initial={{ y: -30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 30, opacity: 0 }}
+                  transition={{ type: 'tween', duration: 0.2 }}
+                  onMouseEnter={showElement}
+                  onMouseLeave={hideElement}
+                  className={css.filters}
+                >
+                  {Filters}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
         {NoButtonSelector}
