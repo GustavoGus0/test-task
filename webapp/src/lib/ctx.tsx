@@ -36,6 +36,25 @@ const AppReactContext = createContext<AppContext>({
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { data, error, isLoading, isFetching, isError } = trpc.getMe.useQuery()
   const [alerts, setAlerts] = useState<IAlert[]>([])
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== 'undefined' ? window.innerWidth : 0
+  )
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth)
+      window.addEventListener('resize', handleResize)
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+  }, [])
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setAlerts((prev) =>
@@ -59,13 +78,15 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
       ) : (
         <motion.div style={contextWrapper}>
           {children}
-          <motion.div style={alertContainer} layout="position">
-            <AnimatePresence>
-              {alerts.map((alert, index) => (
-                <GlobalAlert key={index} title={alert.title} type={alert.type} />
-              ))}
-            </AnimatePresence>
-          </motion.div>
+          {windowWidth > 768 && (
+            <motion.div style={alertContainer} layout="position">
+              <AnimatePresence>
+                {alerts.map((alert, index) => (
+                  <GlobalAlert key={index} title={alert.title} type={alert.type} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
         </motion.div>
       )}
     </AppReactContext.Provider>

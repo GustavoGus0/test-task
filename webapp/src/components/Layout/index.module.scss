@@ -5,12 +5,12 @@
   min-height: 100svh;
   display: flex;
   gap: $mainPageMenuToContentGap;
-  width: $mainPageWidth;
+  width: 60%;
   margin: 0 auto;
   overflow: hidden;
 
   .stickyContainer {
-    width: $mainPageMenuWidth;
+    width: 20%;
 
     .header {
       position: sticky;
@@ -84,6 +84,212 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: calc(100% - $mainPageMenuWidth - 1rem);
+    max-width: calc(80% - 1rem);
+  }
+}
+
+@media screen and (width <= 1320px) {
+  .container {
+    width: 70%;
+
+    .stickyContainer {
+      .header {
+        .navigation {
+          .list {
+            .item {
+              .reactLink {
+                padding: 0.5rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (width <= 1100px) {
+  .container {
+    width: 80%;
+
+    .stickyContainer {
+      width: 25%;
+    }
+  }
+}
+
+@media screen and (width <= 970px) {
+  .container {
+    width: 90%;
+
+    .stickyContainer {
+      width: 30%;
+    }
+  }
+}
+
+@media screen and (width <= 769px) {
+  .container {
+    position: relative;
+    width: 90%;
+    gap: none;
+
+    .stickyContainer {
+      width: 100%;
+      position: absolute;
+      bottom: 1rem;
+
+      .header {
+        top: 0;
+        margin-top: 0;
+        position: static;
+        width: 100%;
+
+        .headerText {
+          display: none;
+        }
+
+        .navigation {
+          width: 100%;
+
+          .list {
+            flex-direction: row;
+
+            .item {
+              .reactLink {
+                padding: 0.375rem;
+
+                .linkWrapper {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: center;
+
+                  .icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                      height: 1.625rem;
+                      fill: $grayColorDarkest;
+                    }
+                  }
+
+                  .label {
+                    font-size: 0.75rem;
+                  }
+                }
+              }
+  
+              .active {
+                background-color: $grayColorDark;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .content {
+      max-width: none;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (width < 645px) {
+  .reactLink {
+    justify-content: center;
+  }
+}
+
+@media screen and (width < 581px) {
+  .container {
+    .stickyContainer {
+      .header {
+        .navigation {
+          .list {
+            justify-content: space-between;
+
+            .item {
+              flex-grow: 1;
+              width: fit-content;
+
+              .reactLink {
+                height: 100%;
+                padding: 1rem;
+
+                .linkWrapper {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
+              
+                  .icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+              
+                    svg {
+                      height: auto;
+                      width: 2rem;
+                      fill: $grayColorDarkest;
+                    }
+                  }
+              
+                  .label {
+                    font-size: 0.875rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (width < 426px) {
+  .container {
+    width: calc(100% - 2rem);
+
+    .stickyContainer {
+      .header {
+        .navigation {
+          .list {
+            .item {
+              flex-grow: 1;
+              width: fit-content;
+
+              .reactLink {
+                padding: 0.5rem;
+
+                .linkWrapper {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
+              
+                  .icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+              
+                    svg {
+                      height: auto;
+                      width: 2.25rem;
+                      fill: $grayColorDarkest;
+                    }
+                  }
+              
+                  .label {
+                    display: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

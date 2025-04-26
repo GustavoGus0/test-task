@@ -6,3 +6,9 @@
   gap: 1rem;
   width: min(100%, 30rem);
 }
+
+@media screen and (width <= 769px) {
+  .formWrapper {
+    width: 100%;
+  }
+}
