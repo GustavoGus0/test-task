@@ -23,6 +23,11 @@
         font-size: 0.8rem;
       }
 
+      .assignedBy {
+        background-color: $grayColorDark;
+        color: rgb(0 0 0);
+      }
+
       .status {
         background-color: $accentColor;
       }

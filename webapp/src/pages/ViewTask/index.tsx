@@ -83,6 +83,23 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
             {getCyrillicStatus(task.status as TaskStatus)}{' '}
             {task.status === 'completed' && formatTimestamp(task.completedAt as Date)}
           </p>
+          <p
+            className={cn({
+              [css.bar]: true,
+              [css.assignedBy]: true,
+            })}
+          >
+            {me?.role === 'EXECUTOR' && (
+              <span>{task.createdById === me?.id ? 'Моя задача' : 'Назначена руководителем'}</span>
+            )}
+            {me?.role === 'MANAGER' && (
+              <span>
+                {task.createdById === me?.id && task.assignedToId !== me?.id
+                  ? 'Назначена исполнителю'
+                  : 'Моя задача'}
+              </span>
+            )}
+          </p>
         </div>
         <p className={css.createdAt}>{formatTimestamp(task.createdAt)}</p>
       </div>
