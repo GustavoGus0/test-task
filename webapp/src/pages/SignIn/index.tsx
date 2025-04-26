@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { ScaleUp } from '../../components/Animation'
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
@@ -45,17 +46,19 @@ export const SignIn = () => {
     },
   })
   return (
-    <Segment title="Вход">
-      <Form
-        gap="small"
-        submitButtonText="Войти"
-        formik={formik}
-        inputs={[
-          { name: 'login', label: 'Логин' },
-          { name: 'password', label: 'Пароль', type: 'password' },
-        ]}
-        alert={errorMessage}
-      />
-    </Segment>
+    <ScaleUp>
+      <Segment title="Вход">
+        <Form
+          gap="small"
+          submitButtonText="Войти"
+          formik={formik}
+          inputs={[
+            { name: 'login', label: 'Логин' },
+            { name: 'password', label: 'Пароль', type: 'password' },
+          ]}
+          alert={errorMessage}
+        />
+      </Segment>
+    </ScaleUp>
   )
 }

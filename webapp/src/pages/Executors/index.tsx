@@ -1,4 +1,5 @@
 import { icons } from '../../assets/icons'
+import { ScaleUp } from '../../components/Animation'
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
@@ -24,14 +25,16 @@ export const Executors = () => {
     )
   }
   return (
-    <Segment title="Подчинённые">
-      {(isLoading || isFetching) && <Loader />}
-      {!data.length && <div>У вас нет подчинённых</div>}
-      {!isFetching &&
-        data.map((executor) => (
-          <Executor executor={executor as IExecutor} key={executor.id}></Executor>
-        ))}
-    </Segment>
+    <ScaleUp>
+      <Segment title="Подчинённые">
+        {(isLoading || isFetching) && <Loader />}
+        {!data.length && <div>У вас нет подчинённых</div>}
+        {!isFetching &&
+          data.map((executor) => (
+            <Executor executor={executor as IExecutor} key={executor.id}></Executor>
+          ))}
+      </Segment>
+    </ScaleUp>
   )
 }
 

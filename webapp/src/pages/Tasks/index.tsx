@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
+import { ScaleUp } from '../../components/Animation'
 import { Loader } from '../../components/Loader'
 import { Segment } from '../../components/Segment'
 import { Selector } from '../../components/Selector'
@@ -65,58 +66,60 @@ export const Tasks = () => {
     )
   }
   return (
-    <Segment
-      setState={setFilters}
-      title={'Задачи'}
-      Filters={
-        <Selector
-          filters={filters}
-          setFilters={setFilters}
-          parameters={[
-            {
-              title: 'Время',
-              values: ['all-time', 'on-today', 'on-week'],
-              byWhat: 'byTime',
-              translatorFunction: getCyrillicTimeFilter as (value: string) => string,
-            },
-            {
-              title: 'Задачи',
-              values:
-                me.role === 'MANAGER' ? ['all', 'my', 'executors'] : ['all', 'my', 'managers'],
-              byWhat: 'byTasks',
-              translatorFunction: getCyrillicTasksFilter as (value: string) => string,
-            },
-            {
-              title: 'По дате',
-              values: ['old', 'new'],
-              byWhat: 'byDate',
-              translatorFunction: getCyrillicDataFilter as (value: string) => string,
-            },
-            {
-              title: 'По приоритету',
-              values: ['high', 'medium', 'low'],
-              byWhat: 'byPriority',
-              translatorFunction: getCyrillicPriority as (value: string) => string,
-            },
-            {
-              title: 'По статусу',
-              values: ['to-do', 'in-progress'],
-              byWhat: 'byStatus',
-              translatorFunction: getCyrillicStatus as (value: string) => string,
-            },
-          ]}
-        />
-      }
-    >
-      {(isLoading || isFetching) && <Loader />}
-      {!isFetching && !data?.tasks.length && <div>Задач нет</div>}
-      {data && (
-        <ul className={css.tasksList}>
-          {data.tasks.map((task) => (
-            <Task {...(task as ITask)} key={task.id} />
-          ))}
-        </ul>
-      )}
-    </Segment>
+    <ScaleUp>
+      <Segment
+        setState={setFilters}
+        title={'Задачи'}
+        Filters={
+          <Selector
+            filters={filters}
+            setFilters={setFilters}
+            parameters={[
+              {
+                title: 'Время',
+                values: ['all-time', 'on-today', 'on-week'],
+                byWhat: 'byTime',
+                translatorFunction: getCyrillicTimeFilter as (value: string) => string,
+              },
+              {
+                title: 'Задачи',
+                values:
+                  me.role === 'MANAGER' ? ['all', 'my', 'executors'] : ['all', 'my', 'managers'],
+                byWhat: 'byTasks',
+                translatorFunction: getCyrillicTasksFilter as (value: string) => string,
+              },
+              {
+                title: 'По дате',
+                values: ['old', 'new'],
+                byWhat: 'byDate',
+                translatorFunction: getCyrillicDataFilter as (value: string) => string,
+              },
+              {
+                title: 'По приоритету',
+                values: ['high', 'medium', 'low'],
+                byWhat: 'byPriority',
+                translatorFunction: getCyrillicPriority as (value: string) => string,
+              },
+              {
+                title: 'По статусу',
+                values: ['to-do', 'in-progress'],
+                byWhat: 'byStatus',
+                translatorFunction: getCyrillicStatus as (value: string) => string,
+              },
+            ]}
+          />
+        }
+      >
+        {(isLoading || isFetching) && <Loader />}
+        {!isFetching && !data?.tasks.length && <div>Задач нет</div>}
+        {data && (
+          <ul className={css.tasksList}>
+            {data.tasks.map((task, index) => (
+              <Task {...(task as ITask)} index={index} key={task.id} />
+            ))}
+          </ul>
+        )}
+      </Segment>
+    </ScaleUp>
   )
 }

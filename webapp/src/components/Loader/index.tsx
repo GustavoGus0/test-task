@@ -1,9 +1,20 @@
+import { motion } from 'framer-motion'
+import { forwardRef } from 'react'
+
 import css from './index.module.scss'
 
-export const Loader = () => {
+export const Loader = forwardRef<HTMLDivElement>((_, ref) => {
   return (
-    <div className={css.loaderWrapper}>
+    <motion.div
+      ref={ref}
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.1 }}
+      className={css.loaderWrapper}
+    >
       <div className={css.loader} />
-    </div>
+    </motion.div>
   )
-}
+})
+
+Loader.displayName = 'Loader'

@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router'
+import { AnimatePresence } from 'framer-motion'
+import { Route, Routes, useLocation } from 'react-router'
 
 import { Layout } from './components/Layout'
 import { AppContextProvider } from './lib/ctx'
@@ -28,23 +29,26 @@ import { Tasks } from './pages/Tasks'
 import { ViewTask } from './pages/ViewTask'
 
 export default function App() {
+  const location = useLocation()
   return (
     <TrpcProvider>
       <AppContextProvider>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path={getTasksRoute()} element={<Tasks />} />
-            <Route path={getNewTaskRoute()} element={<NewTask />} />
-            <Route path={getArchivedTasksRoute()} element={<ArchivedTasks />} />
-            <Route path={getExecutorsRoute()} element={<Executors />} />
-            <Route path={getSignUpRoute()} element={<SignUp />} />
-            <Route path={getSignInRoute()} element={<SignIn />} />
-            <Route path={getSignOutRoute()} element={<SignOut />} />
-            <Route path={getViewTaskRoute(viewTaskRouteParams)} element={<ViewTask />} />
-            <Route path={getEditTaskRoute(editTaskRouteParams)} element={<EditTask />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+        <AnimatePresence mode="popLayout">
+          <Routes location={location} key={location.pathname}>
+            <Route element={<Layout />}>
+              <Route path={getTasksRoute()} element={<Tasks />} />
+              <Route path={getNewTaskRoute()} element={<NewTask />} />
+              <Route path={getArchivedTasksRoute()} element={<ArchivedTasks />} />
+              <Route path={getExecutorsRoute()} element={<Executors />} />
+              <Route path={getSignUpRoute()} element={<SignUp />} />
+              <Route path={getSignInRoute()} element={<SignIn />} />
+              <Route path={getSignOutRoute()} element={<SignOut />} />
+              <Route path={getViewTaskRoute(viewTaskRouteParams)} element={<ViewTask />} />
+              <Route path={getEditTaskRoute(editTaskRouteParams)} element={<EditTask />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </AnimatePresence>
       </AppContextProvider>
     </TrpcProvider>
   )

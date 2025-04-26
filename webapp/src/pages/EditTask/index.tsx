@@ -5,6 +5,7 @@ import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import { ScaleIn } from '../../components/Animation'
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
 import { ExecutorsSelector } from '../../components/Selector'
@@ -83,34 +84,36 @@ export const EditTask = () => {
     },
   })
   return (
-    <Segment title={'Редактирование задачи'}>
-      <div className={css.formWrapper}>
-        <Form
-          alert={alert}
-          submitButtonText="Сохранить"
-          clearButtonText="Сбросить"
-          cancelButton={true}
-          key={formKey}
-          formik={formik}
-          legend={'Измените существующую задачу'}
-          inputs={[
-            {
-              name: 'title',
-              label: 'Заголовок',
-            },
-            { name: 'description', label: 'Описание', type: 'textarea' },
-          ]}
-          selectorInputs={[
-            {
-              translatorFunction: getCyrillicPriority as (priority: string) => string,
-              name: 'priority',
-              label: 'Приоритет',
-              parameters: ['low', 'medium', 'high'],
-            },
-          ]}
-        />
-        {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
-      </div>
-    </Segment>
+    <ScaleIn>
+      <Segment title={'Редактирование задачи'}>
+        <div className={css.formWrapper}>
+          <Form
+            alert={alert}
+            submitButtonText="Сохранить"
+            clearButtonText="Сбросить"
+            cancelButton={true}
+            key={formKey}
+            formik={formik}
+            legend={'Измените существующую задачу'}
+            inputs={[
+              {
+                name: 'title',
+                label: 'Заголовок',
+              },
+              { name: 'description', label: 'Описание', type: 'textarea' },
+            ]}
+            selectorInputs={[
+              {
+                translatorFunction: getCyrillicPriority as (priority: string) => string,
+                name: 'priority',
+                label: 'Приоритет',
+                parameters: ['low', 'medium', 'high'],
+              },
+            ]}
+          />
+          {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
+        </div>
+      </Segment>
+    </ScaleIn>
   )
 }

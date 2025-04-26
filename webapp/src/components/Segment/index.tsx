@@ -1,5 +1,6 @@
 import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Dispatch, SetStateAction } from 'react'
 import { useNavigate } from 'react-router'
 
@@ -66,28 +67,34 @@ export const Segment = ({
         </div>
         {Filters && (
           <div className={css.filtersBox}>
-            {needShow && (
-              <button
-                onClick={() => {
-                  setItem('filterByTime', 'all-time')
-                  setItem('filterByTasks', 'all')
-                  setItem('filterByDate', 'old')
-                  removeItem('filterByPriority')
-                  removeItem('filterByStatus')
-                  setState?.({
-                    byTime: 'all-time',
-                    byTasks: 'all',
-                    byDate: 'old',
-                    byPriority: null,
-                    byStatus: null,
-                  })
-                }}
-                className={css.dropFilters}
-                type="button"
-              >
-                {icons.cross()} Сбросить
-              </button>
-            )}
+            <AnimatePresence>
+              {needShow && (
+                <motion.button
+                  onClick={() => {
+                    setItem('filterByTime', 'all-time')
+                    setItem('filterByTasks', 'all')
+                    setItem('filterByDate', 'old')
+                    removeItem('filterByPriority')
+                    removeItem('filterByStatus')
+                    setState?.({
+                      byTime: 'all-time',
+                      byTasks: 'all',
+                      byDate: 'old',
+                      byPriority: null,
+                      byStatus: null,
+                    })
+                  }}
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.1 }}
+                  className={css.dropFilters}
+                  type="button"
+                >
+                  {icons.cross()} Сбросить
+                </motion.button>
+              )}
+            </AnimatePresence>
             <button
               className={css.filtersButton}
               onMouseEnter={showElement}

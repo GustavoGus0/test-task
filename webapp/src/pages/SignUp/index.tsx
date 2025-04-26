@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import { ScaleUp } from '../../components/Animation'
 import { Form } from '../../components/Form'
 import { Segment } from '../../components/Segment'
 import { useMe } from '../../lib/ctx'
@@ -64,33 +65,35 @@ export const SignUp = () => {
     },
   })
   return (
-    <Segment title="Регистрация">
-      <Form
-        gap="small"
-        formik={formik}
-        legend="Создайте аккаунт"
-        inputs={[
-          { name: 'login', label: 'Логин', errorMessage: errorMessage },
-          { name: 'password', label: 'Пароль', type: 'password' },
-          { name: 'firstName', label: 'Имя' },
-          { name: 'lastName', label: 'Фамилия' },
-          { name: 'patronymic', label: 'Отчество' },
-        ]}
-        selectorInputs={[
-          {
-            translatorFunction: getCyrillicRole as (role: string) => string,
-            name: 'role',
-            label: 'Роль',
-            parameters: ['MANAGER', 'EXECUTOR'],
-          },
-          {
-            name: 'managerId',
-            label: 'Руководитель',
-            parameters: availableManagers ? availableManagers : [],
-            selectorType: 'managers',
-          },
-        ]}
-      />
-    </Segment>
+    <ScaleUp>
+      <Segment title="Регистрация">
+        <Form
+          gap="small"
+          formik={formik}
+          legend="Создайте аккаунт"
+          inputs={[
+            { name: 'login', label: 'Логин', errorMessage: errorMessage },
+            { name: 'password', label: 'Пароль', type: 'password' },
+            { name: 'firstName', label: 'Имя' },
+            { name: 'lastName', label: 'Фамилия' },
+            { name: 'patronymic', label: 'Отчество' },
+          ]}
+          selectorInputs={[
+            {
+              translatorFunction: getCyrillicRole as (role: string) => string,
+              name: 'role',
+              label: 'Роль',
+              parameters: ['MANAGER', 'EXECUTOR'],
+            },
+            {
+              name: 'managerId',
+              label: 'Руководитель',
+              parameters: availableManagers ? availableManagers : [],
+              selectorType: 'managers',
+            },
+          ]}
+        />
+      </Segment>
+    </ScaleUp>
   )
 }

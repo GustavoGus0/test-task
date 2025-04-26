@@ -1,4 +1,5 @@
 import type { TrpcRouterOutput } from '@management/backend/src/router'
+import { AnimatePresence, motion } from 'framer-motion'
 import React, {
   createContext,
   Dispatch,
@@ -38,9 +39,9 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setAlerts((prev) =>
-        prev.filter((alert) => new Date().getTime() - alert.createdAt.getTime() < 3000)
+        prev.filter((alert) => new Date().getTime() - alert.createdAt.getTime() < 1000)
       )
-    }, 3000)
+    }, 1000)
     return () => clearInterval(intervalId)
   }, [])
   return (
@@ -56,14 +57,16 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
       ) : isError ? (
         <p>Error: {error.message}</p>
       ) : (
-        <div style={contextWrapper}>
+        <motion.div style={contextWrapper}>
           {children}
-          <div style={alertContainer}>
-            {alerts.map((alert, index) => (
-              <GlobalAlert key={index} title={alert.title} type={alert.type} />
-            ))}
-          </div>
-        </div>
+          <motion.div style={alertContainer} layout="position">
+            <AnimatePresence>
+              {alerts.map((alert, index) => (
+                <GlobalAlert key={index} title={alert.title} type={alert.type} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       )}
     </AppReactContext.Provider>
   )
@@ -84,6 +87,7 @@ export const useAlerts = () => {
 }
 
 const alertContainer: React.CSSProperties = {
+  overflow: 'hidden',
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',

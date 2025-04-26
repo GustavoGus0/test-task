@@ -1,6 +1,7 @@
 import { TrpcRouterOutput } from '@management/backend/src/router'
 import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useParams } from 'react-router'
 
 import { icons } from '../../assets/icons'
@@ -30,9 +31,20 @@ export const ViewTask = () => {
   }
 
   return (
-    <Segment status={data.task.status as TaskStatus} getBack={true} title={'Просмотр задачи'}>
-      <Task task={data.task} />
-    </Segment>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 1.1 }}
+      transition={{ duration: 0.1 }}
+    >
+      <Segment status={data.task.status as TaskStatus} getBack={true} title={'Просмотр задачи'}>
+        <AnimatePresence mode="wait">
+          <motion.div transition={{ duration: 0.1 }}>
+            <Task task={data.task} />
+          </motion.div>
+        </AnimatePresence>
+      </Segment>
+    </motion.div>
   )
 }
 
@@ -60,7 +72,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
   const me = useMe()
   const isProcessed = task.status === 'to-do' || task.status === 'in-progress'
   return (
-    <div className={css.taskWrapper}>
+    <motion.div exit={{ opacity: 0 }} className={css.taskWrapper}>
       <div className={css.statusPriorityAndTime}>
         <div className={css.statusAndPriority}>
           <p
@@ -136,6 +148,6 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           <DeleteButton taskStatus={task.status as TaskStatus} taskId={task.id} />
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }

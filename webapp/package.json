@@ -19,6 +19,8 @@
     "@tanstack/react-query": "^5.74.4",
     "@trpc/client": "^11.1.0",
     "@trpc/react-query": "^11.1.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.9.2",
     "js-cookie": "^3.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
