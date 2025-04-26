@@ -1,5 +1,6 @@
 import { TrpcRouterOutput } from '@management/backend/src/router'
-import { Link, Outlet } from 'react-router'
+import cn from 'classnames'
+import { Link, Outlet, useLocation } from 'react-router'
 
 import { useMe } from '../../lib/ctx'
 import { links } from '../../lib/links'
@@ -9,6 +10,7 @@ import css from './index.module.scss'
 
 export const Layout = () => {
   const me = useMe()
+  const location = useLocation()
   return (
     <div className={css.container}>
       <div className={css.stickyContainer}>
@@ -18,7 +20,13 @@ export const Layout = () => {
             <ul className={css.list}>
               {defineLinksFilter(links, me).map((link) => (
                 <li className={css.item} key={link.to}>
-                  <Link className={css.reactLink} to={link.to}>
+                  <Link
+                    className={cn({
+                      [css.reactLink]: true,
+                      [css.active]: location.pathname === link.to,
+                    })}
+                    to={link.to}
+                  >
                     <div className={css.linkWrapper}>
                       <div className={css.icon}>{link.icon}</div>
                       <span className={css.label}>{link.label}</span>
