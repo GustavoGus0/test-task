@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
 export const zSignInTrpcInput = z.object({
-  login: z.string().min(1, 'Тут пусто'),
-  password: z.string().min(1, 'Тут пусто'),
+  login: z.string().trim().min(1, 'Тут пусто'),
+  password: z.string().trim().min(1, 'Тут пусто'),
 })
