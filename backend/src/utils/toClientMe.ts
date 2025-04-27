@@ -11,6 +11,7 @@ export const toClientMe = (user: User | null) => {
       'lastName',
       'patronymic',
       'role',
+      'managerId',
       'manager',
       'executors',
     ])

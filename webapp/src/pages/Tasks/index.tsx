@@ -36,6 +36,7 @@ export interface IFilter {
 
 export const Tasks = () => {
   const me = useMe()
+
   if (!me) {
     return (
       <Segment type="error" title="Не авторизован">

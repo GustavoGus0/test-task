@@ -6,6 +6,7 @@ import { Dispatch, forwardRef, SetStateAction, useState } from 'react'
 
 import { icons } from '../../assets/icons'
 import { useStorage } from '../../hooks/useStorage'
+import { useMe } from '../../lib/ctx'
 import { trpc } from '../../lib/trpc'
 import { IFilter } from '../../pages/Tasks'
 import { Loader } from '../Loader'
@@ -27,9 +28,16 @@ interface ISelector {
 
 export const Selector = forwardRef<HTMLDivElement, ISelector>(
   ({ filters, setFilters, parameters }, ref) => {
+    const me = useMe()
+    let filteredParametersExcludeManager = parameters
+    if (!me?.managerId && me?.role === 'EXECUTOR') {
+      filteredParametersExcludeManager = parameters.filter(
+        (parameter) => parameter.byWhat !== 'byTasks'
+      )
+    }
     return (
       <div ref={ref} className={css.parametersWrapper}>
-        {parameters.map((parameter) => (
+        {filteredParametersExcludeManager.map((parameter) => (
           <Parameter
             filters={filters}
             setFilters={setFilters}
