@@ -18,6 +18,7 @@ export type AppContext = {
   me: TrpcRouterOutput['getMe']['me']
   alerts: IAlert[]
   setAlerts: Dispatch<SetStateAction<IAlert[]>>
+  windowWidth: number
 }
 
 export type AlertType = 'error' | 'success' | 'delete' | 'cancel'
@@ -31,6 +32,7 @@ const AppReactContext = createContext<AppContext>({
   me: null,
   alerts: [],
   setAlerts: () => null,
+  windowWidth: 0,
 })
 
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -69,6 +71,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
         me: data?.me || null,
         alerts: alerts,
         setAlerts: setAlerts,
+        windowWidth,
       }}
     >
       {isLoading || isFetching ? (
@@ -105,6 +108,11 @@ export const useMe = () => {
 export const useAlerts = () => {
   const { setAlerts } = useAppContext()
   return setAlerts
+}
+
+export const useWindowWidth = () => {
+  const { windowWidth } = useAppContext()
+  return windowWidth
 }
 
 const alertContainer: React.CSSProperties = {

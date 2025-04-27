@@ -100,3 +100,14 @@
 .error {
   color: $errorTextColor;
 }
+
+@media screen and (width < 426px) {
+  .segment {
+    .headerBox[data-is-archive="true"] {
+      align-items: start;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }  
+}

@@ -33,12 +33,15 @@
   .info {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.5rem;
 
     .bar {
+      text-wrap: nowrap;
       width: fit-content;
       display: flex;
       justify-content: center;
+      align-items: center;
       font-size: 0.8rem;
       padding: 0.25rem 0.625rem;
       border-radius: 999rem;
@@ -67,6 +70,16 @@
 
     .green {
       background-color: $lowPriorityColor;
+    }
+  }
+}
+
+@media screen and (width < 441px) {
+  .task {
+    .info {
+      .bar {
+        flex-grow: 1;
+      }
     }
   }
 }

@@ -10,6 +10,7 @@
   border-radius: 1rem;
   background-color: $grayColor;
   transition: $defaultInOutFastTransition;
+  font-size: 1rem;
 
   &:hover {
     background-color: $grayColorDark;
@@ -58,6 +59,36 @@
       svg {
         fill: $whiteTextColor;
       }
+    }
+  }
+}
+
+@media screen and (width < 827px) {
+  .button {
+    padding: 0.75rem;
+  }
+
+  .change {
+    flex: 1 0 auto;
+  
+    &:hover {
+      background-color: $successBackgroundColor;
+      color: $whiteTextColor;
+    }
+  }
+}
+
+@media screen and (width < 591px) {
+  .button {
+    padding: 0.75rem;
+  }
+
+  .change {
+    flex: 1 0 auto;
+  
+    &:hover {
+      background-color: $successBackgroundColor;
+      color: $whiteTextColor;
     }
   }
 }

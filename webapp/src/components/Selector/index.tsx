@@ -79,6 +79,7 @@ const Parameter = ({
             }}
             className={cn({ [css.value]: true, [css.active]: value === filters[parameter.byWhat] })}
             key={value}
+            data-is-status={parameter.byWhat === 'byTime'}
           >
             {parameter.translatorFunction(value)}
           </button>

@@ -12,35 +12,37 @@ export const Layout = () => {
   const me = useMe()
   const location = useLocation()
   return (
-    <div className={css.container}>
-      <div className={css.stickyContainer}>
-        <header className={css.header}>
-          <h1 className={css.headerText}>TODO</h1>
-          <nav className={css.navigation}>
-            <ul className={css.list}>
-              {defineLinksFilter(links, me).map((link) => (
-                <li className={css.item} key={link.to}>
-                  <Link
-                    className={cn({
-                      [css.reactLink]: true,
-                      [css.active]: location.pathname === link.to,
-                    })}
-                    to={link.to}
-                  >
-                    <div className={css.linkWrapper}>
-                      <div className={css.icon}>{link.icon}</div>
-                      <span className={css.label}>{link.label}</span>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </header>
+    <div className={css.overflowedContainer}>
+      <div className={css.container}>
+        <div className={css.stickyContainer}>
+          <header className={css.header}>
+            <h1 className={css.headerText}>TODO</h1>
+            <nav className={css.navigation}>
+              <ul className={css.list}>
+                {defineLinksFilter(links, me).map((link) => (
+                  <li className={css.item} key={link.to}>
+                    <Link
+                      className={cn({
+                        [css.reactLink]: true,
+                        [css.active]: location.pathname === link.to,
+                      })}
+                      to={link.to}
+                    >
+                      <div className={css.linkWrapper}>
+                        <div className={css.icon}>{link.icon}</div>
+                        <span className={css.label}>{link.label}</span>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </header>
+        </div>
+        <main className={css.content}>
+          <Outlet />
+        </main>
       </div>
-      <main className={css.content}>
-        <Outlet />
-      </main>
     </div>
   )
 }

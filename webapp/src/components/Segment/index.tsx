@@ -45,7 +45,7 @@ export const Segment = ({
 
   return (
     <div className={cn({ [css.segment]: true, [css.error]: type === 'error' })}>
-      <div className={css.headerBox}>
+      <div data-is-archive={NoButtonSelector ? 'true' : 'false'} className={css.headerBox}>
         <div className={css.titleAndReturn}>
           {getBack && (
             <button

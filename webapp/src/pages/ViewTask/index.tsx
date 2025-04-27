@@ -7,7 +7,7 @@ import { useParams } from 'react-router'
 import { icons } from '../../assets/icons'
 import { CancelButton, ChangeButton, DeleteButton, EditButton } from '../../components/Button'
 import { Segment } from '../../components/Segment'
-import { useMe } from '../../lib/ctx'
+import { useMe, useWindowWidth } from '../../lib/ctx'
 import { ViewTaskRouteParams } from '../../lib/routes'
 import { trpc } from '../../lib/trpc'
 import { checkMyOrManagersTask, checkMyTask, checkStatus } from '../../utils/check'
@@ -16,6 +16,14 @@ import { getCyrillicPriority, getCyrillicStatus } from '../../utils/getCyrillic'
 import css from './index.module.scss'
 
 export const ViewTask = () => {
+  const me = useMe()
+  if (!me) {
+    return (
+      <Segment type="error" title="Не авторизован">
+        Для доступа к этой странице вам нужно авторизоваться
+      </Segment>
+    )
+  }
   const { taskId } = useParams() as ViewTaskRouteParams
   const { data, error } = trpc.getTask.useQuery({
     taskId,
@@ -71,6 +79,8 @@ function formatTimestamp(timestamp: Date) {
 const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
   const me = useMe()
   const isProcessed = task.status === 'to-do' || task.status === 'in-progress'
+  const windowWidth = useWindowWidth()
+
   return (
     <motion.div exit={{ opacity: 0 }} className={css.taskWrapper}>
       <div className={css.statusPriorityAndTime}>
@@ -78,6 +88,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           <p
             className={cn({
               [css.bar]: true,
+              [css.fullRounded]: windowWidth < 1481,
               [css.low]: task.priority === 'low',
               [css.medium]: task.priority === 'medium',
               [css.high]: task.priority === 'high',
@@ -88,6 +99,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           <p
             className={cn({
               [css.bar]: true,
+              [css.fullRounded]: windowWidth < 1481,
               [css.status]: true,
               [css.completed]: task.status === 'completed',
             })}
@@ -98,6 +110,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           <p
             className={cn({
               [css.bar]: true,
+              [css.fullRounded]: windowWidth < 1481,
               [css.assignedBy]: true,
             })}
           >
@@ -113,7 +126,11 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
             )}
           </p>
         </div>
-        <p className={css.createdAt}>{formatTimestamp(task.createdAt)}</p>
+        <p className={css.createdAt}>
+          {windowWidth < 591
+            ? `Создана ${formatTimestamp(task.createdAt)}`
+            : formatTimestamp(task.createdAt)}
+        </p>
       </div>
       <div className={css.task}>
         <h2 className={css.title}>{task.title}</h2>
@@ -136,6 +153,7 @@ const Task = ({ task }: { task: TrpcRouterOutput['getTask']['task'] }) => {
           </div>
         </div>
       </div>
+
       <div className={css.buttonBox}>
         {isProcessed && <ChangeButton taskId={task.id} text={task.status} />}
         {checkMyTask(me, task) && !checkStatus(task, ['cancelled', 'completed']) && (

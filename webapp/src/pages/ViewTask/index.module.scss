@@ -23,6 +23,10 @@
         font-size: 0.8rem;
       }
 
+      .fullRounded {
+        border-radius: 99rem;
+      }
+
       .assignedBy {
         background-color: $grayColorDark;
         color: rgb(0 0 0);
@@ -133,5 +137,63 @@
     flex-direction: row;
     gap: 1rem;
     margin-top: 1rem;
+  }
+}
+
+@media screen and (width < 1481px) {
+  .taskWrapper {
+    .statusPriorityAndTime {
+      .statusAndPriority {
+      }
+
+      .createdAt {
+      }
+    }
+  }
+}
+
+@media screen and (width < 591px) {
+  .taskWrapper {
+    .task {
+      order: 1;
+    }
+
+    .buttonBox {
+      order: 3;
+      flex-direction: column;
+    }
+
+    .statusPriorityAndTime {
+      width: 100%;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      order: 2;
+
+      .statusAndPriority {
+        width: 100%;
+        margin-left: 0;
+
+        .bar {
+          flex-grow: 1;
+          text-align: center;
+        }
+      }
+
+      .createdAt {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (width < 393px) {
+  .taskWrapper {
+    .statusPriorityAndTime {
+      .statusAndPriority {
+        flex-direction: column;
+      }
+    }
   }
 }
