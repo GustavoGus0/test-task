@@ -1,7 +1,7 @@
 import { TaskStatus } from '@management/backend/src/utils/types'
 import cn from 'classnames'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { icons } from '../../assets/icons'
@@ -36,9 +36,15 @@ export const Segment = ({
 }) => {
   const windowWidth = useWindowWidth()
   const navigate = useNavigate()
+  const [isShowByClick, setIsShowByClick] = useState<boolean>(false)
   const { isShow, showElement, hideElement } = useDelayedShow({
-    delay: windowWidth > 768 ? 300 : 0,
+    delay: 300,
   })
+  useEffect(() => {
+    if (windowWidth > 768) {
+      setIsShowByClick(false)
+    }
+  }, [windowWidth])
   const { removeItem, setItem, getItem } = useStorage()
   const needShow =
     getItem('filterByTime') !== 'all-time' ||
@@ -108,12 +114,15 @@ export const Segment = ({
                 {icons.filters()}
               </button>
             ) : (
-              <button className={css.filtersButton} onClick={isShow ? hideElement : showElement}>
+              <button
+                className={css.filtersButton}
+                onClick={() => setIsShowByClick((prev) => !prev)}
+              >
                 {icons.filters()}
               </button>
             )}
             <AnimatePresence>
-              {isShow && (
+              {(isShow || isShowByClick) && (
                 <motion.div
                   initial={{ y: -30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
