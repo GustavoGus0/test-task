@@ -3,6 +3,7 @@ import { TaskPriority, TaskStatus } from '@management/backend/src/utils/types'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 import { ScaleUp } from '../../components/Animation'
 import { Form } from '../../components/Form'
@@ -59,32 +60,37 @@ export const NewTask = () => {
     },
   })
   return (
-    <ScaleUp>
-      <Segment title={'Новая задача'}>
-        <div className={css.formWrapper}>
-          <Form
-            key={formKey}
-            formik={formik}
-            legend={'Создайте новую задачу'}
-            inputs={[
-              {
-                name: 'title',
-                label: 'Заголовок',
-              },
-              { name: 'description', label: 'Описание', type: 'textarea' },
-            ]}
-            selectorInputs={[
-              {
-                translatorFunction: getCyrillicPriority as (priority: string) => string,
-                name: 'priority',
-                label: 'Приоритет',
-                parameters: ['low', 'medium', 'high'],
-              },
-            ]}
-          />
-          {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
-        </div>
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Новая задача</title>
+      </Helmet>
+      <ScaleUp>
+        <Segment title={'Новая задача'}>
+          <div className={css.formWrapper}>
+            <Form
+              key={formKey}
+              formik={formik}
+              legend={'Создайте новую задачу'}
+              inputs={[
+                {
+                  name: 'title',
+                  label: 'Заголовок',
+                },
+                { name: 'description', label: 'Описание', type: 'textarea' },
+              ]}
+              selectorInputs={[
+                {
+                  translatorFunction: getCyrillicPriority as (priority: string) => string,
+                  name: 'priority',
+                  label: 'Приоритет',
+                  parameters: ['low', 'medium', 'high'],
+                },
+              ]}
+            />
+            {me.role === 'MANAGER' && <ExecutorsSelector formik={formik} />}
+          </div>
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }

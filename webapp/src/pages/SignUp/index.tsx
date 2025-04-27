@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router'
 
 import { ScaleUp } from '../../components/Animation'
@@ -65,35 +66,40 @@ export const SignUp = () => {
     },
   })
   return (
-    <ScaleUp>
-      <Segment title="Регистрация">
-        <Form
-          gap="small"
-          formik={formik}
-          legend="Создайте аккаунт"
-          inputs={[
-            { name: 'login', label: 'Логин', errorMessage: errorMessage },
-            { name: 'password', label: 'Пароль', type: 'password' },
-            { name: 'firstName', label: 'Имя' },
-            { name: 'lastName', label: 'Фамилия' },
-            { name: 'patronymic', label: 'Отчество' },
-          ]}
-          selectorInputs={[
-            {
-              translatorFunction: getCyrillicRole as (role: string) => string,
-              name: 'role',
-              label: 'Роль',
-              parameters: ['MANAGER', 'EXECUTOR'],
-            },
-            {
-              name: 'managerId',
-              label: 'Руководитель',
-              parameters: availableManagers ? availableManagers : [],
-              selectorType: 'managers',
-            },
-          ]}
-        />
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Регистрация</title>
+      </Helmet>
+      <ScaleUp>
+        <Segment title="Регистрация">
+          <Form
+            gap="small"
+            formik={formik}
+            legend="Создайте аккаунт"
+            inputs={[
+              { name: 'login', label: 'Логин', errorMessage: errorMessage },
+              { name: 'password', label: 'Пароль', type: 'password' },
+              { name: 'firstName', label: 'Имя' },
+              { name: 'lastName', label: 'Фамилия' },
+              { name: 'patronymic', label: 'Отчество' },
+            ]}
+            selectorInputs={[
+              {
+                translatorFunction: getCyrillicRole as (role: string) => string,
+                name: 'role',
+                label: 'Роль',
+                parameters: ['MANAGER', 'EXECUTOR'],
+              },
+              {
+                name: 'managerId',
+                label: 'Руководитель',
+                parameters: availableManagers ? availableManagers : [],
+                selectorType: 'managers',
+              },
+            ]}
+          />
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }

@@ -6,6 +6,7 @@ import {
   TimeFilter,
 } from '@management/backend/src/utils/types'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useDebounceValue } from 'usehooks-ts'
 
 import { ScaleUp } from '../../components/Animation'
@@ -67,60 +68,66 @@ export const Tasks = () => {
     )
   }
   return (
-    <ScaleUp>
-      <Segment
-        setState={setFilters}
-        title={'Задачи'}
-        Filters={
-          <Selector
-            filters={filters}
-            setFilters={setFilters}
-            parameters={[
-              {
-                title: 'Время',
-                values: ['all-time', 'on-today', 'on-week'],
-                byWhat: 'byTime',
-                translatorFunction: getCyrillicTimeFilter as (value: string) => string,
-              },
-              {
-                title: 'Задачи',
-                values:
-                  me.role === 'MANAGER' ? ['all', 'my', 'executors'] : ['all', 'my', 'managers'],
-                byWhat: 'byTasks',
-                translatorFunction: getCyrillicTasksFilter as (value: string) => string,
-              },
-              {
-                title: 'По дате',
-                values: ['old', 'new'],
-                byWhat: 'byDate',
-                translatorFunction: getCyrillicDataFilter as (value: string) => string,
-              },
-              {
-                title: 'По приоритету',
-                values: ['high', 'medium', 'low'],
-                byWhat: 'byPriority',
-                translatorFunction: getCyrillicPriority as (value: string) => string,
-              },
-              {
-                title: 'По статусу',
-                values: ['to-do', 'in-progress'],
-                byWhat: 'byStatus',
-                translatorFunction: getCyrillicStatus as (value: string) => string,
-              },
-            ]}
-          />
-        }
-      >
-        {(isLoading || isFetching) && <Loader />}
-        {!isFetching && !data?.tasks.length && <div>Задач нет</div>}
-        {data && (
-          <ul className={css.tasksList}>
-            {data.tasks.map((task, index) => (
-              <Task {...(task as ITask)} index={index} key={task.id} />
-            ))}
-          </ul>
-        )}
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Задачи</title>
+      </Helmet>
+
+      <ScaleUp>
+        <Segment
+          setState={setFilters}
+          title={'Задачи'}
+          Filters={
+            <Selector
+              filters={filters}
+              setFilters={setFilters}
+              parameters={[
+                {
+                  title: 'Время',
+                  values: ['all-time', 'on-today', 'on-week'],
+                  byWhat: 'byTime',
+                  translatorFunction: getCyrillicTimeFilter as (value: string) => string,
+                },
+                {
+                  title: 'Задачи',
+                  values:
+                    me.role === 'MANAGER' ? ['all', 'my', 'executors'] : ['all', 'my', 'managers'],
+                  byWhat: 'byTasks',
+                  translatorFunction: getCyrillicTasksFilter as (value: string) => string,
+                },
+                {
+                  title: 'По дате',
+                  values: ['old', 'new'],
+                  byWhat: 'byDate',
+                  translatorFunction: getCyrillicDataFilter as (value: string) => string,
+                },
+                {
+                  title: 'По приоритету',
+                  values: ['high', 'medium', 'low'],
+                  byWhat: 'byPriority',
+                  translatorFunction: getCyrillicPriority as (value: string) => string,
+                },
+                {
+                  title: 'По статусу',
+                  values: ['to-do', 'in-progress'],
+                  byWhat: 'byStatus',
+                  translatorFunction: getCyrillicStatus as (value: string) => string,
+                },
+              ]}
+            />
+          }
+        >
+          {(isLoading || isFetching) && <Loader />}
+          {!isFetching && !data?.tasks.length && <div>Задач нет</div>}
+          {data && (
+            <ul className={css.tasksList}>
+              {data.tasks.map((task, index) => (
+                <Task {...(task as ITask)} index={index} key={task.id} />
+              ))}
+            </ul>
+          )}
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }

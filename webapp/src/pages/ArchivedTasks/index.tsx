@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 
 import { ScaleUp } from '../../components/Animation'
 import { Loader } from '../../components/Loader'
@@ -41,28 +42,33 @@ export const ArchivedTasks = () => {
     )
   }
   return (
-    <ScaleUp>
-      <Segment
-        title="Архив"
-        NoButtonSelector={
-          <NoButtonSelector
-            filterArchive={filterArchive}
-            setFilterArchive={setFilterArchive}
-            buttons={[{ value: 'completed' }, { value: 'cancelled' }]}
-            translatorFunction={getCyrillicStatus as (arg: string) => string}
-          />
-        }
-      >
-        {(isLoading || isFetching) && <Loader />}
-        {!isFetching && (!data || !data.tasks.length) && <div>Задач нет</div>}
-        {data && (
-          <ul className={css.tasksList}>
-            {data.tasks.map((task, index) => (
-              <Task {...(task as ITask)} index={index} key={task.id} />
-            ))}
-          </ul>
-        )}
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Архив</title>
+      </Helmet>
+      <ScaleUp>
+        <Segment
+          title="Архив"
+          NoButtonSelector={
+            <NoButtonSelector
+              filterArchive={filterArchive}
+              setFilterArchive={setFilterArchive}
+              buttons={[{ value: 'completed' }, { value: 'cancelled' }]}
+              translatorFunction={getCyrillicStatus as (arg: string) => string}
+            />
+          }
+        >
+          {(isLoading || isFetching) && <Loader />}
+          {!isFetching && (!data || !data.tasks.length) && <div>Задач нет</div>}
+          {data && (
+            <ul className={css.tasksList}>
+              {data.tasks.map((task, index) => (
+                <Task {...(task as ITask)} index={index} key={task.id} />
+              ))}
+            </ul>
+          )}
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }

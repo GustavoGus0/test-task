@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet-async'
+
 import { icons } from '../../assets/icons'
 import { ScaleUp } from '../../components/Animation'
 import { Loader } from '../../components/Loader'
@@ -25,16 +27,21 @@ export const Executors = () => {
     )
   }
   return (
-    <ScaleUp>
-      <Segment title="Подчинённые">
-        {(isLoading || isFetching) && <Loader />}
-        {!data.length && <div>У вас нет подчинённых</div>}
-        {!isFetching &&
-          data.map((executor) => (
-            <Executor executor={executor as IExecutor} key={executor.id}></Executor>
-          ))}
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Подчинённые</title>
+      </Helmet>
+      <ScaleUp>
+        <Segment title="Подчинённые">
+          {(isLoading || isFetching) && <Loader />}
+          {!data.length && <div>У вас нет подчинённых</div>}
+          {!isFetching &&
+            data.map((executor) => (
+              <Executor executor={executor as IExecutor} key={executor.id}></Executor>
+            ))}
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }
 

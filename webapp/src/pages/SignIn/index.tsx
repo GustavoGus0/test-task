@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router'
 
 import { ScaleUp } from '../../components/Animation'
@@ -46,19 +47,24 @@ export const SignIn = () => {
     },
   })
   return (
-    <ScaleUp>
-      <Segment title="Вход">
-        <Form
-          gap="small"
-          submitButtonText="Войти"
-          formik={formik}
-          inputs={[
-            { name: 'login', label: 'Логин' },
-            { name: 'password', label: 'Пароль', type: 'password' },
-          ]}
-          alert={errorMessage}
-        />
-      </Segment>
-    </ScaleUp>
+    <>
+      <Helmet>
+        <title>Вход</title>
+      </Helmet>
+      <ScaleUp>
+        <Segment title="Вход">
+          <Form
+            gap="small"
+            submitButtonText="Войти"
+            formik={formik}
+            inputs={[
+              { name: 'login', label: 'Логин' },
+              { name: 'password', label: 'Пароль', type: 'password' },
+            ]}
+            alert={errorMessage}
+          />
+        </Segment>
+      </ScaleUp>
+    </>
   )
 }

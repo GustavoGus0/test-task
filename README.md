@@ -1,8 +1,7 @@
 ## EN
-### FullStack Task Manager App using Typescript, React and Node.js + JWT Authorization
----
+# FullStack Task Manager App using Typescript, React and Node.js + JWT Authorization
 
-# This app is a task management system, here you can create, update, delete, edit your own tasks. You can be a manager nor an executor. If you are a manager, you can assign tasks to your employees. If you are an executor, you can create and control your own tasks, and see tasks those have been assigned to you by your manager. The manager is selected on sign up page, but you can skip it and have no manager at all.
+### This app is a task management system, here you can create, update, delete, edit your own tasks. You can be a manager nor an executor. If you are a manager, you can assign tasks to your employees. If you are an executor, you can create and control your own tasks, and see tasks those have been assigned to you by your manager. The manager is selected on sign up page, but you can skip it and have no manager at all.
 
 HOW TO RUN APP
 Remember you need to have Node.js, Node Package Manager and PostgreSQL installed on your machine.
@@ -15,10 +14,12 @@ Remember you need to have Node.js, Node Package Manager and PostgreSQL installed
 7. If no errors were thrown, start the app by running `pnpm dev` in your terminal
 8. If all went well, you should see two clickable links. You're interested in the app link by Vite, by default it's http://localhost:5173/
 
-## RU
-### FullStack приложение для управления задачами на Typescript, React и Node.js + JWT Authorization
+---
 
-# Это приложение представляет собой систему управления задачами в виде веб-приложения, где вы можете создавать, обновлять, удалять и редактировать свои задачи. Вы можете быть руководителем или исполнителем. Если вы руководитель, вы можете назначать задачи вашим сотрудникам. Если вы исполнитель, вы можете создавать и управлять своими задачами, а также видеть задачи, назначенные вам вашим руководителем. Руководитель выбирается на странице регистрации, но он не обязателен.
+## RU
+# FullStack приложение для управления задачами на Typescript, React и Node.js + JWT Authorization
+
+### Это приложение представляет собой систему управления задачами в виде веб-приложения, где вы можете создавать, обновлять, удалять и редактировать свои задачи. Вы можете быть руководителем или исполнителем. Если вы руководитель, вы можете назначать задачи вашим сотрудникам. Если вы исполнитель, вы можете создавать и управлять своими задачами, а также видеть задачи, назначенные вам вашим руководителем. Руководитель выбирается на странице регистрации, но он не обязателен.
 
 КАК ЗАПУСТИТЬ ПРИЛОЖЕНИЕ
 Не забудьте установить на компьютер Node.js, Node Package Manager и PostgreSQL.
