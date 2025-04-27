@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router'
 import { icons } from '../../assets/icons'
 import { useDelayedShow } from '../../hooks/useDelayedShow'
 import { useStorage } from '../../hooks/useStorage'
+import { useWindowWidth } from '../../lib/ctx'
 import { getArchivedTasksRoute, getTasksRoute } from '../../lib/routes'
 
 import css from './index.module.scss'
@@ -33,8 +34,11 @@ export const Segment = ({
   NoButtonSelector?: React.ReactNode
   children: React.ReactNode
 }) => {
+  const windowWidth = useWindowWidth()
   const navigate = useNavigate()
-  const { isShow, showElement, hideElement } = useDelayedShow({ delay: 300 })
+  const { isShow, showElement, hideElement } = useDelayedShow({
+    delay: windowWidth > 768 ? 300 : 0,
+  })
   const { removeItem, setItem, getItem } = useStorage()
   const needShow =
     getItem('filterByTime') !== 'all-time' ||
@@ -95,13 +99,19 @@ export const Segment = ({
                 </motion.button>
               )}
             </AnimatePresence>
-            <button
-              className={css.filtersButton}
-              onMouseEnter={showElement}
-              onMouseLeave={hideElement}
-            >
-              {icons.filters()}
-            </button>
+            {windowWidth > 768 ? (
+              <button
+                className={css.filtersButton}
+                onMouseEnter={showElement}
+                onMouseLeave={hideElement}
+              >
+                {icons.filters()}
+              </button>
+            ) : (
+              <button className={css.filtersButton} onClick={isShow ? hideElement : showElement}>
+                {icons.filters()}
+              </button>
+            )}
             <AnimatePresence>
               {isShow && (
                 <motion.div
