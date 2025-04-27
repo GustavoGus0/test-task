@@ -141,18 +141,22 @@
 @media screen and (width <= 769px) {
   .overflowedContainer {
     .container {
+      justify-content: center;
       position: relative;
       width: 90%;
       gap: none;
-
+      
       .stickyContainer {
         width: 100%;
-        position: absolute;
-        bottom: 1rem;
+        position: fixed;
+        z-index: 999;
+        bottom: 0;
 
         .header {
           top: 0;
           margin-top: 0;
+          padding: 1rem;
+          background-color: $whiteTextColor;
           position: static;
           width: 100%;
 

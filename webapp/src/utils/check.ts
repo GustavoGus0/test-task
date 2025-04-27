@@ -12,7 +12,11 @@ export const checkMyOrManagersTask = (
   me: TrpcRouterOutput['getMe']['me'],
   task: TrpcRouterOutput['getTask']['task']
 ) => {
-  return task.assignedToId === me?.id || task.createdById === me?.managerId
+  return (
+    task.assignedToId === me?.id ||
+    task.createdById === me?.managerId ||
+    task.createdById === me?.id
+  )
 }
 export const checkStatus = (
   task: TrpcRouterOutput['getTask']['task'],
