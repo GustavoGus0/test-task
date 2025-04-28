@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import { FormikProps } from 'formik'
+import { useEffect } from 'react'
 
 import { icons } from '../../assets/icons'
 import { Alert } from '../Alert'
@@ -23,6 +24,7 @@ interface ISelectorInput extends IInput {
 export const Form = ({
   cancelButton = false,
   alert,
+  setAlert,
   gap = 'large',
   formik,
   inputs,
@@ -33,6 +35,7 @@ export const Form = ({
 }: {
   cancelButton?: boolean
   alert?: string
+  setAlert?: (arg: string) => void
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formik: FormikProps<any>
@@ -43,6 +46,7 @@ export const Form = ({
   submitButtonText?: string
   clearButtonText?: string
 }) => {
+  useEffect(() => {}, [alert])
   const filteredSelectorInputs =
     formik.values.role === 'MANAGER' || formik.values.role === null
       ? selectorInputs?.filter((input) => input.selectorType !== 'managers')
@@ -113,7 +117,10 @@ export const Form = ({
         <button
           className={css.button + ' ' + css.clearButton}
           type="reset"
-          onClick={() => formik.resetForm()}
+          onClick={() => {
+            setAlert?.('')
+            return formik.resetForm()
+          }}
         >
           {clearButtonText}
         </button>

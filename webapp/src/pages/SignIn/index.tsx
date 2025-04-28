@@ -62,6 +62,7 @@ export const SignIn = () => {
               { name: 'password', label: 'Пароль', type: 'password' },
             ]}
             alert={errorMessage}
+            setAlert={setErrorMessage}
           />
         </Segment>
       </ScaleUp>
